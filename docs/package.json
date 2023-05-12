@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start",
     "export": "NODE_ENV=production next build && next export",
-    "predeploy": "npm run export && touch out/.nojekyll",
-    "deploy": "gh-pages -d out",
+    "predeploy": "npm run export",
+    "deploy": "touch out/.nojekyll && gh-pages -d out",
     "lint": "next lint"
   },
   "browserslist": "defaults, not ie <= 11",
