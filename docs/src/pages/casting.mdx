@@ -1,0 +1,141 @@
+export const description =
+  'In this guide, we’ll look at some usages of the casting methods.'
+
+# Casting
+The tools library provides custom casting methods that expand Pinescript's casting 
+capabilities for boolean, float, integer, string, and color object types.
+
+<Note>
+  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  If you are following along with the examples, please make sure to import the latest 
+  version of the library in your script first, and assign `tl` as namespace.
+</Note>
+
+## Boolean
+The [`_bool()`](/cast#bool) method extends the functionality of the `bool()` function in Pinescript, 
+allowing the conversion of string, integer, and float values to boolean values. 
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+// Values that returns false
+
+"".tl._bool()          // empty string.
+0.tl._bool()           // literal 0 value.
+0.0.tl._bool()         // float 0.
+"0".tl._bool()         // string "0".
+"no".tl._bool()        // string "no"  (letter casing doesn't matter).
+"na".tl._bool()        // string "na"  (letter casing doesn't matter).
+"NaN".tl._bool()       // string "nan" (letter casing doesn't matter).
+
+// Values that returns true
+
+"non-empty".tl._bool() // any non-empty string (other than 0, no, na, nan).
+100.tl._bool()         // any float or integer value other than 0.
+```
+
+```js {{ title: 'Function' }}
+// Values that returns false
+
+tl._bool("")           // empty string.
+tl._bool(0)            // literal 0 value.
+tl._bool(0.0)          // float 0.
+tl._bool("0")          // string "0".
+tl._bool("no")         // string "no"  (letter casing doesn't matter).
+tl._bool("na")         // string "na"  (letter casing doesn't matter).
+tl._bool("NaN")        // string "nan" (letter casing doesn't matter).
+
+// Values that returns true
+
+tl._bool("non-empty")  // any non-empty string (other than 0, no, na, nan).
+tl._bool(100)          // any float or integer value other than 0.
+```
+
+</CodeGroup>
+
+
+## Float
+The [`_float()`](/cast#float) method provides a convenient way to convert into
+floating point number.
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+"20.408".tl._float()             // returns float 20.408.
+"20.408".tl._float(precision=2)  // returns float 20.40.
+```
+
+```js {{ title: 'Function' }}
+tl._float("20.408")              // returns float 20.408.
+tl._float("20.408", precision=2) // returns float 20.40.
+```
+
+</CodeGroup>
+
+
+## Integer
+The [`_int()`](/cast#int)  method provides a convenient way to convert into 
+integer values.
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+"201".tl._int() // returns integer 201
+```
+
+```js {{ title: 'Function' }}
+tl._int("201")  // returns integer 201
+```
+
+</CodeGroup>
+
+## String
+The [`_str()`](/cast#str)  method provides a convenient way to convert a value to it's string representation. 
+The method works with string, boolean, float, integer, and color object types. If a color 
+value is passed, the method converts it to the color's RGBT values and returns those 
+values as a string separated by pipes ("|"). There is also a convenient method 
+[`_colorToString()`](/cast#color-to-string) which basically does the same thing.
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+true.tl._str()                             // returns the string "true".
+20.408.tl._str()                           // returns the string "20.408"
+201.tl._str()                              // returns the string "201"
+#FFFFFF.tl._str()                          // returns the string "255|255|255|0"
+color.new(#FFFFFF, 0).tl._str()            // returns the string "255|255|255|0"
+#FFFFFF.tl._colorToString()                // (alternative) returns the string "255|255|255|0"
+color.new(#FFFFFF, 0).tl._colorToString()  // (alternative) returns the string "255|255|255|0"
+```
+
+```js {{ title: 'Function' }}
+tl._str(true)                              // returns the string "true".
+tl._str(20.408)                            // returns the string "20.408"
+tl._str(201)                               // returns the string "201"
+tl._str(#FFFFFF)                           // returns the string "255|255|255|0"
+tl._str(color.new(#FFFFFF, 0))             // returns the string "255|255|255|0"
+tl._colorToString(#FFFFFF)                 // (alternative) returns the string "255|255|255|0"
+tl._colorToString(color.new(#FFFFFF, 0))   // (alternative) returns the string "255|255|255|0"
+```
+
+</CodeGroup>
+
+## Color
+The [`_clr()`](/cast#clr) method provides a convenient way to convert a string of RGBT values into a 
+color ("R|G|B|T"). This method only works with properly converted RGBT strings. There 
+is also a convenient method [`_colorFromString()`](/cast#color-from-string) which basically 
+does the same thing.
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+"255|255|255|0".tl._clr()              // returns the #FFFFFF color.
+"255|255|255|0".tl._colorFromString()  // (alternative) returns the #FFFFFF color.
+```
+
+```js {{ title: 'Function' }}
+tl._clr("255|255|255|0")               // returns the #FFFFFF color.
+tl._colorFromString("255|255|255|0")   // (alternative) returns the #FFFFFF color.
+```
+
+</CodeGroup>

@@ -1,0 +1,106 @@
+export const description =
+  'On this page, we’ll look at the make up of all the casting functions.'
+
+# Casting methods.
+A set of methods to help with casting for the following object types.
+
+- boolean
+- float
+- integer
+- color
+- string
+
+
+---
+
+## _bool()
+Casting to a boolean. 
+<Properties>
+  <Property name="this" type="object">
+    Any object of type bool, string, float, or int.
+  </Property>
+  <Property name="returns" type="bool">
+    A boolean value.
+  </Property>
+</Properties>
+
+---
+
+## _float()
+Casting to a float. 
+<Properties>
+  <Property name="this" type="object">
+    Any object of type bool, string, float, or int.
+  </Property>
+  <Property name="precision" type="int">
+    Decimal places to which the number will be rounded. _Optional_.
+  </Property>
+  <Property name="returns" type="float">
+    A floating point number.
+  </Property>
+</Properties>
+
+---
+
+## _int()
+Casting to an integer. 
+<Properties>
+  <Property name="this" type="object">
+    Any object of type bool, string, float, or int.
+  </Property>
+  <Property name="returns" type="int">
+    An integer number.
+  </Property>
+</Properties>
+
+---
+
+## _clr()
+Cast to a color using a "|" separated string of RGBT values. 
+<Properties>
+  <Property name="this" type="string">
+    Any object of type string.
+  </Property>
+  <Property name="returns" type="color">
+    A color value.
+  </Property>
+</Properties>
+
+---
+
+## _colorFromString()
+Cast to a color using a "|" separated string of RGBT values. 
+<Properties>
+  <Property name="this" type="string">
+    Any object of type string.
+  </Property>
+  <Property name="returns" type="color">
+    A color value.
+  </Property>
+</Properties>
+
+---
+
+## _str()
+Casting to a string. 
+<Properties>
+  <Property name="this" type="object">
+    Any object of type bool, string, float, int, or color.
+  </Property>
+  <Property name="returns" type="string">
+    A string value.
+  </Property>
+</Properties>
+
+---
+
+## _colorToString()
+Cast to a "|" separated string using the color's RGBT values.
+<Properties>
+  <Property name="this" type="color">
+    Any object of type color.
+  </Property>
+  <Property name="returns" type="string">
+    A string value.
+  </Property>
+</Properties>

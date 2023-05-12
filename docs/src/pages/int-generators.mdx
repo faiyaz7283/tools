@@ -1,0 +1,64 @@
+export const description =
+  'On this page, we’ll look at the make up of all the random integer generator functions.'
+
+
+# Integer generators.
+A set of functions to help with generating random types of integer number. 
+Generators can return a single value or grouped values using arrays and matrix. 
+
+---
+
+## _rndmInt()
+Generate a random integer number.
+<Properties>
+  <Property name="min" type="int">
+    Minimum value allowed. _Optional. The default is 0_.
+  </Property>
+  <Property name="max" type="int">
+    Maximum value allowed. _Optional. The default is 100_.
+  </Property>
+  <Property name="returns" type="int">
+    A random integer number.
+  </Property>
+</Properties>
+
+---
+
+## _rndmIntArray()
+Generate a random integer array.
+<Properties>
+  <Property name="size" type="int">
+    The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="min" type="int">
+    Minimum value allowed. _Optional. The default is 0_.
+  </Property>
+  <Property name="max" type="int">
+    Maximum value allowed. _Optional. The default is 100_.
+  </Property>
+  <Property name="returns" type="array<int>">
+    A random integer array.
+  </Property>
+</Properties>
+
+---
+
+## _rndmIntMatrix()
+Generate a random integer matrix.
+<Properties>
+  <Property name="rows" type="int">
+    Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="columns" type="int">
+    Total column size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="min" type="int">
+    Minimum value allowed. _Optional. The default is 0_.
+  </Property>
+  <Property name="max" type="int">
+    Maximum value allowed. _Optional. The default is 100_.
+  </Property>
+  <Property name="returns" type="matrix<int>">
+    A random integer matrix.
+  </Property>
+</Properties>

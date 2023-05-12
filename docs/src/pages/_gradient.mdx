@@ -1,0 +1,26 @@
+export const description =
+  'On this page, we’ll look at the make up of the _gradient object type.'
+
+# _gradient
+
+The _gradient object expands PineScript's color.from_gradient() method. It allows for setting a neutral color, which eases the blending 
+from high to low. The _gradient object has the following properties:
+
+### Properties
+<Properties>
+  <Property name="max" type="float">
+    The maximum value corresponding to the up color.
+  </Property>
+  <Property name="min" type="float">
+    The minimum value corresponding to the down color.
+  </Property>
+  <Property name="up" type="color">
+    The color for the maximum value.
+  </Property>
+  <Property name="neutral" type="color">
+    The color for the neutral value.
+  </Property>
+  <Property name="down" type="color">
+    The color for the minimum value.
+  </Property>
+</Properties>

@@ -1,0 +1,494 @@
+
+export const description =
+  'In this guide, we’ll look at some usages of the `_printer` and the versatile print().'
+
+# Printer
+The [`_printer`](/_printer) is designed to help print data on screen quickly and easily. Just create
+a new [`_printer`](/_printer) object and start printing with the [`print()`](/print) method. There are also many
+convenient methods to easily customize and style the [`_printer`](/_printer).
+
+<Note>
+  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  If you are following along with the examples, please make sure to import the latest 
+  version of the library in your script first, and assign `tl` as namespace.
+</Note>
+
+<Note>
+  Always create a printer under the `barstate.islast` condition. 
+</Note>
+
+<Note>
+  Do not use `var` when assigning a printer to a variable. 
+</Note>
+
+```js {{ title: 'Creating a printer object' }}
+// Always create printer under the `barstate.islast` condition. 
+if barstate.islast
+
+  // Do not assign with `var`.
+  printer = tl._printer.new()
+```
+
+Below we will go through all the available methods and some examples of how to use them. All the
+examples below assumes we already have a printer object created.
+
+<Note>
+  It is recommended to use methods instead of directly interacting with the printer properties. 
+  Direct interaction with certain properties will cause unintended behavior.
+</Note>
+
+## cell()
+[`cell()`](#): Can be used to change the orientation of arrays to horizontal, or to set a custom [`cellStyle`](/cellStyle).
+The last example assumes we already have a variable called customCellStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // For printing arrays vertically, set horizontal to false (default).
+  printer.cell(horizontal=false) 
+
+  // For printing arrays horizontally, set horizontal to true.
+  printer.cell(horizontal=true) 
+
+  // Set a cellStyle.
+  printer.cell(cellStyle=customCellStyle) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // For printing arrays vertically, set horizontal to false (default).
+  tl.cell(printer, horizontal=false) 
+  
+  // For printing arrays horizontally, set horizontal to true
+  tl.cell(printer, horizontal=true) 
+
+  // Set a cellStyle.
+  tl.cell(printer, cellStyle=customCellStyle) 
+  ```
+
+</CodeGroup>
+
+## debug()
+[`debug()`](#): When set to true, adds helpful debugging information to the tooltip.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Turn on debugger.
+  printer.debug(true) 
+
+  // Turn off debugger (default).
+  printer.debug(false) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Turn on debugger.
+  tl.debug(printer, true) 
+
+  // Turn off debugger (default).
+  tl.debug(printer, false) 
+  ```
+
+</CodeGroup>
+
+## footer()
+[`footer()`](#): Used to set a footer text and [`footerStyle`](/footerStyle). The example assumes we already have a variable called customFooterStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Set footer text and style.
+  printer.footer("Some footer", footerStyle=customFooterStyle) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Set footer text and style.
+  tl.footer(printer, "Some footer", footerStyle=customFooterStyle) 
+  ```
+
+</CodeGroup>
+
+## gutter()
+[`gutter()`](#): Used to turn gutter on or off, and set the [`gutterStyle`](/gutterStyle). The last example assumes we already have a variable called custoGutterStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Set gutter on (default).
+  printer.gutter(true) 
+
+  // Set gutter off.
+  printer.gutter(false) 
+
+  // Set a gutterStyle.
+  printer.gutter(gutterStyle=customGutterStyle) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Set gutter on (default).
+  tl.gutter(printer, true) 
+
+  // Set gutter off.
+  tl.gutter(printer, false) 
+
+  // Set a gutterStyle.
+  tl.gutter(printer, gutterStyle=customGutterStyle) 
+  ```
+
+
+</CodeGroup>
+
+
+## header()
+[`header()`](#): Used to set a header text and [`headerStyle`](/headerStyle). The example assumes we already have a variable called customHeaderStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Set header text and style.
+  printer.header("Some header", headerStyle=customHeaderStyle) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Set header text and style.
+  tl.header(printer, "Some header", headerStyle=customHeaderStyle) 
+  ```
+
+</CodeGroup>
+
+## print()
+[`print()`](#): Outputs data onto the screen. Some of the examples below assumes we already
+have the variables called customTitleStyle and customCellStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Printing: Basic types.
+
+  // string
+  str  = tl._rndmString()
+  printer.print(str)
+
+  // float
+  flt  = tl._rndmFloat()
+  printer.print(flt)
+
+  // int
+  int  = tl._rndmInt()
+  printer.print(int)
+
+  // bool
+  bool = tl._rndmBool()
+  printer.print(bool)
+
+  // color
+  clr  = tl._rndmColor()
+  printer.print(clr)
+  
+  //-----------------------------------
+
+  // Printing: Arrays.
+
+  // array<string>
+  strArr  = tl._rndmStringArray()
+  printer.print(strArr)
+
+  // array<float>
+  fltArr  = tl._rndmFloatArray()
+  printer.print(fltArr)
+
+  // array<int>
+  intArr  = tl._rndmIntArray()
+  printer.print(intArr)
+
+  // array<bool>
+  boolArr = tl._rndmBoolArray()
+  printer.print(boolArr)
+
+  // array<color>
+  clrArr  = tl._rndmColorArray()
+  printer.print(clrArr)
+
+  //-----------------------------------
+
+  // Printing: Matrix.
+
+  // matrix<string>
+  strMtx  = tl._rndmStringMatrix()
+  printer.print(strMtx)
+
+  // matrix<float>
+  fltMtx  = tl._rndmFloatMatrix()
+  printer.print(fltMtx)
+
+  // matrix<int>
+  intMtx  = tl._rndmIntMatrix()
+  printer.print(intMtx)
+
+  // matrix<bool>
+  boolMtx = tl._rndmBoolMatrix()
+  printer.print(boolMtx)
+
+  // matrix<color>
+  clrMtx  = tl._rndmColorMatrix()
+  printer.print(clrMtx)
+
+  //-----------------------------------
+
+  // Printing: Title.
+
+  // Add a title.
+  printer.print(tl._rndmFloatArray, title="Random float array")
+
+  // Change the orientation of title.
+  // Changing orientation for all titles.
+  printer.title(top=false)
+  printer.print(tl._rndmFloatArray, title="Random float array")
+  printer.print(tl._rndmSentence, title="Random sentence")
+  printer.print(tl._rndmFloatMatrix, title="Random float matrix")
+
+  // Changing orientation for single title.
+  ts = titleStyle.copy(printer.titleStyle)
+  ts.top := false
+  printer.print(tl._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
+  printer.print(tl._rndmSentence, title="Random sentence") // Back to default orientation.
+  printer.print(tl._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+
+  //-----------------------------------
+
+  // Printing: Styles.
+
+  // Add custom titleStyle and cellStyle to print method.
+  printer.print(tl._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  printer.print(tl._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  printer.print(tl._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  printer.print(tl._rndmIntArray, title="Random integer array") // Back to default styles.
+  ```
+
+  ```js {{ title: "Function" }}
+  // Printing: Basic types.
+
+  // string
+  str  = tl._rndmString()
+  tl.print(printer, str)
+
+  // float
+  flt  = tl._rndmFloat()
+  tl.print(printer, flt)
+
+  // int
+  int  = tl._rndmInt()
+  tl.print(printer, int)
+
+  // bool
+  bool = tl._rndmBool()
+  tl.print(printer, bool)
+
+  // color
+  clr  = tl._rndmColor()
+  tl.print(printer, clr)
+  
+  //-----------------------------------
+
+  // Printing: Arrays.
+
+  // array<string>
+  strArr  = tl._rndmStringArray()
+  tl.print(printer, strArr)
+
+  // array<float>
+  fltArr  = tl._rndmFloatArray()
+  tl.print(printer, fltArr)
+
+  // array<int>
+  intArr  = tl._rndmIntArray()
+  tl.print(printer, intArr)
+
+  // array<bool>
+  boolArr = tl._rndmBoolArray()
+  tl.print(printer, boolArr)
+
+  // array<color>
+  clrArr  = tl._rndmColorArray()
+  tl.print(printer, clrArr)
+
+  //-----------------------------------
+
+  // Printing: Matrix.
+
+  // matrix<string>
+  strMtx  = tl._rndmStringMatrix()
+  tl.print(printer, strMtx)
+
+  // matrix<float>
+  fltMtx  = tl._rndmFloatMatrix()
+  tl.print(printer, fltMtx)
+
+  // matrix<int>
+  intMtx  = tl._rndmIntMatrix()
+  tl.print(printer, intMtx)
+
+  // matrix<bool>
+  boolMtx = tl._rndmBoolMatrix()
+  tl.print(printer, boolMtx)
+
+  // matrix<color>
+  clrMtx  = tl._rndmColorMatrix()
+  tl.print(printer, clrMtx)
+
+  //-----------------------------------
+
+  // Printing: Title.
+
+  // Add a title.
+  tl.print(printer, tl._rndmFloatArray, title="Random float array")
+
+  // Change the orientation of title.
+  // Changing orientation for all titles.
+  tl.title(printer, top=false)
+  tl.print(printer, tl._rndmFloatArray, title="Random float array")
+  tl.print(printer, tl._rndmSentence, title="Random sentence")
+  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix")
+
+  // Changing orientation for single title.
+  ts = tl.titleStyle.copy(printer.titleStyle)
+  ts.top := false
+  tl.print(printer, tl._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
+  tl.print(printer, tl._rndmSentence, title="Random sentence") // Back to default orientation.
+  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+
+  //-----------------------------------
+
+  // Printing: Styles.
+
+  // Add custom titleStyle and cellStyle to print method.
+  tl.print(printer, tl._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  tl.print(printer, tl._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  tl.print(printer, tl._rndmIntArray, title="Random integer array") // Back to default styles.
+  ```
+
+</CodeGroup>
+
+## stack()
+[`stack()`](#): Used to change the orientation of the printer. By default, groups data and stacks it vertically. 
+Setting this to false will print each group side by side.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Turn off stacking.
+  printer.stack(false) 
+
+  // Turn on stacking (default).
+  printer.stack(true) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Turn off stacking.
+  tl.stack(printer, false) 
+
+  // Turn on stacking (default).
+  tl.stack(printer, true) 
+  ```
+
+</CodeGroup>
+
+## theme()
+[`theme()`](#): Used to add a preset style combination to the printer object.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Available themes:
+  // blue, gray (default), green, orange, pink, purple, red, white, yellow
+
+  // Set 'blue' theme.
+  printer.theme("blue")
+
+  // Set 'gray' theme.
+  printer.theme("gray")
+
+  // Set 'green' theme.
+  printer.theme("green")
+
+  // Set 'orange' theme.
+  printer.theme("orange")
+
+  // Set 'pink' theme.
+  printer.theme("pink")
+
+  // Set 'purple' theme.
+  printer.theme("purple")
+
+  // Set 'red' theme.
+  printer.theme("red")
+
+  // Set 'white' theme.
+  printer.theme("white")
+
+  // Set 'yellow' theme.
+  printer.theme("yellow")
+  ```
+
+  ```js {{ title: "Function" }}
+  // Available themes: 
+  // blue, gray (default), green, orange, pink, purple, red, white, yellow
+
+  // Set 'blue' theme.
+  tl.theme(printer, "blue") 
+
+  // Set 'gray' theme.
+  tl.theme(printer, "gray") 
+
+  // Set 'green' theme.
+  tl.theme(printer, "green") 
+
+  // Set 'orange' theme.
+  tl.theme(printer, "orange") 
+
+  // Set 'pink' theme.
+  tl.theme(printer, "pink") 
+
+  // Set 'purple' theme.
+  tl.theme(printer, "purple") 
+
+  // Set 'red' theme.
+  tl.theme(printer, "red") 
+
+  // Set 'white' theme.
+  tl.theme(printer, "white") 
+
+  // Set 'yellow' theme.
+  tl.theme(printer, "yellow")
+  ```
+
+</CodeGroup>
+
+## title()
+[`title()`](#): Used to set the position of titles and [`titleStyle`](/titleStyle). The last example assumes we already have a variable called customTitleStyle.
+
+<CodeGroup>
+
+  ```js {{ title: "Method" }}
+  // Place titles on top (default).
+  printer.title(top=true) 
+
+  // Place titles on left.
+  printer.title(top=false) 
+
+  // Set a titleStyle.
+  printer.title(titleStyle=customtitleStyle) 
+  ```
+
+  ```js {{ title: "Function" }}
+  // Place titles on top (default).
+  tl.title(printer, top=true) 
+
+  // Place titles on left.
+  tl.title(printer, top=false) 
+
+  // Set a titleStyle.
+  tl.title(printer, titleStyle=customtitleStyle) 
+  ```
+
+</CodeGroup>

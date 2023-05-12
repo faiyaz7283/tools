@@ -1,0 +1,233 @@
+export const description =
+  'In this guide, we’ll look at some usages of the random generator functions.'
+
+# Generators
+
+The tools library provides a set of custom data generator functions. These generator functions
+can be used to produce a single data or multiple data across all pinescripts basic data types - 
+string, float, integer (including UNIX timestamp), boolean, color. These data can be generated 
+as single entity or using pinescript's array or matrix.
+
+<Note>
+  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  If you are following along with the examples, please make sure to import the latest 
+  version of the library in your script first, and assign `tl` as namespace.
+</Note>
+
+## Strings
+To generate random string(s), use the following functions:
+
+- [`_rndmChar()`](/string-generators#rndm-char)
+- [`_rndmString()`](/string-generators#rndm-string)
+- [`_rndmWord()`](/string-generators#rndm-word)
+- [`_rndmSentence()`](/string-generators#rndm-sentence)
+- [`_rndmStringArray()`](/string-generators#rndm-string-array)
+- [`_rndmCharArray()`](/string-generators#rndm-char-array)
+- [`_rndmStringMatrix()`](/string-generators#rndm-string-matrix)
+- [`_rndmCharMatrix()`](/string-generators#rndm-char-matrix)
+
+<CodeGroup title="Generating random string(s).">
+
+  ```js {{ title: 'Random character' }}
+  tl._rndmChar()
+  // returns a random a-z character.
+
+  tl._rndmCharArray()        
+  // returns random size array<string>, each filled with a single random a-z character.
+
+  tl._rndmCharArray(size=5)     
+  // returns array<string> size 5, each filled with a single random a-z character.         
+  
+  tl._rndmCharMatrix()   
+  // returns matrix<string> with random rows and columns, each filled with single random a-z character.
+
+  tl._rndmCharMatrix(rows=3, columns=4)  
+  // returns 3x4 matrix<string>, each filled with a single random a-z character.
+  ```
+
+  ```js {{ title: 'Random word' }}
+  tl._rndmWord()
+  // returns a random word.
+
+  tl._rndmWord(len=3)                    
+  // returns a random word with length of 3 characters.
+  ```
+
+  ```js {{ title: 'Random sentence' }}
+  tl._rndmSentence()
+  // returns a random sentence.
+
+  tl._rndmSentence(size=4) 
+  // returns a random sentence with a size of 4 words.                
+  ```
+
+  ```js {{ title: 'Random string' }}
+  tl._rndmString()                         
+  // returns a random string.
+
+  tl._rndmString(len=8)                   
+  // returns a random string with length of 8 characters.
+
+  tl._rndmStringArray()                    
+  // returns random size array<string>, each filled with random length strings.
+
+  tl._rndmStringArray(size=4, len=3) 
+  // returns array<string> size 4, each filled with fixed 3 character length string.
+
+  tl._rndmStringMatrix()                   
+  // returns matrix<string> with random rows and columns, each filled with random length strings.
+
+  tl._rndmStringMatrix(rows=2, columns=2)  
+  // returns 2x2 matrix<string>, each filled with random length strings.
+  ```
+
+</CodeGroup>
+
+## Floats
+To generate random float(s), use the following functions:
+
+- [`_rndmFloat()`](/float-generators#rndm-float)
+- [`_rndmFloatArray()`](/float-generators#rndm-float-array)
+- [`_rndmFloatMatrix()`](/float-generators#rndm-float-matrix)
+
+```js {{ title: 'Generating random float(s)' }}
+tl._rndmFloat()                                                    
+// returns 66.17.
+
+tl._rndmFloat(min=25, max=30, precision=5)                         
+// returns 25.01369.
+
+tl._rndmFloatArray()                                               
+// returns random size array<float>, each filled with random floats in range 0-100 with a 
+// precision of 2 decimal points.
+
+tl._rndmFloatArray(size=3, min=0, max=1, precision=8)              
+// returns array<float> size 3, each filled with random floats in range 0-1 with a precision 
+// of 8 decimal points.
+
+tl._rndmFloatMatrix()                                              
+// returns matrix<float> with random rows and columns, each filled with random floats in range 
+// 0-100 with a precision of 2 decimal points.
+
+tl._rndmFloatMatrix(rows=4, columns=4, min=1, max=5, precision=1)  
+// returns matrix<float> with 4 by 4 rows and columns, each filled with random floats in range 
+// 1-5 with a precision of 1 decimal points.
+```
+
+## Integers
+To generate random integer(s), use the following functions:
+
+- [`_rndmInt()`](/int-generators#rndm-int)
+- [`_rndmIntArray()`](/int-generators#rndm-int-array)
+- [`_rndmIntMatrix()`](/int-generators#rndm-int-matrix)
+
+```js {{ title: 'Generating random integer(s)' }}
+tl._rndmInt()                                      
+// returns 4.
+
+tl._rndmInt(min=25, max=30)                        
+// returns 27.
+
+tl._rndmIntArray()                                 
+// returns random size array<int>, each filled with random integer in range 1-100.
+
+tl._rndmIntArray(size=3, min=-5, max=5)            
+// returns array<int> size 3, each filled with random integer in range -5-5.
+
+tl._rndmIntMatrix()                                
+// returns matrix<int> with random rows and columns, each filled with random integers in 
+// range 1-100.
+
+tl._rndmIntMatrix(rows=4, columns=4, min=1, max=5) 
+// returns 4x4 matrix<int>, each filled with random integers in range 1-5.
+```
+
+## Booleans
+To generate random boolean(s), use the following functions:
+
+- [`_rndmBool()`](/bool-generators#rndm-bool)
+- [`_rndmBoolArray()`](/bool-generators#rndm-bool-array)
+- [`_rndmBoolMatrix()`](/bool-generators#rndm-bool-matrix)
+
+
+```js {{ title: 'Generating random boolean(s)' }}
+tl._rndmBool()                         
+// returns true.
+
+tl._rndmBoolArray()                    
+// returns random size array<bool>, each filled with random boolean value.
+
+tl._rndmBoolArray(size=6)              
+// returns array<bool> size 6, each filled with random boolean value.
+
+tl._rndmBoolMatrix()                   
+// returns matrix<bool> with random rows and columns, each filled with random boolean value.
+
+tl._rndmBoolMatrix(rows=2, columns=2)  
+// returns 2x2 matrix<bool>, each filled with random boolean value.
+```
+
+## Colors
+To generate random color(s), use the following functions:
+
+- [`_rndmColor()`](/color-generators#rndm-color)
+- [`_rndmColorArray()`](/color-generators#rndm-color-array)
+- [`_rndmColorMatrix()`](/color-generators#rndm-color-matrix)
+
+```js {{ title: 'Generating random color(s)' }}
+tl._rndmColor()                                    
+// returns color #D7AD84.
+
+tl._rndmColor(trnsp=true)                          
+// returns color #C0D88E3B.
+
+tl._rndmColorArray()                               
+// returns random size array<color>, each filled with random color value.
+
+tl._rndmColorArray(size=2, trnsp=true)             
+// returns array<color> size 2, each filled with random color value and random transparency.
+
+tl._rndmColorMatrix()                              
+// returns matrix<color> with random rows and columns, each filled with random color value and 
+// random transparency.
+
+tl._rndmColorMatrix(rows=3, columns=3, trnsp=true) 
+// returns 3x3 matrix<color>, each filled with random color value and random transparency.
+```
+
+## UNIX timestamps
+To generate random UNIX timestamp(s), use the following functions:
+
+- [`_rndmTimestamp()`](/UNIX-timestamp-generators#rndm-timestamp)
+- [`_rndmTimestampArray()`](/UNIX-timestamp-generators#rndm-timestamp-array)
+- [`_rndmTimestampMatrix()`](/UNIX-timestamp-generators#rndm-timestamp-matrix)
+
+```js {{ title: 'Generating random UNIX timestamp(s)' }}
+tl._rndmTimestamp()                                    
+// returns 303740247000.
+
+tl._rndmTimestamp(year=2016)                           
+// returns 1470434775000.
+
+tl._rndmTimestamp(year=2002, month=10)                 
+// returns 1477449509000.
+
+tl._rndmTimestamp(year=1998, month=02, day=12)         
+// returns 887328265000.
+
+tl._rndmTimestamp(day=12, hour=12, minute=30)          
+// returns 963419451000.
+
+tl._rndmTimestampArray()                               
+// returns random size array<int>, each filled with random UNIX timestamp.
+
+tl._rndmTimestampArray(size=2, year=2000, month=01)    
+// returns array<int> size 2, each filled with random UNIX timestamp with fixed year 2000 
+// and January month.
+
+tl._rndmTimestampMatrix()                              
+// returns matrix<int> with random rows and columns, each filled with random UNIX timestamp.
+
+tl._rndmTimestampMatrix(rows=2, columns=2, year=1999)  
+// returns 2x2 matrix<int>, each filled with random UNIX timestamp with fixed year 1999.
+```

@@ -1,0 +1,55 @@
+export const description =
+  'On this page, we’ll look at the make up of all the random color generator functions.'
+
+
+# Color generators.
+A set of functions to help with generating random types of color values. 
+Generators can return a single value or grouped values using arrays and matrix. 
+
+---
+
+## _rndmColor()
+Generate a random color value.
+<Properties>
+  <Property name="transp" type="bool">
+    Set it to true, to use random transparency value. _Optional. The default is false_.
+  </Property>
+  <Property name="returns" type="color">
+    A random color value.
+  </Property>
+</Properties>
+
+---
+
+## _rndmColorArray()
+Generate a random color array.
+<Properties>
+  <Property name="size" type="int">
+    The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="transp" type="bool">
+    Set it to true, to use random transparency values. _Optional. The default is false_.
+  </Property>
+  <Property name="returns" type="array<color>">
+    A random color array.
+  </Property>
+</Properties>
+
+---
+
+## _rndmColorMatrix()
+Generate a random color matrix.
+<Properties>
+  <Property name="rows" type="int">
+    Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="columns" type="int">
+    Total column size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="transp" type="bool">
+    Set it to true, to use random transparency values. _Optional. The default is false_.
+  </Property>
+  <Property name="returns" type="matrix<color>">
+    A random color matrix.
+  </Property>
+</Properties>

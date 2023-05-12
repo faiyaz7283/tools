@@ -1,0 +1,307 @@
+export const description =
+  'On this page, we\`ll look at the _printer object and all it\'s methods.'
+
+# Printer
+Let's see how the _printer object structure, and all its availble methods.
+
+## _printer
+
+The _printer object is the core for the print method. It has the following properties:
+
+<Note>
+  Please do not assign any value to properties that starts with underscore. They are meant for internal use only.
+  For all other properties, please use dedicated getter and setter methods to interact with them. 
+</Note>
+
+### Properties
+<Properties>
+  <Property name="header" type="string">
+    A header for the _printer content. _Optional. The default is na_.
+  </Property>
+  <Property name="footer" type="string">
+    A header for the _printer content. _Optional. The default is na_.
+  </Property>
+  <Property name="stack" type="bool">
+    If true, each new grouped data are stacked under, if false, they are placed on right side. _Optional. The default is true_.
+  </Property>
+  <Property name="loc" type="string">
+    The screen location to place the printer object. This is same as pinescripts table positions. Possible values are: 
+    position.top_left, position.top_center, position.top_right, position.middle_left, position.middle_center, position.middle_right, 
+    position.bottom_left, position.bottom_center, position.bottom_right. _Optional. The default is position.middle_center_.
+  </Property>
+  <Property name="debug" type="bool">
+    If true, then print method will provide some basic debug info. _Optional. The default is false_.
+  </Property>
+  <Property name="tableStyle" type="tableStyle">
+    A tableStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="headerStyle" type="headerStyle">
+    A headerStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="footerStyle" type="footerStyle">
+    A footerStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="titleStyle" type="titleStyle">
+    A titleStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="cellStyle" type="cellStyle">
+    A cellStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="gutterStyle" type="gutterStyle">
+    A gutterStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="_table" type="table">
+    A Table object. _Optional. The default is na_.
+  </Property>
+  <Property name="_cTotal" type="int">
+    Column total. _Optional. The default is 100_.
+  </Property>
+  <Property name="_rTotal" type="int">
+    Row total. _Optional. The default is 100_.
+  </Property>
+  <Property name="_slot" type="string">
+    A comma separated string containing column and row number of last active cell used. _Optional. The default is na_.
+  </Property>
+  <Property name="_maxCol" type="int">
+    Size counter of maximum column used. _Optional. The default is 0_.
+  </Property>
+  <Property name="_init" type="bool">
+    A checker to see if _printer object has been initialized. _Optional. The default is false_.
+  </Property>
+</Properties>
+
+---
+
+## cell()
+Change the default array orientation.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="horizontal" type="bool">
+    Array orientation. Use false for vertical, true for horizontal.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## cell()
+Set a cellStyle for all data cells (excludes: header, footer and titles).
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="cellStyle" type="cellStyle">
+    A cellStyle object.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## debug()
+Change the default debug value.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="debug" type="bool">
+    Use true for debug on, false for debug off.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## footer()
+Set a footer text and footerStyle.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="val" type="string">
+    Footer text.
+  </Property>
+  <Property name="footerStyle" type="footerStyle">
+    A footerStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## gutter()
+Turn gutter on/off.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="gutter" type="bool">
+    Use true for gutter on, false for gutter off.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## gutter()
+Set a gutterStyle.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="gutterStyle" type="gutterStyle">
+    A gutterStyle object.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## header()
+Set a header text and headerStyle.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="val" type="string">
+    Header text.
+  </Property>
+  <Property name="headerStyle" type="headerStyle">
+    A headerStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## print()
+Print data on screen.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="val" type="object">
+    Any object of type string, integer, boolean, float, color, array&lt;type&gt;, or matrix&lt;type&gt;.
+  </Property>
+  <Property name="title" type="string">
+    Title text. _Optional. The default is na_.
+  </Property>
+  <Property name="titleStyle" type="titleStyle">
+    A titleStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="cellStyle" type="cellStyle">
+    A cellStyle object. _Optional. The default is na_.
+  </Property>
+  <Property name="theme" type="string">
+    The name of the color theme. Possible values are: blue, gray, green, 
+    orange, pink, purple, red, white, yellow. _Optional. The default is na_.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## stack()
+Turn on/off stack orientation for printer.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="stack" type="bool">
+    Use true for stacking per grouped printed data, false for printing them side by side.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## theme()
+Set color theme.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="theme" type="string">
+    The name of the color theme. Possible values are: blue, gray, green, 
+    orange, pink, purple, red, white, yellow.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## title()
+Change title position.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="top" type="bool">
+    Use true for placing titles on top, false for placing title on left side.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>
+
+---
+
+## title()
+Set a titleStyle.
+
+### Properties
+<Properties>
+  <Property name="this" type="_printer">
+    A _printer object.
+  </Property>
+  <Property name="titleStyle" type="titleStyle">
+    A titleStyle object.
+  </Property>
+  <Property name="returns" type="_printer">
+    The modified _printer object.
+  </Property>
+</Properties>

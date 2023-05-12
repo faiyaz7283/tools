@@ -1,0 +1,44 @@
+export const description =
+  'On this page, we’ll look at the titleStyle object.'
+
+# titleStyle
+
+The titleStyle object is similar to styling a table's cell while it targets the [`_printer's`](/_printer) title cells. 
+It has the following properties:
+
+### Properties
+<Properties>
+  <Property name="top" type="bool">
+    The location to place the title. If true, title is placed on top, else placed to the left. _Optional. The default is true_.
+  </Property>
+  <Property name="width" type="float">
+    The width of the cell as a % of the indicator's visual space. _Optional. The default is 0_.
+  </Property>
+  <Property name="height" type="float">
+    The height of the cell as a % of the indicator's visual space. _Optional. The default is 3_.
+  </Property>
+  <Property name="textHalign" type="string">
+    The horizontal alignment of the cell's text. Possible values: text.align_left, text.align_center, text.align_right. 
+    _Optional. The default is text.align_center_.
+  </Property>
+  <Property name="textValign" type="string">
+    The vertical alignment of the cell's text. Possible values: text.align_top, text.align_center, text.align_bottom. 
+    _Optional. The default is text.align_center_.
+  </Property>
+  <Property name="textColor" type="color">
+    The color of the text. _Optional. The default is #FFFFFF_.
+  </Property>
+  <Property name="textSize" type="string">
+    The size of the text. Possible values: size.auto, size.tiny, size.small, size.normal, size.large, size.huge. 
+    _Optional. The default is size.auto_.
+  </Property>
+  <Property name="bgColor" type="color">
+    The background color of the text. _Optional. The default is #3C465087_.
+  </Property>
+  <Property name="textFontFamily" type="string">
+    The font family of the text. Possible values: font.family_default, font.family_monospace. _Optional. The default is font.family_default_.
+  </Property>
+  <Property name="format" type="string">
+    Format string targeting footer text. _Optional. The default is na_.
+  </Property>
+</Properties>

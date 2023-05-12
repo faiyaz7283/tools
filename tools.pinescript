@@ -1,0 +1,1427 @@
+// © faiyaz7283
+
+//@version=5
+
+// @description A library of many helper methods, plus a comprehensive print method and a printer object.
+library("tools", overlay=true)
+
+// { Type: get the type values for data objects.
+
+// @function *HACK* bypass arg use.
+__type(this) => not na(this) ? true : true
+
+// @function    Get the type of an object.
+// @param this  The object to inspect.
+// @returns     (string) The string representation of the object type.
+export method _type(string this) =>
+    if __type(this)
+        "string"
+
+export method _type(array<string> this) =>
+    if __type(this)
+        "array<string>"
+
+export method _type(matrix<string> this) =>
+    if __type(this)
+        "matrix<string>"
+
+export method _type(float this) =>
+    if __type(this)
+        "float"
+
+export method _type(array<float> this) =>
+    if __type(this)
+        "array<float>"
+
+export method _type(matrix<float> this) =>
+    if __type(this)
+        "matrix<float>"
+
+export method _type(int this) =>
+    if __type(this)
+        "int"
+
+export method _type(array<int> this) =>
+    if __type(this)
+        "array<int>"
+
+export method _type(matrix<int> this) =>
+    if __type(this)
+        "matrix<int>"
+
+export method _type(bool this) =>
+    if __type(this)
+        "bool"
+
+export method _type(array<bool> this) =>
+    if __type(this)
+        "array<bool>"
+
+export method _type(matrix<bool> this) =>
+    if __type(this)
+        "matrix<bool>"
+
+export method _type(color this) =>
+    if __type(this)
+        "color"
+
+export method _type(array<color> this) =>
+    if __type(this)
+        "array<color>"
+
+export method _type(matrix<color> this) =>
+    if __type(this)
+        "matrix<color>"
+
+export method _type(box this) =>
+    if __type(this)
+        "box"
+
+export method _type(array<box> this) =>
+    if __type(this)
+        "array<box>"
+
+export method _type(matrix<box> this) =>
+    if __type(this)
+        "matrix<box>"
+
+export method _type(label this) =>
+    if __type(this)
+        "label"
+
+export method _type(array<label> this) =>
+    if __type(this)
+        "array<label>"
+
+export method _type(matrix<label> this) =>
+    if __type(this)
+        "matrix<label>"
+
+export method _type(line this) =>
+    if __type(this)
+        "line"
+
+export method _type(array<line> this) =>
+    if __type(this)
+        "array<line>"
+
+export method _type(matrix<line> this) =>
+    if __type(this)
+        "matrix<line>"
+
+export method _type(linefill this) =>
+    if __type(this)
+        "linefill"
+
+export method _type(array<linefill> this) =>
+    if __type(this)
+        "array<linefill>"
+
+export method _type(matrix<linefill> this) =>
+    if __type(this)
+        "matrix<linefill>"
+
+export method _type(table this) =>
+    if __type(this)
+        "table"
+
+export method _type(array<table> this) =>
+    if __type(this)
+        "array<table>"
+
+export method _type(matrix<table> this) =>
+    if __type(this)
+        "matrix<table>"
+
+// }
+
+// { Casting: cast data from one type to another.
+
+// @function    Casting to a boolean.
+// @param this  The casting object.
+// @returns     (bool) A boolean value.
+export method _bool(bool this) => this
+
+export method _bool(string this) => (str.lower(this) == "true") or ((this != "") and (str.lower(this) != "nan") and (str.lower(this) != "no") and (str.lower(this) != "na") and (this != "0") and (this != "0.0") and (str.lower(this) != "false"))
+
+export method _bool(float this) => not na(this) and this != 0
+
+export method _bool(int this) => not na(this) and this != 0
+
+// @function        Cast to a float.
+// @param this      The casting object.
+// @param precision (int) A precision value for decimal point.
+// @returns         (float) A floating point number.
+export method _float(bool this) => float(this ? 1 : 0)
+
+export method _float(string this) => str.tonumber(this)
+
+export method _float(string this, int precision) => math.round(str.tonumber(this), precision)
+
+export method _float(float this) => this
+
+export method _float(float this, int precision) => math.round(this, precision)
+
+export method _float(int this) => float(this) 
+
+export method _float(int this, int precision) => math.round(float(this), precision) 
+
+// @function    Cast to an integer.
+// @param this  The casting object.
+// @returns     (int) An integer number.
+export method _int(bool this) => int(this ? 1 : 0)
+
+export method _int(string this) => int(str.tonumber(this))
+
+export method _int(float this) => int(this)
+
+export method _int(int this) => this
+
+// @function    Cast to a string using the color's RGBT values (separated by "|").
+// @param this  (color) A color object.
+// @returns     (string) A color string.
+export method _colorToString(color this) =>
+    string result = na
+	if not na(this)
+    	result := str.format("{0}|{1}|{2}|{3}", color.r(this), color.g(this), color.b(this), color.t(this))
+	result
+    
+// @function    Cast to a color using the string's RGBT values (separated by "|").
+// @param this  (string) A string of RGBT values split by '|'.
+// @returns     (color) A color object.
+export method _colorFromString(string this) =>
+    color result = na
+    _rgbt = str.split(this, "|") 
+    if _rgbt.size() == 4
+        result := color.rgb(
+          _float(array.get(_rgbt, 0)), 
+          _float(array.get(_rgbt, 1)), 
+          _float(array.get(_rgbt, 2)), 
+          _float(array.get(_rgbt, 3)))
+    result
+
+// @function    Cast to a string.
+// @param this  The casting object.
+// @returns     (string) A string value.
+export method _str(bool this) => str.tostring(this)
+
+export method _str(string this) => str.tostring(this)
+
+export method _str(float this) => str.tostring(this)
+    
+export method _str(int this) => str.tostring(this)   
+
+export method _str(color this) => _colorToString(this) 
+
+// @function    Cast to a color using the string's RGBT values (separated by "|").
+// @param this  (string) The casting string object.
+// @returns     (color) A color object.
+export method _clr(string this) => _colorFromString(this) 
+
+// }
+
+// { Array and String: methods and functions related to array and string object.
+
+// @function *HACK* Helper function for _join.
+// Integers and floats get weird formats when using the native 'array.join'.
+// Also boolean arrays are not supported with native 'array.join'.
+// This is a hack due to the above issues.
+__join(this, sep) =>
+    new_arr = array.new_string()
+    for arr in this
+        array.push(new_arr, _str(arr))
+    array.join(new_arr, sep)
+
+// @function    Convert an array to a string using the given separator.
+// @param this  The array object to join.
+// @param sep   (string) A separator. (`,` is used if no argument is supplied).
+// @returns     (string) A string joined from an array.
+export method _join(array<string> this, string sep=",") => array.join(this, sep)
+
+export method _join(array<int> this, string sep=",") => __join(this, sep)
+    
+export method _join(array<float> this, string sep=",") => __join(this, sep)
+    
+export method _join(array<bool> this, string sep=",") => __join(this, sep)
+
+export method _join(array<color> this, string sep=",") => __join(this, sep)
+
+// @function    Split a string by comma.
+// @param this  (string) A comma separated string.
+// @returns     (array<string>) A string array.
+export method _commaSplit(string this) => str.split(this, ",") 
+
+// @function    Split a string by comma.
+// @param this  (string) A comma separated string.
+// @param idx   (int) The index location of a value.
+// @returns     (string) A string.
+export method _commaSplit(string this, int idx) =>
+    result = ""
+    items  = _commaSplit(this)
+    if idx < array.size(items)
+        result := array.get(items, idx)
+    result
+
+// @function    Get the first pair of values as tuple from a comma separated string.
+// @param this  (string) A comma separated string.
+// @returns     ([string, string]) A tuple consisting of the first two items from a comma separated string.
+export method _commaSplitPair(string this) =>
+    items = _commaSplit(this)
+    v0    = array.get(items, 0)
+    v1    = array.size(items) >= 2 ? array.get(items, 1) : ""
+    [v0,v1]
+
+// @function    Get all items, except the first, as an array from a comma separated string.
+// @param this  (string) A comma separated string.
+// @returns     (array<string>) A string array.
+export method _commaSplitShift(string this) =>
+    items = _commaSplit(this)
+    array.shift(items)
+    items
+
+// @function    Split a string by pipe.
+// @param this  (string) A pipe separated string.
+// @returns     (array<string>) A string array.
+export method _pipeSplit(string this) => str.split(this, "|") 
+
+// @function    Split a string by pipe.
+// @param this  (string) A pipe separated string.
+// @param idx   (int) The index location of a value.
+// @returns     (string) A string.
+export method _pipeSplit(string this, int idx) =>
+    result = ""
+    items  = _pipeSplit(this)
+    if idx < array.size(items)
+        result := array.get(items, idx)
+    result
+
+// @function    Get the first pair of values as tuple from a pipe separated string.
+// @param this  (string) A pipe separated string.
+// @returns     ([string, string]) A tuple consisting of the first two items from a pipe separated string.
+export method _pipeSplitPair(string this) =>
+    items = _pipeSplit(this)
+    v0    = array.get(items, 0)
+    v1    = array.size(items) >= 2 ? array.get(items, 1) : ""
+    [v0,v1]
+
+// @function    Get all items, except the first, as an array from a pipe separated string.
+// @param this  (string) A pipe separated string.
+// @returns     (array<string>) A string array.
+export method _pipeSplitShift(string this) =>
+    items = _pipeSplit(this)
+    array.shift(items)
+    items
+
+// @function    Split a string by colon.
+// @param this  (string) A colon separated string.
+// @returns     (array<string>) A string array.
+export method _colonSplit(string this) => str.split(this, ":") 
+
+// @function    Split a string by colon.
+// @param this  (string) A colon separated string.
+// @param idx   (int) The index location of a value.
+// @returns     (string) A string.
+export method _colonSplit(string this, int idx) =>
+    result = ""
+    items  = _colonSplit(this)
+    if idx < array.size(items)
+        result := array.get(items, idx)
+    result
+
+// @function    Get the first pair of values as tuple from a colon separated string.
+// @param this   (string) A colon separated string.
+// @returns     ([string, string]) A tuple consisting of the first two items from a colon separated string.
+export method _colonSplitPair(string this) =>
+    items = _colonSplit(this)
+    v0    = array.get(items, 0)
+    v1    = array.size(items) >= 2 ? array.get(items, 1) : ""
+    [v0,v1]
+    
+// @function    Get all items, except the first, as an array from a colon separated string.
+// @param this  (string) A colon separated string.
+// @returns     (array<string>) A string array.
+export method _colonSplitShift(string this) =>
+    items = _colonSplit(this)
+    array.shift(items)
+    items
+
+// }
+
+// { Random generators: generate random objects.
+
+// @function Helper function for random number generator.
+__rndmNum(min, max) =>
+    math.random(min, max)
+
+// @function Helper function for character generator.
+__char(num) =>
+    string character = switch num
+        1  => "a"
+        2  => "b"
+        3  => "c"
+        4  => "d"
+        5  => "e"
+        6  => "f"
+        7  => "g"
+        8  => "h"
+        9  => "i"
+        10 => "j"
+        11 => "k"
+        12 => "l"
+        13 => "m"
+        14 => "n"
+        15 => "o"
+        16 => "p"
+        17 => "q"
+        18 => "r"
+        19 => "s"
+        20 => "t"
+        21 => "u"
+        22 => "v"
+        23 => "w"
+        24 => "x"
+        25 => "y"
+        26 => "z"
+    character
+
+// @function Random character generator.
+// @returns  (string) Random character a-z. 
+export _rndmChar() =>
+    num = _int(__rndmNum(1, 26))
+    __char(num)
+    
+// @function    Random string generator.
+// @param len   (int) Total length of the string. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns     (string) Random string. 
+export _rndmString(int len=0) =>
+    _len = len <= 0 ? _int(__rndmNum(3, 10)) : len
+    str = ""
+    for i=0 to _len - 1
+        str += _rndmChar()
+    str
+
+// @function    Random word generator.
+// @param len   (int) Total length of the word. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns     (string) Random word. 
+export _rndmWord(int len=0) =>
+    _rndmString(len)
+    
+// @function    Random sentence generator.
+// @param len   (int) Total length of the sentence. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns     (string) Random sentence. 
+export _rndmSentence(int len=0) =>
+    _len    = len <= 0 ? _int(__rndmNum(3, 10)) : len
+    sentence = array.new_string()
+    for i=0 to _len - 1
+        array.push(sentence, _rndmString())
+    _join(sentence, " ")
+
+// @function Random boolean generator.
+// @returns  (bool) Random boolean value. 
+export _rndmBool() =>
+    _int(__rndmNum(0, 2)) > 0 ? true : false
+
+// @function        Random float number generator.
+// @param min       (float) Minimum float value. (`0` is used if no argument is supplied).
+// @param max       (float) Maximum float value. (`100` is used if no argument is supplied).
+// @param precision (int) Decimal places. (`2` is used if no argument is supplied).
+// @returns         (float) A random float value.
+export _rndmFloat(float min=0, float max=100, int precision=2) =>
+    rndm_num   = math.round(__rndmNum(min, max), precision)
+    _float(rndm_num)
+    
+// @function        Random integer number generator.
+// @param min       (int) Minimum integer value. (`1` is used if no argument is supplied).
+// @param max       (int) Maximum integer value. (`100` is used if no argument is supplied).
+// @returns         (int) A random integer value.
+export _rndmInt(int min=1, int max=100) =>
+    _int(__rndmNum(min, max))
+
+// @function        Random color generator.
+// @param transp    (bool) Set it to true, to use random transparency value. (`false` is used if no argument is supplied). 
+// @returns         (color) Random color value. 
+export _rndmColor(bool transp = false) =>
+    r = _int(__rndmNum(0, 255))
+    g = _int(__rndmNum(0, 255))
+    b = _int(__rndmNum(0, 255))
+    t = transp ? _int(__rndmNum(1, 100)) : 0
+    color.rgb(r, g, b, t)
+
+// @function        Random UNIX timestamp generator.
+// @param year      (int) Set a custom year, instead of random value. (`0` is used if no argument is supplied). 
+// @param month     (int) Set a custom month, instead of random value. (`0` is used if no argument is supplied). 
+// @param day       (int) Set a custom day, instead of random value. (`0` is used if no argument is supplied). 
+// @param hour      (int) Set a custom hour, instead of random value. (`0` is used if no argument is supplied). 
+// @param minute    (int) Set a custom minute, instead of random value. (`0` is used if no argument is supplied). 
+// @param second    (int) Set a custom second, instead of random value. (`0` is used if no argument is supplied). 
+// @returns         (int) Random UNIX timestamp. 
+export _rndmTimestamp(int year=0, int month=0, int day=0, int hour=0, int minute=0, int second=0) =>
+    _crntT = timenow
+    _crntYr = year(_crntT)
+    _crntMn = month(_crntT)
+    _crntDy = dayofmonth(_crntT)
+    _year = year == 0 ? _int(__rndmNum(1970, _crntYr)) : year
+    _mMax = _year == _crntYr ? _crntMn : 12
+    _month = month == 0 ? _int(__rndmNum(1, _mMax)) : month
+    _dMax = 30
+    if _month == 2
+        _dMax := _year % 4 == 0 ? 29 : 28
+    else if array.includes(array.from(1,3,5,7,8,10,12), _month)
+        _dMax := 31
+    
+    _dMax := _year == _crntYr and _month == _crntMn ? _crntDy : _dMax
+    
+    _day = day == 0 ? _int(__rndmNum(1, _dMax)) : day
+    _hour = hour == 0 ? _int(__rndmNum(0, 23)) : hour
+    _minute = minute == 0 ? _int(__rndmNum(0, 59)) : minute
+    _second = second == 0 ? _int(__rndmNum(0, 59)) : second
+
+    timestamp(_year, _month, _day, _hour, _minute, _second)
+
+// @function        Random string array generator.
+// @param size      (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param len       (int) Total length of each string. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns         (array<string>) An array of random strings.
+export _rndmStringArray(int size=0, int len=0) =>
+    _size   = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    str_arr = array.new_string()
+    for i=0 to _size - 1
+        val = len == 0 ? _rndmWord() : (len == 1 ? _rndmChar() : _rndmWord(len))
+        array.push(str_arr, val)
+    str_arr
+
+// @function    Random character array generator.
+// @param size  (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns     (array<string>) An array of random characters.
+export _rndmCharArray(int size=0) =>
+    _rndmStringArray(size, len=1)
+    
+// @function        Random float array generator.
+// @param size      (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param min       (float) Minimum float value. (`0` is used if no argument is supplied).
+// @param max       (float) Maximum float value. (`100` is used if no argument is supplied).
+// @param precision (int) Decimal places. (`2` is used if no argument is supplied).
+// @returns         (array<float>) An array of random float numbers.
+export _rndmFloatArray(int size=0, float min=0, float max=100, int precision=2) =>
+    _size    = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    float_arr = array.new_float()
+    for i=0 to _size - 1
+        array.push(float_arr, _rndmFloat(min, max, precision))
+    float_arr
+    
+// @function        Random integer array generator.
+// @param size      (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param min       (int) Minimum float value. (`1` is used if no argument is supplied).
+// @param max       (int) Maximum float value. (`100` is used if no argument is supplied).
+// @param precision (int) Decimal places. (`2` is used if no argument is supplied).
+// @returns         (array<int>) An array of random integer numbers.
+export _rndmIntArray(int size=0, int min=1, int max=100) =>
+    _size  = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    int_arr = array.new_int()
+    for i=0 to _size - 1
+        array.push(int_arr, _rndmInt(min, max))
+    int_arr
+
+// @function    Random boolean array generator.
+// @param size  (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns     (array<bool>) An array of random boolean values.
+export _rndmBoolArray(int size=0) =>
+    _size   = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    bool_arr = array.new_bool()
+    for i=0 to _size - 1
+        array.push(bool_arr, _rndmBool())
+    bool_arr
+
+// @function        Random color array generator.
+// @param size      (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param transp    (bool) Set it to true, to use random transparency values. (`false` is used if no argument is supplied). 
+// @returns         (array<color>) An array of random colors.
+export _rndmColorArray(int size=0, bool transp=false) =>
+    _size   = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    color_arr = array.new_color()
+    for i=0 to _size - 1
+        array.push(color_arr, _rndmColor(transp))
+    color_arr
+
+// @function        Random UNIX timestamp array generator.
+// @param size      (int) Total size of the array. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param year      (int) Set a custom year, instead of random values. (`0` is used if no argument is supplied). 
+// @param month     (int) Set a custom month, instead of random values. (`0` is used if no argument is supplied). 
+// @param day       (int) Set a custom day, instead of random values. (`0` is used if no argument is supplied). 
+// @param hour      (int) Set a custom hour, instead of random values. (`0` is used if no argument is supplied). 
+// @param minute    (int) Set a custom minute, instead of random values. (`0` is used if no argument is supplied). 
+// @param second    (int) Set a custom second, instead of random values. (`0` is used if no argument is supplied). 
+// @returns         (array<int>) An array of random UNIX timestamps.
+export _rndmTimestampArray(int size=0, int year=0, int month=0, int day=0, int hour=0, int minute=0, int second=0) =>
+    _size   = size <= 0 ? _int(__rndmNum(3, 10)) : size
+    timestamp_arr = array.new_int()
+    for i=0 to _size - 1
+        array.push(timestamp_arr, _rndmTimestamp(year, month, day, hour, minute, second))
+    timestamp_arr
+
+// @function        Random string matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param len       (int) Total sizeof each word. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns         (matrix<string>) A matrix of random strings.
+export _rndmStringMatrix(int rows=0, int columns=0, int len=0) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<string>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            val = len == 0 ? _rndmWord() : (len == 1 ? _rndmChar() : _rndmWord(len))
+            _m.set(r, c, val)
+    _m
+
+// @function        Random character matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns         (matrix<string>) A matrix of random characters.
+export _rndmCharMatrix(int rows=0, int columns=0) =>
+    _rndmStringMatrix(rows, columns, len=1)
+
+// @function        Random float matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param min       (float) Minimum float value. (`0` is used if no argument is supplied).
+// @param max       (float) Maximum float value. (`100` is used if no argument is supplied).
+// @param precision (int) Decimal places. (`2` is used if no argument is supplied).
+// @returns         (matrix<float>) A matrix of random float numbers.
+export _rndmFloatMatrix(int rows=0, int columns=0, float min=0, float max=100, int precision=2) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<float>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            _m.set(r, c, _rndmFloat(min, max, precision))
+    _m
+
+// @function        Random integer matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param min       (int) Minimum float value. (`0` is used if no argument is supplied).
+// @param max       (int) Maximum float value. (`100` is used if no argument is supplied).
+// @returns         (matrix<int>) A matrix of random integer numbers.
+export _rndmIntMatrix(int rows=0, int columns=0, int min=0, int max=100) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<int>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            _m.set(r, c, _rndmInt(min, max))
+    _m
+
+// @function        Random boolean matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @returns         (matrix<bool>) A matrix of random booleans.
+export _rndmBoolMatrix(int rows=0, int columns=0) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<bool>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            _m.set(r, c, _rndmBool())
+    _m
+
+// @function        Random color matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param transp    (bool) Set it to true, to use random transparency values. (`false` is used if no argument is supplied). 
+// @returns         (matrix<color>) A matrix of random colors.
+export _rndmColorMatrix(int rows=0, int columns=0, bool transp=false) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<color>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            _m.set(r, c, _rndmColor(transp))
+    _m
+
+// @function        Random UNIX timestamp matrix generator.
+// @param rows      (int) Total rows. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param columns   (int) Total columns. (`0` is used if no argument is supplied, which implies random value between 3-10).
+// @param year      (int) Set a custom year, instead of random values. (`0` is used if no argument is supplied). 
+// @param month     (int) Set a custom month, instead of random values. (`0` is used if no argument is supplied). 
+// @param day       (int) Set a custom day, instead of random values. (`0` is used if no argument is supplied). 
+// @param hour      (int) Set a custom hour, instead of random values. (`0` is used if no argument is supplied). 
+// @param minute    (int) Set a custom minute, instead of random values. (`0` is used if no argument is supplied). 
+// @param second    (int) Set a custom second, instead of random values. (`0` is used if no argument is supplied). 
+// @returns         (matrix<int>) A matrix of random UNIX timestamps.
+export _rndmTimestampMatrix(int rows=0, int columns=0, int year=0, int month=0, int day=0, int hour=0, int minute=0, int second=0) =>
+    _rows = rows <= 0 ? _int(__rndmNum(3, 10)) : rows
+    _cols = columns <= 0 ? _int(__rndmNum(3, 10)) : columns
+    _m    = matrix.new<int>(_rows, _cols, na)
+    for r=0 to _rows - 1
+        for c=0 to _cols - 1
+            _m.set(r, c, _rndmTimestamp(year, month, day, hour, minute, second))
+    _m
+
+// }
+
+// { Colors: Methods and functions related to colors, and gradients.
+
+// @function        Custom preset color.
+// @param this      (string) A string value.
+// @param transp    (float) A transparency value. (`0` is used if no argument is supplied). 
+// @returns         (color) A custom color.
+export method _color(string this, float transp=0) =>
+    color result = na
+    _cl = switch this
+        "aqua_bright"   => #00FFFF
+        "aqua_light"    => #00C8FF
+        "aqua_medium"   => #0096FF
+        "aqua_dark"     => #0078FF
+        "black_bright"  => #191919
+        "black_light"   => #0A0A0A
+        "black_medium"  => #050505
+        "black_dark"    => #000000
+        "blue_bright"   => #0000FF
+        "blue_light"    => #0000C8
+        "blue_medium"   => #000096
+        "blue_dark"     => #000078
+        "gray_bright"   => #3C4650
+        "gray_light"    => #2D3741
+        "gray_medium"   => #1E2832
+        "gray_dark"     => #0F1923
+        "green_bright"  => #00FF00
+        "green_light"   => #00C800
+        "green_medium"  => #009600
+        "green_dark"    => #007800
+        "orange_bright" => #FF6400
+        "orange_light"  => #F55A00
+        "orange_medium" => #EB5000
+        "orange_dark"   => #E14600
+        "pink_bright"   => #FF96FF
+        "pink_light"    => #FF64FF
+        "pink_medium"   => #FF32FF
+        "pink_dark"     => #FF00FF
+        "purple_bright" => #9696FF
+        "purple_light"  => #9664FF
+        "purple_medium" => #9632FF
+        "purple_dark"   => #9600FF
+        "red_bright"    => #FF0000
+        "red_light"     => #C80000
+        "red_medium"    => #960000
+        "red_dark"      => #780000
+        "white_bright"  => #FFFFFF
+        "white_light"   => #EBEBEB
+        "white_medium"  => #D7D7D7
+        "white_dark"    => #C8C8C8
+        "yellow_bright" => #FFFF00
+        "yellow_light"  => #E6E600
+        "yellow_medium" => #D2D200
+        "yellow_dark"   => #AFAF00
+        => na                      
+    if not na(_cl)                   
+    	result := color.new(_cl, transp)
+	result
+
+// Define the `_gradient` UDT.
+export type _gradient
+    float max
+    float min
+    float mid = 0
+    color up = #00FF00
+    color neutral = #C8C8C8
+    color down = #FF0000
+
+// @function    Get the gradient color for given number.
+// @param this	(_gradient) A `_gradient` object.
+// @param num   (float) A number value.
+// @returns  	(color) The gradient color.
+export method _color(_gradient this, float num) =>
+    gradient_cl = color.from_gradient(num, this.mid, this.max, this.neutral, this.up)
+    if math.sign(num) == -1.0
+        gradient_cl := color.from_gradient(num, this.min, this.mid, this.down, this.neutral)
+    gradient_cl
+
+//}
+
+// { Print: methods for printing various kind of objects using table.
+
+// Define the `tableStyle` UDT.
+export type tableStyle
+    color bgColor = #000000B3
+    color frameColor = #3C465047
+    int frameWidth = 1
+    color borderColor = na
+    int borderWidth = 2
+
+// Define the `headerStyle` UDT.
+export type headerStyle
+    float width = 0
+    float height = 0
+    string textHalign = text.align_center
+    string textValign = text.align_center
+    color textColor = #FFFFFF
+    string textSize = size.auto
+    color bgColor = #3C465087
+    string textFontFamily = font.family_default
+    string format = na
+
+// Define the `footerStyle` UDT.
+export type footerStyle
+    float width = 0
+    float height = 0
+    string textHalign = text.align_center
+    string textValign = text.align_center
+    color textColor = #FFFFFF
+    string textSize = size.auto
+    color bgColor = #3C465087
+    string textFontFamily = font.family_default
+    string format = na
+
+// Define the `titleStyle` UDT.
+export type titleStyle
+    bool top = true
+    float width = 0
+    float height = 0
+    string textHalign = text.align_center
+    string textValign = text.align_center
+    color textColor = #FFFFFF
+    string textSize = size.auto
+    color bgColor = #1E28328C
+    string textFontFamily = font.family_default
+    string format = na
+
+// Define the `cellStyle` UDT.
+export type cellStyle
+    bool horizontal = false
+    float width = 0
+    float height = 0
+    string textHalign = text.align_center
+    string textValign = text.align_center
+    color textColor = #E14600
+    string textSize = size.auto
+    color bgColor = na
+    string textFontFamily = font.family_default
+    string format = na
+
+// Define the `gutterStyle` UDT.
+export type gutterStyle
+    bool gutter = true
+    float width = 0.01
+    float height = 0.01
+
+// Define the `_printer` UDT.
+export type _printer
+    string header = na
+    string footer = na
+    bool stack = true
+    string loc = position.middle_center
+    bool debug = false
+    tableStyle tableStyle = na
+    headerStyle headerStyle = na
+    footerStyle footerStyle = na
+    titleStyle titleStyle = na
+    cellStyle cellStyle = na
+    gutterStyle gutterStyle = na
+    table _table = na
+    int _cTotal = 100
+    int _rTotal = 100
+    string _slot = na
+    int _maxCol = 0
+    bool _init = false
+
+
+// Tooltip
+__toolTip(_printer printer, col, row, cell, val, int idx=na, int mCol=na, int mRow=na, string _type=na) =>
+    tooltip = val
+    if printer.debug
+        if cell == "gutter"
+            gs = printer.gutterStyle
+            tooltip := str.format("column: {0}\nrow: {1}\ncell: {2}\nwidth: {3}\nheight: {4}", col, row, cell, gs.width, gs.height)
+        else
+            _tp = not na(_type) ? _type : _type(val)
+            tooltip := str.format("column: {0}\nrow: {1}\ncell: {2}\ntype: {3}", col, row, cell, _tp)
+            if _tp == "string" or _tp == "array<string>" or _tp == "matrix<string>"
+                tooltip := str.format("{0}\nlength: {1}", tooltip, str.length(val))
+            else if str.startswith(_tp, "array")
+                tooltip := str.format("{0}\nindex: {1}", tooltip, idx)
+            else if str.startswith(_tp, "matrix")
+                tooltip := str.format("{0}\nmatrix col: {1}\nmatrix row: {2}", tooltip, mCol, mRow)
+            tooltip := str.format("{0}\nvalue: {1}", tooltip, _str(val))
+    tooltip
+
+// Header
+__header(_printer printer, bool init=false) =>
+    if not na(printer.header)
+        if printer._maxCol > 0
+            // Readjustment: This keeps header adjusted in a single cell.
+            // Note: Gutter (single cell space between each data sets) requires 1 additional column per set.
+            //       So on non-stack setup, if gutter is turned on, we have to remove 2 extra spaces from the end to even it out, else 1.
+            maxCol = printer.stack ? printer._maxCol : printer._maxCol - (printer.gutterStyle.gutter ?  2 : 1)
+            printer._table.clear(0, 0, maxCol, 0)
+            printer._table.merge_cells(0, 0, maxCol, 0)
+        hs = printer.headerStyle
+        format = hs.format
+        val = printer.header
+        val := not na(format) ? str.format(format, val) : val
+        tooltip = __toolTip(printer, 0, 0, "header", printer.header, _type="string")
+        printer._table.cell(0, 0, text=val, width=hs.width, height=hs.height, text_color=hs.textColor, text_halign=hs.textHalign, text_valign=hs.textValign, text_size=hs.textSize, bgcolor=hs.bgColor, tooltip=tooltip, text_font_family=hs.textFontFamily)
+            
+    
+// Footer
+__footer(_printer printer, bool init=false) =>
+    if not na(printer.footer)
+        row = printer._rTotal - 1
+        if printer._maxCol > 0
+            // Readjustment: This keeps footer adjusted in a single cell.
+            // Note: Gutter (single cell space between each data sets) requires 1 additional column per set.
+            //       So on non-stack setup, if gutter is turned on, we have to remove 2 extra spaces from the end to even it out, else 1.
+            maxCol = printer.stack ? printer._maxCol : printer._maxCol - (printer.gutterStyle.gutter ?  2 : 1)
+            printer._table.clear(0, row, maxCol, row)
+            printer._table.merge_cells(0, row, maxCol, row)
+        fs = printer.footerStyle
+        format = fs.format
+        val = printer.footer
+        val := not na(format) ? str.format(format, val) : val
+        tooltip = __toolTip(printer, 0, row, "footer", printer.footer, _type="string")
+        printer._table.cell(0, row, text=val, width=fs.width, height=fs.height, text_color=fs.textColor, text_halign=fs.textHalign, text_valign=fs.textValign, text_size=fs.textSize, bgcolor=fs.bgColor, tooltip=tooltip, text_font_family=fs.textFontFamily)
+
+// Get or set and get table style.
+__tableStyle(_printer printer, tableStyle tableStyle=na) =>
+    if not na(tableStyle)
+        printer.tableStyle := tableStyle
+    else if na(printer.tableStyle)
+        printer.tableStyle := tableStyle.new()
+    printer.tableStyle
+
+// Get or set and get header style.
+__headerStyle(_printer printer, headerStyle headerStyle=na) =>
+    if not na(headerStyle)
+        printer.headerStyle := headerStyle
+    else if na(printer.headerStyle)
+        printer.headerStyle := headerStyle.new()
+    printer.headerStyle
+
+// Get or set and get footer style.
+__footerStyle(_printer printer, footerStyle footerStyle=na) =>
+    if not na(footerStyle)
+        printer.footerStyle := footerStyle
+    else if na(printer.footerStyle)
+        printer.footerStyle := footerStyle.new()
+    printer.footerStyle
+
+// Get or set and get title style.
+__titleStyle(_printer printer, titleStyle titleStyle=na) =>
+    if not na(titleStyle)
+        printer.titleStyle := titleStyle
+    else if na(printer.titleStyle)
+        printer.titleStyle := titleStyle.new()
+    printer.titleStyle     
+
+// Get or set and get cell style.
+__cellStyle(_printer printer, cellStyle cellStyle=na) =>
+    if not na(cellStyle)
+        printer.cellStyle := cellStyle
+    else if na(printer.cellStyle)
+        printer.cellStyle := cellStyle.new()
+    printer.cellStyle
+
+// Get or set and get gutter style.
+__gutterStyle(_printer printer, gutterStyle gutterStyle=na) =>
+    if not na(gutterStyle)
+        printer.gutterStyle := gutterStyle
+    else if na(printer.gutterStyle)
+        printer.gutterStyle := gutterStyle.new()
+    printer.gutterStyle
+
+// Setup default styles.
+__styles(_printer printer) =>
+    __tableStyle(printer)
+    __headerStyle(printer)
+    __footerStyle(printer)
+    __titleStyle(printer)
+    __cellStyle(printer)
+    __gutterStyle(printer)
+
+// Initialize
+__init(_printer printer) =>
+    // Run only if this is first time.
+    if not printer._init
+        // Setup all the default styles.
+        __styles(printer)
+        // Initialize a table.
+        printer._table := table.new(printer.loc, printer._cTotal, printer._rTotal, bgcolor=printer.tableStyle.bgColor, frame_color=printer.tableStyle.frameColor, frame_width=printer.tableStyle.frameWidth, border_color=printer.tableStyle.borderColor, border_width=printer.tableStyle.borderWidth)
+        // Header
+        if not na(printer.header)
+            __header(printer, init=true)
+            // After placing the header on very top, change the slot to use row 1, while starting column stays 0.
+            printer._slot := "0,1"
+        else
+            // If header is not given, then starting slot is always column 0, row 0
+            printer._slot := "0,0"
+        // Footer
+        if not na(printer.footer)
+            __footer(printer, init=true)    
+        // Mark complete, so next time init method gets skipped. 
+        printer._init := true
+
+// Slot setup
+__slot(_printer printer, int col, int row) =>
+    // Stacked: (stacking new set of data bottom of previous data set)
+    //      Column  - Should not change
+    //      Row     - Should increment by 1 
+    // Non stacked: (stacking new set of data right side of previous data set)
+    //      Column  - Should increment by 1
+    //      Row     - Should not change
+    int _col = printer.stack ? 0 : col + 1
+    int _row = printer.stack ? row + 1 : 0
+    // Special case: When not stacked, and have header, row have to start down 1 cell.
+    if not printer.stack and not na(printer.header)
+        _row += 1
+    // Store the value as "col,row" in printer._slot
+    printer._slot := str.format("{0},{1}", _col, _row)
+
+// get slot
+__slot(_printer printer) =>
+    [col, row] = printer._slot._commaSplitPair()
+    [_int(col), _int(row)]
+
+// Add 1 extra cell if title top is not true.
+__titleSide(_printer printer, bool title_top) =>
+    extraCell = 0
+    if not na(title_top)
+        extraCell := title_top ? extraCell : 1
+    else
+        extraCell := printer.titleStyle.top ? extraCell : 1
+    extraCell
+
+// Setup max column
+__maxColumn(_printer printer, int size, bool title_top, bool horizontal) =>
+    // Update the printer._maxCol
+    titleSide = __titleSide(printer, title_top)
+    if printer.stack
+        if horizontal
+            _size = size + titleSide
+            // For stacked data sets: (pushed to the bottom)
+            // Only if the set of data is positioned horizontally, then max column should be total size of all the values -1 (arrays start at 0 indexed)
+            printer._maxCol := _size > printer._maxCol ? _size - 1 : printer._maxCol
+        else
+            printer._maxCol := titleSide > printer._maxCol ? titleSide : printer._maxCol 
+    else
+        // For non-stacked data sets: (pushed to the right)
+        // every set of data occupies a column therefore +1.
+        // And if gutter is turned on, that also adds +1 (therefore 2).
+        // And if title is placed on the side (not top) then +1 as well.
+        printer._maxCol += (printer.gutterStyle.gutter ? 2 : 1) + titleSide
+        if horizontal
+            // And if the set of data is positioned horizontally, then max column should be total size of all the values -1 (arrays start at 0 indexed)
+            printer._maxCol += (size - 1)
+
+// Start the printer process
+__startPrinter(_printer printer, title, titleStyle, size, horizontal) =>
+    // Get the printer._init value to test first run.
+    firstRun = printer._init ? false : true
+    // Only runs when print is called first time.
+    __init(printer) 
+    // Get the column and row values from printer._slot. Print will start from here.
+    [col, row] = __slot(printer)
+    // Gutter
+    ps = printer.gutterStyle
+    if ps.gutter
+        tooltip = __toolTip(printer, col, row, "gutter", "")
+        printer._table.cell(col, row, na, width=ps.width, height=ps.height, tooltip=tooltip)
+    // Return the column and row value.
+    if not firstRun and ps.gutter
+        col := printer.stack ? col : (firstRun ? col : col + 1)
+        row := printer.stack ? (firstRun ? row : row + 1) : row
+    // Title setup
+    if not na(title)
+        format = titleStyle.format
+        tooltip = __toolTip(printer, col, row, "title", title)
+        val = not na(format) ? str.format(format, title) : _str(title)
+        printer._table.cell(col, row, text=val, width=titleStyle.width, height=titleStyle.height, text_color=titleStyle.textColor, text_halign=titleStyle.textHalign, text_valign=titleStyle.textValign, text_size=titleStyle.textSize, bgcolor=titleStyle.bgColor, tooltip=tooltip, text_font_family=titleStyle.textFontFamily)
+        if titleStyle.top
+            if horizontal
+                if size > 1
+                    printer._table.merge_cells(col, row, col + (size - 1), row)
+            row += 1
+        else
+            if not (horizontal)
+                if size > 1
+                    printer._table.merge_cells(col, row, col, row + (size - 1))
+            col += 1
+    [col, row]
+
+// End the printer process
+__endPrinter(_printer printer, col, row, size, titleTop, horizontal) =>
+    // After the loop completes, update the printer._slot with the last used column and row value
+    __slot(printer, col, row)
+    // Update the printer._maxCol
+    __maxColumn(printer, size, titleTop, horizontal)
+    // Re-run the title and footer, incase they need rearrangement for cell merging.
+    // Only runs if either title and/or footer is available.
+    __header(printer)
+    __footer(printer)
+    // Finally return the printer object.
+    printer
+
+// Loop thru array values.
+__arrayPrintLoop(_printer printer, val, title, titleStyle, cellStyle, string _type=na) =>
+    _tp = not na(_type) ? _type : _type(val) 
+    // Size of the values.
+    int size = val.size()
+    // Start the process.
+    ts = na(titleStyle) ? __titleStyle(printer) : titleStyle
+    cs = na(cellStyle) ? __cellStyle(printer) : cellStyle
+    [col, row] = __startPrinter(printer, title, ts, size, cs.horizontal)
+    // We need to store the column and row values into temporary variables.
+    // These temporary variables, allow us to keep track of current changes.
+    int _col = col 
+    int _row = row
+    // Start the loop thru the values.
+    for i=0 to size - 1
+        if cs.horizontal
+            // If horizontal is true, values should be placed per column.
+            // Therefore, each values should get an incremental column value.
+            _col := col + i
+        else 
+            // If horizontal is false, values should be placed per row.
+            // Therefore, each values should get an incremental row value.
+            _row := row + i
+        // If there is a format requested, transform the each value with the given format.
+        _format = cs.format
+        _val = _str(val.get(i))
+        _index = str.startswith(_tp, "array") ? i : na 
+        tooltip = __toolTip(printer, _col, _row, "cell", _val, idx=_index, _type=_tp)
+        _val := not na(_format) ? str.format(_format, _val) : _val
+        // Finally, put them in a table cell.
+        printer._table.cell(_col, _row, text=_val, width=cs.width, height=cs.height, text_color=cs.textColor, text_halign=cs.textHalign, text_valign=cs.textValign, text_size=cs.textSize, bgcolor=cs.bgColor, tooltip=tooltip, text_font_family=cs.textFontFamily)
+    // End printer process.
+    __endPrinter(printer, _col, _row, size, ts.top, cs.horizontal)
+
+// Loop thru matrix values.
+__matrixPrintLoop(_printer printer, val, title, titleStyle, cellStyle) =>
+    _tp = _type(val) 
+    // Start the process
+    totalRows = val.rows()
+    totalCols = val.columns()
+    ts = na(titleStyle) ? __titleStyle(printer) : titleStyle
+    size = ts.top ? totalCols : totalRows
+    horz = ts.top ? true : false
+    [col, row] = __startPrinter(printer, title, ts, size, horz)
+    // We need to store the column and row values into temporary variables.
+    // These temporary variables, allow us to keep track of current changes.
+    int _col = col 
+    int _row = row
+    // Start the loop thru the values.
+    isStack = printer.stack
+    cs = na(cellStyle) ? __cellStyle(printer) : cellStyle
+    for r=0 to totalRows - 1
+        for c=0 to totalCols - 1
+            _col := col + c
+            _row := row + r
+            _format = cs.format
+            _val = _str(val.get(r, c)) 
+            tooltip = __toolTip(printer, _col, _row, "cell", _val, mCol=c, mRow=r, _type=_tp)
+            _val := not na(_format) ? str.format(_format, _val) : _val
+            printer._table.cell(_col, _row, text=_val, width=cs.width, height=cs.height, text_color=cs.textColor, text_halign=cs.textHalign, text_valign=cs.textValign, text_size=cs.textSize, bgcolor=cs.bgColor, tooltip=tooltip, text_font_family=cs.textFontFamily)
+    __endPrinter(printer, _col, _row, totalCols, ts.top, true)
+
+// theme
+__theme(string theme) =>
+    // Default 'gray'
+    tblBgCl    = #0000004D       // _color("black_dark", 70)
+    frmCl      = #3C4650B8       // _color("gray_bright", 28)
+    cellTxtCl  = #E14600         // _color("orange_dark") 
+    otherTxtCl = #E1E1E1         // _color("white_bright")
+    titleBgCl  = #1E283273       // _color("gray_medium", 55)
+    otherBgCl  = #3C465078       // _color("gray_bright", 53)
+
+    if theme == "blue"
+        tblBgCl    := #0000780D  // _color("blue_dark", 95)
+        frmCl      := #0000FFB3  // _color("blue_bright", 30)
+        cellTxtCl  := #00FFFF    // _color("aqua_bright")
+        otherTxtCl := #E1E1E1    // _color("white_bright")
+        titleBgCl  := #0078FF9E  // _color("aqua_dark", 38)
+        otherBgCl  := #0096FFA6  // _color("aqua_medium", 35)
+    else if theme == "green"
+        tblBgCl    := #0078000D  // _color("green_dark", 95)
+        frmCl      := #00FF00B8  // _color("green_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #000000    // _color("black_dark")
+        titleBgCl  := #00C800D9  // _color("green_light", 15)
+        otherBgCl  := #00FF00DE  // _color("green_bright", 13)
+    else if theme == "orange"
+        tblBgCl    := #E146000D  // _color("orange_dark", 95)
+        frmCl      := #E16400B8  // _color("orange_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #000000    // _color("black_dark")
+        titleBgCl  := #E14600D9  // _color("orange_dark", 15)
+        otherBgCl  := #E16400DE  // _color("orange_bright", 13)
+    else if theme == "pink"
+        tblBgCl    := #FF00FF0D  // _color("pink_dark", 95)
+        frmCl      := #FF96FFB8  // _color("pink_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #000000    // _color("black_dark")
+        titleBgCl  := #FF64FFD9  // _color("pink_light", 15)
+        otherBgCl  := #FF96FFDE  // _color("pink_bright", 13)
+    else if theme == "purple"
+        tblBgCl    := #9B00FF0D  // _color("purple_dark", 95)
+        frmCl      := #9696FFB8  // _color("purple_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #E1E1E1    // _color("white_bright")
+        titleBgCl  := #9664FFD9  // _color("purple_light", 15)
+        otherBgCl  := #9696FFDE  // _color("purple_bright", 13)
+    else if theme == "red"
+        tblBgCl    := #7800000D  // _color("red_dark", 95)
+        frmCl      := #FF0000B8  // _color("red_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #E1E1E1    // _color("white_bright")
+        titleBgCl  := #C80000D9  // _color("red_light", 15)
+        otherBgCl  := #FF0000DE  // _color("red_bright", 13)
+    else if theme == "white"
+        tblBgCl    := #C8C8C80D  // _color("white_dark", 95)
+        frmCl      := #FFFFFFB8  // _color("white_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #000000    // _color("black_dark")
+        titleBgCl  := #C8C8C8D9  // _color("white_dark", 15)
+        otherBgCl  := #EBEBEBDE  // _color("white_light", 13)
+    else if theme == "yellow"
+        tblBgCl    := #AFAF000D  // _color("yellow_dark", 95)
+        frmCl      := #FFFF00B8  //_color("yellow_bright", 28)
+        cellTxtCl  := #E1E1E1    // _color("white_bright")
+        otherTxtCl := #000000    // _color("black_dark")
+        titleBgCl  := #E6E600D9  // _color("yellow_light", 15)
+        otherBgCl  := #FFFF00DE  // _color("yellow_bright", 13)
+    [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl]
+
+// @function         Set a color theme for the printer object using pre-defined theme names.
+// @param this       (_printer) A _printer UDT object. 
+// @param theme      (string) The name of the theme. Choices: gray, blue, green, orange, red, purple, pink and white. Gray is always default.
+// @returns          (_printer) Returns the _printer UDT object.
+export method theme(_printer this, string theme) =>
+    [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl] = __theme(theme)
+    // Styling for table.
+    if na(this.tableStyle)
+        this.tableStyle := tableStyle.new(bgColor=tblBgCl, frameColor=frmCl)
+    else
+        this.tableStyle.bgColor := tblBgCl
+        this.tableStyle.frameColor := frmCl
+    // Styling for Header.
+    if na(this.headerStyle)
+        this.headerStyle := headerStyle.new(textColor=otherTxtCl, bgColor=otherBgCl)
+    else
+        this.headerStyle.textColor := otherTxtCl
+        this.headerStyle.bgColor := otherBgCl
+    // Styling for Footer.
+    if na(this.footerStyle)
+        this.footerStyle := footerStyle.new(textColor=otherTxtCl, bgColor=otherBgCl)
+    else
+        this.footerStyle.textColor := otherTxtCl
+        this.footerStyle.bgColor := otherBgCl
+    // Styling for Title.
+    if na(this.titleStyle)
+        this.titleStyle := titleStyle.new(textColor=otherTxtCl, bgColor=titleBgCl)
+    else
+        this.titleStyle.textColor := otherTxtCl
+        this.titleStyle.bgColor := titleBgCl
+    // Styling for Cell.
+    if na(this.cellStyle)
+        this.cellStyle := cellStyle.new(textColor=cellTxtCl)
+    else
+        this.cellStyle.textColor := cellTxtCl
+    this
+
+// Set custom theme colors for a single print method.
+___printThemeSetup(printer, theme, titleStyle, cellStyle) =>
+    ts = titleStyle
+    cs = cellStyle
+    if not na(theme)
+        [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl] = __theme(theme)
+        ts := titleStyle.copy(printer.titleStyle)
+        ts.textColor := otherTxtCl
+        ts.bgColor := titleBgCl
+        cs := cellStyle.copy(printer.cellStyle)
+        cs.textColor := cellTxtCl
+    [ts, cs]
+
+// @function         Print data on screen.
+// @param this       (_printer) A _printer UDT object. 
+// @param val        Data to print on screen. Possible types: string, float, int, bool, color, array<type>, matrix<type> 
+// @param title      (string) A title for the value. (`na` is used if no argument is supplied). 
+// @param titleStyle (titleStyle) Add a custom `titleStyle` for this print only. (`na` is used if no argument is supplied). 
+// @param cellStyle  (cellStyle) Add a custom `cellStyle` for this print only. (`na` is used if no argument is supplied).
+// @param theme      (string) The name of the theme. Choices: gray, blue, green, orange, green, red, purple, pink and white. (`na` is used if no argument is supplied).
+// @returns          (_printer) Returns the _printer UDT object.
+export method print(_printer this, string val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, array.new_string(1, val), title, ts, cs, "string")
+
+export method print(_printer this, float val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, array.new_float(1, val), title, ts, cs, "float")
+
+export method print(_printer this, int val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, array.new_int(1, val), title, ts, cs, "int")
+
+export method print(_printer this, bool val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, array.new_bool(1, val), title, ts, cs, "bool")
+
+export method print(_printer this, color val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, array.new_color(1, val), title, ts, cs, "color")
+
+export method print(_printer this, array<string> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, array<float> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, array<int> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, array<bool> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, array<color> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __arrayPrintLoop(this, val, title, ts, cs)
+
+export method print(_printer this, matrix<string> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __matrixPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, matrix<float> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __matrixPrintLoop(this, val, title, ts, cs)
+
+export method print(_printer this, matrix<int> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __matrixPrintLoop(this, val, title, ts, cs)
+    
+export method print(_printer this, matrix<bool> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __matrixPrintLoop(this, val, title, ts, cs)
+
+export method print(_printer this, matrix<color> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
+    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
+    __matrixPrintLoop(this, val, title, ts, cs)
+    
+// @function            Set a printer header. Optionally pass a customized header style.
+// @param this          (_printer) A _printer UDT object.  
+// @param headerStyle   (headerStyle) Add a custom `headerStyle` for the printer object. (`na` is used if no argument is supplied). 
+// @returns             (_printer) Returns the _printer UDT object.
+export method header(_printer this, string val, headerStyle headerStyle=na) =>
+    __headerStyle(this, headerStyle)
+    this.header := val
+    this
+
+// @function            Set a printer footer. Optionally pass a customized footer style.
+// @param this          (_printer) A _printer UDT object. 
+// @param footerStyle   (footerStyle) Add a custom `footerStyle` for the printer object. (`na` is used if no argument is supplied). 
+// @returns             (_printer) Returns the _printer UDT object.
+export method footer(_printer this, string val, footerStyle footerStyle=na) =>
+    __footerStyle(this, footerStyle)
+    this.footer := val
+    this
+
+// @function            Set a printer's default title location.
+// @param this          (_printer) A _printer UDT object. 
+// @param top           (bool) Location to place data titles. Use `false` to place the title to the left of data, or `true` to place title on top of data. By default this title top is `true`. 
+// @returns             (_printer) Returns the _printer UDT object.
+export method title(_printer this, bool top) =>
+    __titleStyle(this)
+    this.titleStyle.top := top
+    this
+
+// @function            Set a printer's custom title style.
+// @param this          (_printer) A _printer UDT object. 
+// @param titleStyle    (titleStyle) Add a custom `titleStyle` for the printer object. (`na` is used if no argument is supplied).  
+// @returns             (_printer) Returns the _printer UDT object.
+export method title(_printer this, titleStyle titleStyle) =>
+    __titleStyle(this, titleStyle)
+    this
+
+// @function            Set a printer's array orientation.
+// @param this          (_printer) A _printer UDT object.
+// @param horizontal    (bool) Array orientation. Use `false` for vertical placement, or `true` to use horizontal placement. By default horizontal is `false`. 
+// @returns             (_printer) Returns the _printer UDT object.
+export method cell(_printer this, bool horizontal) =>
+    __cellStyle(this)
+    this.cellStyle.horizontal := horizontal
+    this
+
+// @function            Set a printer's custom style for all data cells (excludes: header, footer and titles).
+// @param this          (_printer) A _printer UDT object.
+// @param cellStyle     (cellStyle) Add a custom `cellStyle` for the printer object.  
+// @returns             (_printer) Returns the _printer UDT object.
+export method cell(_printer this, cellStyle cellStyle) =>
+    __cellStyle(this, cellStyle)
+    this
+
+// @function            Set a printer's stacking order. Stacking order is the placement order of each new data sets. Either set new data under (true), or to the right (false).
+// @param this          (_printer) A _printer UDT object.
+// @param stack         (bool) If set to `true`, following data will be stacked under, if `false`, data will be pushed to the right. By default stacking is`true`. 
+// @returns             (_printer) Returns the _printer UDT object.
+export method stack(_printer this, bool stack) =>
+    this.stack := stack
+    this
+
+// @function            Set a printer's gutter. A gutter is an empty cell spacing between two individual printed data. 
+// @param this          (_printer) A _printer UDT object. 
+// @param gutter        (bool) If set to `true`, an empty cell will be added between each data set, if `false`, data sets will have no separation. By default gutter is `true`. 
+// @returns             (_printer) Returns the _printer UDT object.
+export method gutter(_printer this, bool gutter) =>
+    __gutterStyle(this)
+    this.gutterStyle.gutter := gutter
+    this
+
+// @function            Set a printer's custom style for gutter cells.
+// @param this          (_printer) A _printer UDT object.
+// @param gutterStyle   (cellStyle) Add a custom `gutterStyle` for the printer object.  
+// @returns             (_printer) Returns the _printer UDT object.
+export method gutter(_printer this, gutterStyle gutterStyle) =>
+    __gutterStyle(this, gutterStyle)
+    this
+
+// @function            Set the debug value for a printer.
+// @param this          (_printer) A _printer UDT object.
+// @param gutterStyle   (bool) If set to `true`, there will be some debuggin info added to tooltips for each printed cell (hover ur mouse over to see). If `false` this extra info will stay hidden. By default debug is `false`.  
+// @returns             (_printer) Returns the _printer UDT object.
+export method debug(_printer this, bool debug) =>
+    this.debug := debug
+    this
+
+//}
+
+var header = "Tools: with a comprehensive print method, plus more."
+var footer = "Built with care. Any question or suggestion, please leave a comment. Thanks."
+var sections = array.from("Get data `types`.", "Cast data from one type to another.", "Joins and Splits", "Generators.", "A color method and gradient object.", "A comprehensive printer object.")
+var docSec1 = "Get type for string, float, integer, boolean, color, box, label, line, linefill, table, array<type> and matrix<type>."
+var docSec2 = "Casting data from one type to another.\nFor example, use _bool(string), will return a boolean value. If the string is empty, it will be false, else true.\nAnd on the other hand _str(bool), would simply convert the bool value into string.\nAvailable casting types are bool, float, integer, string, and color. "
+var docSec3 = "There are also some useful join and splitting methods for string to array and array to string conversions.\nFor array to string conversion, available array types are string, float, int, bool and color."
+var docSec4 = "Use generators to generate:\n- random strings (characters, words, sentences)\n- booleans\n- numbers (integers, floats, UNIX timestamps)\n- colors\nAll arrays and matrix are supported."
+var docSec5 = "A convenient _color() method that accepts preset color names and returns the color.\nColors include aqua, black, blue, gray, green, orange, pink, purple, red, white and yellow.\nAdd _bright, _light, _medium or _dark with the color name to get a specific shade of that color.\nSetup a gradient object,and get gradient color of a number."
+var docSec6a = "Use the convenient _printer object and print method to print almost anything on screen.\nPrinter object can print a single item or multiple sets of data at once.\nBehind the scene, it uses table, and cells strategically for printing.\nAll _printer methods are chain-able for convenience."
+var docSec6b = "Header: Use the convenient header method to add a header, and pass a headerStyle object to customize."
+var docSec6c = "Footer: Use the convenient footer method to add a footer, and pass a footerStyle object to customize."
+var docSec6d = "There's also several other convenient methods to customize the printer.\n- theme(): method to add a preset theme.\n   Choices are gray (same as default color style), blue, orange, green, red, purple, pink, yellow and white.\n- title(): pass custom default titleStyle object for all data,\n   or just pass top=<true/false> to designate the location of title placement.\n- stack(): use true or false to either stack each set of data (default is true), or side by side (if false).\n- gutter(): use true or false to add extra spacing. Pass a gutterStyle object to customize.\n- cell(): method to add custom default cell settings with cellStyle object,\n   or just pass horizontal=<true/false> to position array data vertically or horizontally.\n- debug(): use true or false, to print some helpful debugging info or hide them."
+var docSec6e = "Once a printer object is created, use the print() method to print any item on screen.\nEach print method accepts a title parameter for that particular dataset.\nYou can also pass titleStyle and cellStyle objects to individually target that dataset.\nYou can also pass a theme name to individual print methods."
+var docSec6 = array.from(docSec6a, docSec6b, docSec6c, docSec6d, docSec6e)
+
+var hs = headerStyle.new(textSize=size.large)
+var fs = footerStyle.new(textSize=size.large, textHalign=text.align_right)
+var ts = titleStyle.new(top=false, textHalign=text.align_right, textValign=text.align_top, textSize=size.normal)
+var cs = cellStyle.new(textHalign=text.align_left, textSize=size.normal)
+
+if barstate.islast
+    printer = _printer.new().header(header, hs).footer(footer, fs).stack(true).title(titleStyle=ts).gutter(true).cell(cellStyle=cs).theme("white")
+    printer.headerStyle.textColor := _color("blue_medium")
+    printer.footerStyle.textColor := _color("orange_dark")
+    printer.print(docSec1, title=sections.get(0), theme="pink")
+    printer.print(docSec2, title=sections.get(1), theme="orange")
+    printer.print(docSec3, title=sections.get(2), theme="yellow")
+    printer.print(docSec4, title=sections.get(3), theme="red")
+    printer.print(docSec5, title=sections.get(4), theme="purple")
+    printer.print(docSec6, title=sections.get(5), theme="blue")

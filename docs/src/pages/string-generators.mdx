@@ -1,0 +1,119 @@
+export const description =
+  'On this page, we’ll look at the make up of all the random string generator functions.'
+
+# String generators.
+A set of functions to help with generating random types of string data. 
+Generators can return a single value or grouped values using arrays and matrix. 
+
+---
+
+## _rndmChar()
+Generate a single random character from a-z. 
+<Properties>
+  <Property name="returns" type="string">
+    A random character (a-z).
+  </Property>
+</Properties>
+
+---
+
+## _rndmString()
+Generate a random string.
+<Properties>
+  <Property name="len" type="int">
+    The length of the string. By default its set to 0, which implies a random length between 3-10. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="string">
+    A random string.
+  </Property>
+</Properties>
+
+---
+
+## _rndmWord()
+Generate a random word. (same as _rndmString())
+<Properties>
+  <Property name="len" type="int">
+    The length of the word. By default its set to 0, which implies a random length between 3-10. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="string">
+    A random word.
+  </Property>
+</Properties>
+
+---
+
+## _rndmSentence()
+Generate a random sentence.
+<Properties>
+  <Property name="len" type="int">
+    The length of the sentence. By default its set to 0, which implies a random length between 3-10 words. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="string">
+    A random sentence.
+  </Property>
+</Properties>
+
+---
+
+## _rndmStringArray()
+Generate a random string array.
+<Properties>
+  <Property name="size" type="int">
+    The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="len" type="int">
+    The length of each string. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="array<string>">
+    A random string array.
+  </Property>
+</Properties>
+
+---
+
+## _rndmCharArray()
+Generate a random string array of single characters.
+<Properties>
+  <Property name="size" type="int">
+    The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="array<string>">
+    A random string array of single characters.
+  </Property>
+</Properties>
+
+---
+
+## _rndmStringMatrix()
+Generate a random string matrix.
+<Properties>
+  <Property name="rows" type="int">
+    Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="columns" type="int">
+    Total column size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="len" type="int">
+    The length of each string. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="matrix<string>">
+    A random string matrix.
+  </Property>
+</Properties>
+
+---
+
+## _rndmCharMatrix()
+Generate a random string matrix of single characters.
+<Properties>
+  <Property name="rows" type="int">
+    Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="columns" type="int">
+    Total column size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="matrix<string>">
+    A random string matrix filled with single characters.
+  </Property>
+</Properties>

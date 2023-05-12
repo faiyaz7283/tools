@@ -1,0 +1,46 @@
+export const description =
+  'On this page, we’ll look at the make up of all the random boolean generator functions.'
+
+
+# Boolean generators.
+A set of functions to help with generating random types of boolean values. 
+Generators can return a single value or grouped values using arrays and matrix. 
+
+---
+
+## _rndmBool()
+Generate a random boolean value.
+<Properties>
+  <Property name="returns" type="bool">
+    A random boolean value.
+  </Property>
+</Properties>
+
+---
+
+## _rndmBoolArray()
+Generate a random boolean array.
+<Properties>
+  <Property name="size" type="int">
+    The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="array<bool>">
+    A random boolean array.
+  </Property>
+</Properties>
+
+---
+
+## _rndmBoolMatrix()
+Generate a random boolean matrix.
+<Properties>
+  <Property name="rows" type="int">
+    Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="columns" type="int">
+    Total column size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
+  </Property>
+  <Property name="returns" type="matrix<bool>">
+    A random boolean matrix.
+  </Property>
+</Properties>

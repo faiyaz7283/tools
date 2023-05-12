@@ -1,0 +1,75 @@
+export const description =
+  'In this guide, we’ll look at some usage of the `_type() method.'
+
+# Inspect data types.
+
+The [`_type()`](/type#type) is a versatile method that can be used to inspect object type. This method is particularly useful for scripts that rely on 
+the type to return a certain value or perform a specific task. The [`_type()`](/type#type) method supports a wide range of data types, including `string`, 
+`integer`, `boolean`, `float`, `color`, `table`, `line`, `label`, `box`, `linefill`, `array<type>`, and `matrix<type>`. By leveraging the [`_type()`](/type#type)
+method, Pinescript users can create more robust and flexible scripts that can adapt to a wide range of data inputs.
+
+<Note>
+  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  If you are following along with the examples, please make sure to import the latest 
+  version of the library in your script first, and assign `tl` as namespace.
+</Note>
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+// Example testing object types 
+
+varStr = "Hello"
+varStr.tl._type() // returns "string"
+
+varFlt = 1.25
+varFlt.tl._type() // returns "float"
+
+int varInt = 100
+varInt.tl._type() // returns "int"
+
+bool varBool = true
+varBool.tl._type() // returns "bool"
+
+color varClr = color.red
+varClr.tl._type() // returns "color"
+
+table varTbl = table.new(position, col, row)
+varTbl.tl._type() // returns "table"
+
+array<string> varArrS = array.new_string(5,na)
+varArrS.tl._type() // returns "array<string>"
+
+matrix<float> varMtxF = matrix.new<float>(4,4,0.5)
+varMtxF.tl._type() // returns "matrix<float>"
+```
+
+```js {{ title: 'Function' }}
+// Example testing object types 
+
+varStr = "Hello"
+tl._type(varStr) // returns "string"
+
+varFlt = 1.25
+tl._type(varFlt) // returns "float"
+
+int varInt = 100
+tl._type(varInt) // returns "int"
+
+bool varBool = true
+tl._type(varBool) // returns "bool"
+
+color varClr = color.red
+tl._type(varClr) // returns "color"
+
+table varTbl = table.new(position, col, row)
+tl._type(varTbl) // returns "table"
+
+array<string> varArrS = array.new_string(5,na)
+tl._type(varArrS) // returns "array<string>"
+
+matrix<float> varMtxF = matrix.new<float>(4,4,0.5)
+tl._type(varMtxF) // returns "matrix<float>"
+```
+
+</CodeGroup>
