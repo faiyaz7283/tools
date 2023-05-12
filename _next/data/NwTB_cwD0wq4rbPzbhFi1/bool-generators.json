@@ -1,0 +1,1 @@
+{"pageProps":{"description":"On this page, we’ll look at the make up of all the random boolean generator functions.","sections":[{"title":"_rndmBool()","id":"rndm-bool"},{"title":"_rndmBoolArray()","id":"rndm-bool-array"},{"title":"_rndmBoolMatrix()","id":"rndm-bool-matrix"}],"title":"Boolean generators."},"__N_SSG":true}
