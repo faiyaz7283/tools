@@ -8,6 +8,8 @@ import { DocumentIcon } from '@/components/icons/DocumentIcon'
 import { CogIcon } from '@/components/icons/CogIcon'
 import { CopyIcon } from '@/components/icons/CopyIcon'
 import { FolderIcon } from '@/components/icons/FolderIcon'
+import { CalendarIcon } from './icons/CalendarIcon'
+import { PaperClipIcon } from './icons/PaperClipIcon'
 
 const resources = [
   {
@@ -67,58 +69,37 @@ const resources = [
     icon: CopyIcon,
   },
   {
-    href: '/UNIX-timestamp-generators',
-    name: 'UNIX Timestamp generators',
+    href: '/unix-timestamp-generators',
+    name: 'Unix timestamp generators',
     description:
-      "Functions for generating UNIX timestamps values.",
+      "Functions for generating unix timestamps values.",
     icon: CopyIcon,
   },
   {
-    href: '/_gradient',
-    name: '_gradient',
+    href: '/_timestamp',
+    name: 'Unix timestamp breakdown',
+    description:
+      "Methods for breaking down and comparing timestamps.",
+    icon: CalendarIcon,
+  },
+  {
+    href: '/color',
+    name: 'Color methods',
+    description:
+      "Color methods",
+    icon: PaperClipIcon,
+  },
+  {
+    href: '/gradient',
+    name: 'Gradient',
     description:
       "An expansion to the Pinescript's color.from_gradient() method.",
     icon: BoltIcon,
   },
   {
-    href: '/tableStyle',
-    name: 'tableStyle',
-    description: "Styling object for _printer's table.",
-    icon: CogIcon,
-  },
-  {
-    href: '/headerStyle',
-    name: 'headerStyle',
-    description:
-      "Styling object for _printer's header cell.",
-    icon: CogIcon,
-  },
-  {
-    href: '/footerStyle',
-    name: 'footerStyle',
-    description:
-      "Styling object for _printer's footer cell.",
-    icon: CogIcon,
-  },
-  {
-    href: '/titleStyle',
-    name: 'titleStyle',
-    description:
-      "Styling object for _printer's title cells.",
-    icon: CogIcon,
-  },
-  {
-    href: '/cellStyle',
-    name: 'cellStyle',
-    description:
-      "Styling object for _printer's data cells.",
-    icon: CogIcon,
-  },
-  {
-    href: '/gutterStyle',
-    name: 'gutterStyle',
-    description:
-      "Styling object for _printer's spacing cells.",
+    href: '/styles',
+    name: 'Styles',
+    description: "All available style objects for printer.",
     icon: CogIcon,
   },
   {

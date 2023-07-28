@@ -5,9 +5,9 @@ export const description =
 The tools library provides some custom array and string methods that expand Pinescript's own `array.join()` and `str.split()` methods.
 
 <Note>
-  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  For all the examples in this page, `tools` is used as a namespace for the tools library.
   If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tl` as namespace.
+  version of the library in your script first, and assign `tools` as namespace.
 </Note>
 
 ## Join
@@ -19,74 +19,74 @@ The [`_join()`](/join-splits#join) method is similar to the `array.join()` metho
 // Joining array<string>
 
 strArray = array.from("apple", "banana", "carrot")
-strArray.tl._join()          // returns the string "apple,banana,carrot".
-strArray.tl._join(sep=" ")   // returns the string "apple banana carrot".
-strArray.tl._join(sep="-")   // returns the string "apple-banana-carrot".
+strArray.tools._join()          // returns the string "apple,banana,carrot".
+strArray.tools._join(sep=" ")   // returns the string "apple banana carrot".
+strArray.tools._join(sep="-")   // returns the string "apple-banana-carrot".
 
 // Joining array<float>
 
 fltArray = array.from(1.2, 2.1, 3.098, 4.0089)
-fltArray.tl._join()          // returns the string "1.2,2.1,3.098,4.0089".
-fltArray.tl._join(sep=" ")   // returns the string "1.2 2.1 3.098 4.0089".
-fltArray.tl._join(sep="-")   // returns the string "1.2-2.1-3.098-4.0089".
+fltArray.tools._join()          // returns the string "1.2,2.1,3.098,4.0089".
+fltArray.tools._join(sep=" ")   // returns the string "1.2 2.1 3.098 4.0089".
+fltArray.tools._join(sep="-")   // returns the string "1.2-2.1-3.098-4.0089".
 
 // Joining array<int>
 
 intArray = array.from(1, 2, 3, 4, 5)
-intArray.tl._join()          // returns the string "1,2,3,4,5".
-intArray.tl._join(sep=" ")   // returns the string "1 2 3 4 5".
-intArray.tl._join(sep="-")   // returns the string "1-2-3-4-5".
+intArray.tools._join()          // returns the string "1,2,3,4,5".
+intArray.tools._join(sep=" ")   // returns the string "1 2 3 4 5".
+intArray.tools._join(sep="-")   // returns the string "1-2-3-4-5".
 
 // Joining array<bool>
 
 boolArray = array.from(true, false, false, true, false)
-boolArray.tl._join()         // returns the string "true,false,false,true,false".
-boolArray.tl._join(sep=" ")  // returns the string "true false false true false".
-boolArray.tl._join(sep="-")  // returns the string "true-false-false-true-false".
+boolArray.tools._join()         // returns the string "true,false,false,true,false".
+boolArray.tools._join(sep=" ")  // returns the string "true false false true false".
+boolArray.tools._join(sep="-")  // returns the string "true-false-false-true-false".
 
 // Joining array<color>
 
 clrArray = array.from(color.red, color.black, color.white)
-clrArray.tl._join()          // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
-clrArray.tl._join(sep=" ")   // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
-clrArray.tl._join(sep="-")   // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
+clrArray.tools._join()          // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
+clrArray.tools._join(sep=" ")   // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
+clrArray.tools._join(sep="-")   // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
 ```
 
 ```js {{ title: 'Function' }}
 // Joining array<string>
 
 strArray = array.from("apple", "banana", "carrot")
-tl._join(strArray)           // returns the string "apple,banana,carrot".
-tl._join(strArray, sep=" ")  // returns the string "apple banana carrot".
-tl._join(strArray, sep="-")  // returns the string "apple-banana-carrot".
+tools._join(strArray)           // returns the string "apple,banana,carrot".
+tools._join(strArray, sep=" ")  // returns the string "apple banana carrot".
+tools._join(strArray, sep="-")  // returns the string "apple-banana-carrot".
 
 // Joining array<float>
 
 fltArray = array.from(1.2, 2.1, 3.098, 4.0089)
-tl._join(fltArray)           // returns the string "1.2,2.1,3.098,4.0089".
-tl._join(fltArray, sep=" ")  // returns the string "1.2 2.1 3.098 4.0089".
-tl._join(fltArray, sep="-")  // returns the string "1.2-2.1-3.098-4.0089".
+tools._join(fltArray)           // returns the string "1.2,2.1,3.098,4.0089".
+tools._join(fltArray, sep=" ")  // returns the string "1.2 2.1 3.098 4.0089".
+tools._join(fltArray, sep="-")  // returns the string "1.2-2.1-3.098-4.0089".
 
 // Joining array<int>
 
 intArray = array.from(1, 2, 3, 4, 5)
-tl._join(intArray)           // returns the string "1,2,3,4,5".
-tl._join(intArray, sep=" ")  // returns the string "1 2 3 4 5".
-tl._join(intArray, sep="-")  // returns the string "1-2-3-4-5".
+tools._join(intArray)           // returns the string "1,2,3,4,5".
+tools._join(intArray, sep=" ")  // returns the string "1 2 3 4 5".
+tools._join(intArray, sep="-")  // returns the string "1-2-3-4-5".
 
 // Joining array<bool>
 
 boolArray = array.from(true, false, false, true, false)
-tl._join(boolArray)          // returns the string "true,false,false,true,false".
-tl._join(boolArray, sep=" ") // returns the string "true false false true false".
-tl._join(boolArray, sep="-") // returns the string "true-false-false-true-false".
+tools._join(boolArray)          // returns the string "true,false,false,true,false".
+tools._join(boolArray, sep=" ") // returns the string "true false false true false".
+tools._join(boolArray, sep="-") // returns the string "true-false-false-true-false".
 
 // Joining array<color>
 
 clrArray = array.from(color.red, color.black, color.white)
-tl._join(clrArray)           // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
-tl._join(clrArray, sep=" ")  // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
-tl._join(clrArray, sep="-")  // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
+tools._join(clrArray)           // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
+tools._join(clrArray, sep=" ")  // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
+tools._join(clrArray, sep="-")  // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
 ```
 
 </CodeGroup>
@@ -96,19 +96,19 @@ tl._join(clrArray, sep="-")  // returns the string "255|82|82|0-54|58|69|0-255|2
 The tools library provides several convenient split methods that work similarly to the `str.split()` method in Pinescript. 
 These methods are named with their separator (comma, pipe or colon) and follow a naming convention: 
 
-- Split.
+- Split into an array.
   - [`_commaSplit()`](/join-splits#comma-split)
   - [`_pipeSplit()`](/join-splits#pipe-split)
   - [`_colonSplit()`](/join-splits#colon-split)
-- Split and get a single item.
+- Split and get just a single item.
   - [`_commaSplit()`](/join-splits#comma-split-2)
   - [`_pipeSplit()`](/join-splits#pipe-split-2)
   - [`_colonSplit()`](/join-splits#colon-split-2) 
-- Split into a tuple pair with first two items.
+- Split into a single tuple pair of first two items.
   - [`_commaSplitPair()`](/join-splits#comma-split-pair)
   - [`_pipeSplitPair()`](/join-splits#pipe-split-pair)
   - [`_colonSplitPair()`](/join-splits#colon-split-pair)
-- Split and shift the first item.
+- Split into an array without the first item.
   - [`_commaSplitShift()`](/join-splits#comma-split-shift)
   - [`_pipeSplitShift()`](/join-splits#pipe-split-shift)
   - [`_colonSplitShift()`](/join-splits#colon-split-shift)
@@ -119,52 +119,52 @@ These methods are named with their separator (comma, pipe or colon) and follow a
 // Separator: Comma
 
 commaStr = "apple,banana,carrot"
-commaStr.tl._commaSplit()        // returns an array<string>("apple", "banana", "carrot").
-commaStr.tl._commaSplit(idx=2)   // returns the string "carrot".
-commaStr.tl._commaSplitPair()    // returns a tuple containing ["apple", "banana"].
-commaStr.tl._commaSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
+commaStr.tools._commaSplit()        // returns an array<string>("apple", "banana", "carrot").
+commaStr.tools._commaSplit(idx=2)   // returns the string "carrot".
+commaStr.tools._commaSplitPair()    // returns a tuple containing ["apple", "banana"].
+commaStr.tools._commaSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Pipe
 
 pipeStr = "apple|banana|carrot"
-pipeStr.tl._pipeSplit()          // returns an array<string>("apple", "banana", "carrot").
-pipeStr.tl._pipeSplit(idx=2)     // returns the string "carrot".
-pipeStr.tl._pipeSplitPair()      // returns a tuple containing ["apple", "banana"].
-pipeStr.tl._pipeSplitShift()     // returns an array<string>("banana", "carrot") without "apple".
+pipeStr.tools._pipeSplit()          // returns an array<string>("apple", "banana", "carrot").
+pipeStr.tools._pipeSplit(idx=2)     // returns the string "carrot".
+pipeStr.tools._pipeSplitPair()      // returns a tuple containing ["apple", "banana"].
+pipeStr.tools._pipeSplitShift()     // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Colon
 
 colonStr = "apple:banana:carrot"
-colonStr.tl._colonSplit()        // returns an array<string>("apple", "banana", "carrot").
-colonStr.tl._colonSplit(idx=2)   // returns the string "carrot".
-colonStr.tl._colonSplitPair()    // returns a tuple containing ["apple", "banana"].
-colonStr.tl._colonSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
+colonStr.tools._colonSplit()        // returns an array<string>("apple", "banana", "carrot").
+colonStr.tools._colonSplit(idx=2)   // returns the string "carrot".
+colonStr.tools._colonSplitPair()    // returns a tuple containing ["apple", "banana"].
+colonStr.tools._colonSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
 ```
 
 ```js {{ title: 'Function' }}
 // Separator: Comma
 
 commaStr = "apple,banana,carrot"
-tl._commaSplit(commaStr)         // returns an array<string>("apple", "banana", "carrot").
-tl._commaSplit(commaStr, idx=2)  // returns the string "carrot".
-tl._commaSplitPair(commaStr)     // returns a tuple containing ["apple", "banana"].
-tl._commaSplitShift(commaStr)    // returns an array<string>("banana", "carrot") without "apple".
+tools._commaSplit(commaStr)         // returns an array<string>("apple", "banana", "carrot").
+tools._commaSplit(commaStr, idx=2)  // returns the string "carrot".
+tools._commaSplitPair(commaStr)     // returns a tuple containing ["apple", "banana"].
+tools._commaSplitShift(commaStr)    // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Pipe
 
 pipeStr = "apple|banana|carrot"
-tl._pipeSplit(pipeStr)           // returns an array<string>("apple", "banana", "carrot").
-tl._pipeSplit(pipeStr, idx=2)    // returns the string "carrot".
-tl._pipeSplitPair(pipeStr)       // returns a tuple containing ["apple", "banana"].
-tl._pipeSplitShift(pipeStr)      // returns an array<string>("banana", "carrot") without "apple".
+tools._pipeSplit(pipeStr)           // returns an array<string>("apple", "banana", "carrot").
+tools._pipeSplit(pipeStr, idx=2)    // returns the string "carrot".
+tools._pipeSplitPair(pipeStr)       // returns a tuple containing ["apple", "banana"].
+tools._pipeSplitShift(pipeStr)      // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Colon
 
 colonStr = "apple:banana:carrot"
-tl._colonSplit(colonStr)         // returns an array<string>("apple", "banana", "carrot").
-tl._colonSplit(colonStr, idx=2)  // returns the string "carrot".
-tl._colonSplitPair(colonStr)     // returns a tuple containing ["apple", "banana"].
-tl._colonSplitShift(colonStr)    // returns an array<string>("banana", "carrot") without "apple".
+tools._colonSplit(colonStr)         // returns an array<string>("apple", "banana", "carrot").
+tools._colonSplit(colonStr, idx=2)  // returns the string "carrot".
+tools._colonSplitPair(colonStr)     // returns a tuple containing ["apple", "banana"].
+tools._colonSplitShift(colonStr)    // returns an array<string>("banana", "carrot") without "apple".
 ```
 
 </CodeGroup>

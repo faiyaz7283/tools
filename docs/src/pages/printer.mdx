@@ -3,14 +3,14 @@ export const description =
   'In this guide, we’ll look at some usages of the `_printer` and the versatile print().'
 
 # Printer
-The [`_printer`](/_printer) is designed to help print data on screen quickly and easily. Just create
-a new [`_printer`](/_printer) object and start printing with the [`print()`](/print) method. There are also many
-convenient methods to easily customize and style the [`_printer`](/_printer).
+The [`_printer`](/_printer#printer) is designed to help print data on screen quickly and easily. Just create
+a new [`_printer`](/_printer#printer) object and start printing with the [`print()`](/_printer#print) method. There are also many
+convenient methods to easily customize and style the [`_printer`](/_printer#printer).
 
 <Note>
-  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  For all the examples in this page, `tools` is used as a namespace for the tools library.
   If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tl` as namespace.
+  version of the library in your script first, and assign `tools` as namespace.
 </Note>
 
 <Note>
@@ -26,7 +26,7 @@ convenient methods to easily customize and style the [`_printer`](/_printer).
 if barstate.islast
 
   // Do not assign with `var`.
-  printer = tl._printer.new()
+  printer = tools._printer.new()
 ```
 
 Below we will go through all the available methods and some examples of how to use them. All the
@@ -38,8 +38,9 @@ examples below assumes we already have a printer object created.
 </Note>
 
 ## cell()
-[`cell()`](#): Can be used to change the orientation of arrays to horizontal, or to set a custom [`cellStyle`](/cellStyle).
-The last example assumes we already have a variable called customCellStyle.
+  - [`cell()`](_printer#cell): Used for changing the orientation of arrays to horizontal.
+  - [`cell()`](_printer#cell-2): Used for setting a custom [`cellStyle`](/styles#cell-style). 
+  - The last example assumes we already have a variable called `customCellStyle`.
 
 <CodeGroup>
 
@@ -56,19 +57,19 @@ The last example assumes we already have a variable called customCellStyle.
 
   ```js {{ title: "Function" }}
   // For printing arrays vertically, set horizontal to false (default).
-  tl.cell(printer, horizontal=false) 
+  tools.cell(printer, horizontal=false) 
   
   // For printing arrays horizontally, set horizontal to true
-  tl.cell(printer, horizontal=true) 
+  tools.cell(printer, horizontal=true) 
 
   // Set a cellStyle.
-  tl.cell(printer, cellStyle=customCellStyle) 
+  tools.cell(printer, cellStyle=customCellStyle) 
   ```
 
 </CodeGroup>
 
 ## debug()
-[`debug()`](#): When set to true, adds helpful debugging information to the tooltip.
+[`debug()`](_printer#debug): When set to true, adds helpful debugging information to the tooltip.
 
 <CodeGroup>
 
@@ -82,16 +83,17 @@ The last example assumes we already have a variable called customCellStyle.
 
   ```js {{ title: "Function" }}
   // Turn on debugger.
-  tl.debug(printer, true) 
+  tools.debug(printer, true) 
 
   // Turn off debugger (default).
-  tl.debug(printer, false) 
+  tools.debug(printer, false) 
   ```
 
 </CodeGroup>
 
 ## footer()
-[`footer()`](#): Used to set a footer text and [`footerStyle`](/footerStyle). The example assumes we already have a variable called customFooterStyle.
+[`footer()`](_printer#footer): Used to set a footer text and [`footerStyle`](/styles#footer-style). 
+The example assumes we already have a variable called customFooterStyle.
 
 <CodeGroup>
 
@@ -102,13 +104,15 @@ The last example assumes we already have a variable called customCellStyle.
 
   ```js {{ title: "Function" }}
   // Set footer text and style.
-  tl.footer(printer, "Some footer", footerStyle=customFooterStyle) 
+  tools.footer(printer, "Some footer", footerStyle=customFooterStyle) 
   ```
 
 </CodeGroup>
 
 ## gutter()
-[`gutter()`](#): Used to turn gutter on or off, and set the [`gutterStyle`](/gutterStyle). The last example assumes we already have a variable called custoGutterStyle.
+  - [`gutter()`](_printer#gutter): Used for adding a gutter space between each [`print()`](/_printer#print) statements.
+  - [`gutter()`](_printer#gutter-2): Used for setting a custom [`gutterStyle`](/styles#gutter-style). 
+  - The last example assumes we already have a variable called `customGutterStyle`.
 
 <CodeGroup>
 
@@ -125,13 +129,13 @@ The last example assumes we already have a variable called customCellStyle.
 
   ```js {{ title: "Function" }}
   // Set gutter on (default).
-  tl.gutter(printer, true) 
+  tools.gutter(printer, true) 
 
   // Set gutter off.
-  tl.gutter(printer, false) 
+  tools.gutter(printer, false) 
 
   // Set a gutterStyle.
-  tl.gutter(printer, gutterStyle=customGutterStyle) 
+  tools.gutter(printer, gutterStyle=customGutterStyle) 
   ```
 
 
@@ -139,7 +143,8 @@ The last example assumes we already have a variable called customCellStyle.
 
 
 ## header()
-[`header()`](#): Used to set a header text and [`headerStyle`](/headerStyle). The example assumes we already have a variable called customHeaderStyle.
+[`header()`](_printer#header): Used for setting a header text and [`headerStyle`](/styles#header-style). 
+The example assumes we already have a variable called customHeaderStyle.
 
 <CodeGroup>
 
@@ -150,13 +155,13 @@ The last example assumes we already have a variable called customCellStyle.
 
   ```js {{ title: "Function" }}
   // Set header text and style.
-  tl.header(printer, "Some header", headerStyle=customHeaderStyle) 
+  tools.header(printer, "Some header", headerStyle=customHeaderStyle) 
   ```
 
 </CodeGroup>
 
 ## print()
-[`print()`](#): Outputs data onto the screen. Some of the examples below assumes we already
+[`print()`](_printer#print): Outputs data onto the screen. Some of the examples below assumes we already
 have the variables called customTitleStyle and customCellStyle.
 
 <CodeGroup>
@@ -165,23 +170,23 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Basic types.
 
   // string
-  str  = tl._rndmString()
+  str  = tools._rndmString()
   printer.print(str)
 
   // float
-  flt  = tl._rndmFloat()
+  flt  = tools._rndmFloat()
   printer.print(flt)
 
   // int
-  int  = tl._rndmInt()
+  int  = tools._rndmInt()
   printer.print(int)
 
   // bool
-  bool = tl._rndmBool()
+  bool = tools._rndmBool()
   printer.print(bool)
 
   // color
-  clr  = tl._rndmColor()
+  clr  = tools._rndmColor()
   printer.print(clr)
   
   //-----------------------------------
@@ -189,23 +194,23 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Arrays.
 
   // array<string>
-  strArr  = tl._rndmStringArray()
+  strArr  = tools._rndmStringArray()
   printer.print(strArr)
 
   // array<float>
-  fltArr  = tl._rndmFloatArray()
+  fltArr  = tools._rndmFloatArray()
   printer.print(fltArr)
 
   // array<int>
-  intArr  = tl._rndmIntArray()
+  intArr  = tools._rndmIntArray()
   printer.print(intArr)
 
   // array<bool>
-  boolArr = tl._rndmBoolArray()
+  boolArr = tools._rndmBoolArray()
   printer.print(boolArr)
 
   // array<color>
-  clrArr  = tl._rndmColorArray()
+  clrArr  = tools._rndmColorArray()
   printer.print(clrArr)
 
   //-----------------------------------
@@ -213,23 +218,23 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Matrix.
 
   // matrix<string>
-  strMtx  = tl._rndmStringMatrix()
+  strMtx  = tools._rndmStringMatrix()
   printer.print(strMtx)
 
   // matrix<float>
-  fltMtx  = tl._rndmFloatMatrix()
+  fltMtx  = tools._rndmFloatMatrix()
   printer.print(fltMtx)
 
   // matrix<int>
-  intMtx  = tl._rndmIntMatrix()
+  intMtx  = tools._rndmIntMatrix()
   printer.print(intMtx)
 
   // matrix<bool>
-  boolMtx = tl._rndmBoolMatrix()
+  boolMtx = tools._rndmBoolMatrix()
   printer.print(boolMtx)
 
   // matrix<color>
-  clrMtx  = tl._rndmColorMatrix()
+  clrMtx  = tools._rndmColorMatrix()
   printer.print(clrMtx)
 
   //-----------------------------------
@@ -237,140 +242,140 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Title.
 
   // Add a title.
-  printer.print(tl._rndmFloatArray, title="Random float array")
+  printer.print(tools._rndmFloatArray, title="Random float array")
 
   // Change the orientation of title.
   // Changing orientation for all titles.
   printer.title(top=false)
-  printer.print(tl._rndmFloatArray, title="Random float array")
-  printer.print(tl._rndmSentence, title="Random sentence")
-  printer.print(tl._rndmFloatMatrix, title="Random float matrix")
+  printer.print(tools._rndmFloatArray, title="Random float array")
+  printer.print(tools._rndmSentence, title="Random sentence")
+  printer.print(tools._rndmFloatMatrix, title="Random float matrix")
 
   // Changing orientation for single title.
   ts = titleStyle.copy(printer.titleStyle)
   ts.top := false
-  printer.print(tl._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
-  printer.print(tl._rndmSentence, title="Random sentence") // Back to default orientation.
-  printer.print(tl._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+  printer.print(tools._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
+  printer.print(tools._rndmSentence, title="Random sentence") // Back to default orientation.
+  printer.print(tools._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
 
   //-----------------------------------
 
   // Printing: Styles.
 
   // Add custom titleStyle and cellStyle to print method.
-  printer.print(tl._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
-  printer.print(tl._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
-  printer.print(tl._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
-  printer.print(tl._rndmIntArray, title="Random integer array") // Back to default styles.
+  printer.print(tools._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  printer.print(tools._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  printer.print(tools._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  printer.print(tools._rndmIntArray, title="Random integer array") // Back to default styles.
   ```
 
   ```js {{ title: "Function" }}
   // Printing: Basic types.
 
   // string
-  str  = tl._rndmString()
-  tl.print(printer, str)
+  str  = tools._rndmString()
+  tools.print(printer, str)
 
   // float
-  flt  = tl._rndmFloat()
-  tl.print(printer, flt)
+  flt  = tools._rndmFloat()
+  tools.print(printer, flt)
 
   // int
-  int  = tl._rndmInt()
-  tl.print(printer, int)
+  int  = tools._rndmInt()
+  tools.print(printer, int)
 
   // bool
-  bool = tl._rndmBool()
-  tl.print(printer, bool)
+  bool = tools._rndmBool()
+  tools.print(printer, bool)
 
   // color
-  clr  = tl._rndmColor()
-  tl.print(printer, clr)
+  clr  = tools._rndmColor()
+  tools.print(printer, clr)
   
   //-----------------------------------
 
   // Printing: Arrays.
 
   // array<string>
-  strArr  = tl._rndmStringArray()
-  tl.print(printer, strArr)
+  strArr  = tools._rndmStringArray()
+  tools.print(printer, strArr)
 
   // array<float>
-  fltArr  = tl._rndmFloatArray()
-  tl.print(printer, fltArr)
+  fltArr  = tools._rndmFloatArray()
+  tools.print(printer, fltArr)
 
   // array<int>
-  intArr  = tl._rndmIntArray()
-  tl.print(printer, intArr)
+  intArr  = tools._rndmIntArray()
+  tools.print(printer, intArr)
 
   // array<bool>
-  boolArr = tl._rndmBoolArray()
-  tl.print(printer, boolArr)
+  boolArr = tools._rndmBoolArray()
+  tools.print(printer, boolArr)
 
   // array<color>
-  clrArr  = tl._rndmColorArray()
-  tl.print(printer, clrArr)
+  clrArr  = tools._rndmColorArray()
+  tools.print(printer, clrArr)
 
   //-----------------------------------
 
   // Printing: Matrix.
 
   // matrix<string>
-  strMtx  = tl._rndmStringMatrix()
-  tl.print(printer, strMtx)
+  strMtx  = tools._rndmStringMatrix()
+  tools.print(printer, strMtx)
 
   // matrix<float>
-  fltMtx  = tl._rndmFloatMatrix()
-  tl.print(printer, fltMtx)
+  fltMtx  = tools._rndmFloatMatrix()
+  tools.print(printer, fltMtx)
 
   // matrix<int>
-  intMtx  = tl._rndmIntMatrix()
-  tl.print(printer, intMtx)
+  intMtx  = tools._rndmIntMatrix()
+  tools.print(printer, intMtx)
 
   // matrix<bool>
-  boolMtx = tl._rndmBoolMatrix()
-  tl.print(printer, boolMtx)
+  boolMtx = tools._rndmBoolMatrix()
+  tools.print(printer, boolMtx)
 
   // matrix<color>
-  clrMtx  = tl._rndmColorMatrix()
-  tl.print(printer, clrMtx)
+  clrMtx  = tools._rndmColorMatrix()
+  tools.print(printer, clrMtx)
 
   //-----------------------------------
 
   // Printing: Title.
 
   // Add a title.
-  tl.print(printer, tl._rndmFloatArray, title="Random float array")
+  tools.print(printer, tools._rndmFloatArray, title="Random float array")
 
   // Change the orientation of title.
   // Changing orientation for all titles.
-  tl.title(printer, top=false)
-  tl.print(printer, tl._rndmFloatArray, title="Random float array")
-  tl.print(printer, tl._rndmSentence, title="Random sentence")
-  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix")
+  tools.title(printer, top=false)
+  tools.print(printer, tools._rndmFloatArray, title="Random float array")
+  tools.print(printer, tools._rndmSentence, title="Random sentence")
+  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix")
 
   // Changing orientation for single title.
-  ts = tl.titleStyle.copy(printer.titleStyle)
+  ts = tools.titleStyle.copy(printer.titleStyle)
   ts.top := false
-  tl.print(printer, tl._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
-  tl.print(printer, tl._rndmSentence, title="Random sentence") // Back to default orientation.
-  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+  tools.print(printer, tools._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
+  tools.print(printer, tools._rndmSentence, title="Random sentence") // Back to default orientation.
+  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
 
   //-----------------------------------
 
   // Printing: Styles.
 
   // Add custom titleStyle and cellStyle to print method.
-  tl.print(printer, tl._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
-  tl.print(printer, tl._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
-  tl.print(printer, tl._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
-  tl.print(printer, tl._rndmIntArray, title="Random integer array") // Back to default styles.
+  tools.print(printer, tools._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  tools.print(printer, tools._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  tools.print(printer, tools._rndmIntArray, title="Random integer array") // Back to default styles.
   ```
 
 </CodeGroup>
 
 ## stack()
-[`stack()`](#): Used to change the orientation of the printer. By default, groups data and stacks it vertically. 
+[`stack()`](_printer#stack): Used for changing the orientation of the printer. By default, groups data and stacks it vertically. 
 Setting this to false will print each group side by side.
 
 <CodeGroup>
@@ -385,16 +390,16 @@ Setting this to false will print each group side by side.
 
   ```js {{ title: "Function" }}
   // Turn off stacking.
-  tl.stack(printer, false) 
+  tools.stack(printer, false) 
 
   // Turn on stacking (default).
-  tl.stack(printer, true) 
+  tools.stack(printer, true) 
   ```
 
 </CodeGroup>
 
 ## theme()
-[`theme()`](#): Used to add a preset style combination to the printer object.
+[`theme()`](_printer#theme): Used for adding a preset style combination to a printer object.
 
 <CodeGroup>
 
@@ -435,37 +440,39 @@ Setting this to false will print each group side by side.
   // blue, gray (default), green, orange, pink, purple, red, white, yellow
 
   // Set 'blue' theme.
-  tl.theme(printer, "blue") 
+  tools.theme(printer, "blue") 
 
   // Set 'gray' theme.
-  tl.theme(printer, "gray") 
+  tools.theme(printer, "gray") 
 
   // Set 'green' theme.
-  tl.theme(printer, "green") 
+  tools.theme(printer, "green") 
 
   // Set 'orange' theme.
-  tl.theme(printer, "orange") 
+  tools.theme(printer, "orange") 
 
   // Set 'pink' theme.
-  tl.theme(printer, "pink") 
+  tools.theme(printer, "pink") 
 
   // Set 'purple' theme.
-  tl.theme(printer, "purple") 
+  tools.theme(printer, "purple") 
 
   // Set 'red' theme.
-  tl.theme(printer, "red") 
+  tools.theme(printer, "red") 
 
   // Set 'white' theme.
-  tl.theme(printer, "white") 
+  tools.theme(printer, "white") 
 
   // Set 'yellow' theme.
-  tl.theme(printer, "yellow")
+  tools.theme(printer, "yellow")
   ```
 
 </CodeGroup>
 
 ## title()
-[`title()`](#): Used to set the position of titles and [`titleStyle`](/titleStyle). The last example assumes we already have a variable called customTitleStyle.
+  - [`title()`](_printer#title): Used for setting the position of of titles.
+  - [`title()`](_printer#title-2): Used for setting a custom [`titleStyle`](/styles#title-style). 
+  - The last example assumes we already have a variable called `customTitleStyle`.
 
 <CodeGroup>
 
@@ -482,13 +489,13 @@ Setting this to false will print each group side by side.
 
   ```js {{ title: "Function" }}
   // Place titles on top (default).
-  tl.title(printer, top=true) 
+  tools.title(printer, top=true) 
 
   // Place titles on left.
-  tl.title(printer, top=false) 
+  tools.title(printer, top=false) 
 
   // Set a titleStyle.
-  tl.title(printer, titleStyle=customtitleStyle) 
+  tools.title(printer, titleStyle=customtitleStyle) 
   ```
 
 </CodeGroup>

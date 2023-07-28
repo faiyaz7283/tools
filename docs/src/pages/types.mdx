@@ -9,9 +9,9 @@ the type to return a certain value or perform a specific task. The [`_type()`](/
 method, Pinescript users can create more robust and flexible scripts that can adapt to a wide range of data inputs.
 
 <Note>
-  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  For all the examples in this page, `tools` is used as a namespace for the tools library.
   If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tl` as namespace.
+  version of the library in your script first, and assign `tools` as namespace.
 </Note>
 
 <CodeGroup>
@@ -20,56 +20,56 @@ method, Pinescript users can create more robust and flexible scripts that can ad
 // Example testing object types 
 
 varStr = "Hello"
-varStr.tl._type() // returns "string"
+varStr.tools._type() // returns "string".
 
 varFlt = 1.25
-varFlt.tl._type() // returns "float"
+varFlt.tools._type() // returns "float".
 
 int varInt = 100
-varInt.tl._type() // returns "int"
+varInt.tools._type() // returns "int".
 
 bool varBool = true
-varBool.tl._type() // returns "bool"
+varBool.tools._type() // returns "bool".
 
 color varClr = color.red
-varClr.tl._type() // returns "color"
+varClr.tools._type() // returns "color".
 
 table varTbl = table.new(position, col, row)
-varTbl.tl._type() // returns "table"
+varTbl.tools._type() // returns "table".
 
 array<string> varArrS = array.new_string(5,na)
-varArrS.tl._type() // returns "array<string>"
+varArrS.tools._type() // returns "array<string>".
 
 matrix<float> varMtxF = matrix.new<float>(4,4,0.5)
-varMtxF.tl._type() // returns "matrix<float>"
+varMtxF.tools._type() // returns "matrix<float>".
 ```
 
 ```js {{ title: 'Function' }}
 // Example testing object types 
 
 varStr = "Hello"
-tl._type(varStr) // returns "string"
+tools._type(varStr) // returns "string".
 
 varFlt = 1.25
-tl._type(varFlt) // returns "float"
+tools._type(varFlt) // returns "float".
 
 int varInt = 100
-tl._type(varInt) // returns "int"
+tools._type(varInt) // returns "int".
 
 bool varBool = true
-tl._type(varBool) // returns "bool"
+tools._type(varBool) // returns "bool".
 
 color varClr = color.red
-tl._type(varClr) // returns "color"
+tools._type(varClr) // returns "color".
 
 table varTbl = table.new(position, col, row)
-tl._type(varTbl) // returns "table"
+tools._type(varTbl) // returns "table".
 
 array<string> varArrS = array.new_string(5,na)
-tl._type(varArrS) // returns "array<string>"
+tools._type(varArrS) // returns "array<string>".
 
 matrix<float> varMtxF = matrix.new<float>(4,4,0.5)
-tl._type(varMtxF) // returns "matrix<float>"
+tools._type(varMtxF) // returns "matrix<float>".
 ```
 
 </CodeGroup>

@@ -1,0 +1,159 @@
+export const description =
+  'In this guide, we’ll look at some usages of breakind down and working with timestamps.'
+
+# Timestamps
+
+The tools library offers a comprehensive set of methods to efficiently calculate and handle 
+timestamps. With these tools, you can effortlessly access various segments of a given epoch 
+time, such as seconds, years, months, weeks, days, hours, and minutes. Additionally, you can 
+compare two timestamps and calculate their time differences in all available segments. 
+The library also provides a convenient method to get a human-readable formatted output, 
+breaking down the time difference into years, months, weeks, days, hours, minutes, and 
+seconds by default. Moreover, you have the flexibility to customize the output by excluding 
+specific segments. For instance, you can omit years and weeks to format the output with 
+only days, hours, minutes, and seconds.
+
+<Note>
+  For all the examples in this page, `tools` is used as a namespace for the tools library.
+  If you are following along with the examples, please make sure to import the latest 
+  version of the library in your script first, and assign `tools` as namespace.
+</Note>
+
+## Time segments
+
+The tools library offers a range of convenient methods to break down a given epoch timestamp into 
+specific time segments. Additionally, if you provide a second timestamp, these methods can calculate 
+the time difference between the two given times. This makes it easy to access and work with various 
+segments of time, providing valuable insights and aiding in time-related calculations. Available time 
+segments breakdown: [`_years()`](/_timestamp#years), [`_months()`](/_timestamp#months), 
+[`_weeks()`](/_timestamp#weeks), [`_days()`](/_timestamp#days), [`_hours()`](/_timestamp#hours), 
+[`_minutes()`](/_timestamp#minutes), and [`_seconds()`](/_timestamp#seconds).
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+// Example timestamps used:
+var timestamp1 = 1690356056000 // 2023-07-26 03:20:56 AM GMT
+var timestamp2 = 1389514846000 // 2014-01-12 03:20:46 AM GMT
+
+// Segments: (casting to integer to discard any remainder values).
+
+// Years
+int(timestamp1.tools._years())              // returns 53. (53 years since 1970).
+int(timestamp1.tools._years(timestamp2))    // returns 9. (9 years difference).
+
+// Months
+int(timestamp1.tools._months())             // returns 642. (642 months since 1970).
+int(timestamp1.tools._months(timestamp2))   // returns 114. (114 months difference).
+
+// Weeks
+int(timestamp1.tools._weeks())              // returns 2794. (2794 weeks since 1970).
+int(timestamp1.tools._weeks(timestamp2))    // returns 497. (497 weeks difference).
+
+// Days
+int(timestamp1.tools._days())               // returns 19564. (19564 days since 1970).
+int(timestamp1.tools._days(timestamp2))     // returns 3481. (3481 days difference).
+
+// Hours
+int(timestamp1.tools._hours())              // returns 469543. (469543 hours since 1970).
+int(timestamp1.tools._hours(timestamp2))    // returns 83567. (83567 hours difference).
+
+// Minutes
+int(timestamp1.tools._minutes())            // returns 28172600. (28172600 minutes since 1970).
+int(timestamp1.tools._minutes(timestamp2))  // returns 5014020. (5014020 minutes difference).
+
+// Seconds
+int(timestamp1.tools._seconds())            // returns 1690356056. (1690356056 seconds since 1970).
+int(timestamp1.tools._seconds(timestamp2))  // returns 300841210. (300841210 seconds difference).
+```
+
+```js {{ title: 'Function' }}
+// Example timestamps used:
+var timestamp1 = 1690356056000 // 2023-07-26 03:20:56 AM GMT
+var timestamp2 = 1389514846000 // 2014-01-12 03:20:46 AM GMT
+
+// Segments: (casting to integer to discard any remainder values).
+
+// Years
+int(tools._years(timestamp1))               // returns 53. (53 years since 1970).
+int(tools._years(timestamp1, timestamp2))   // returns 9. (9 years difference).
+
+// Months
+int(tools._months(timestamp1))              // returns 642. (642 months since 1970).
+int(tools._months(timestamp1, timestamp2))  // returns 114. (114 months difference).
+
+// Weeks
+int(tools._weeks(timestamp1))               // returns 2794. (2794 weeks since 1970).
+int(tools._weeks(timestamp1, timestamp2))   // returns 497. (497 weeks difference).
+
+// Days
+int(tools._days(timestamp1))                // returns 19564. (19564 days since 1970).
+int(tools._days(timestamp1, timestamp2))    // returns 3481. (3481 days difference).
+
+// Hours
+int(tools._hours(timestamp1))               // returns 469543. (469543 hours since 1970).
+int(tools._hours(timestamp1, timestamp2))   // returns 83567. (83567 hours difference).
+
+// Minutes
+int(tools._minutes(timestamp1))             // returns 28172600. (28172600 minutes since 1970).
+int(tools._minutes(timestamp1, timestamp2)) // returns 5014020. (5014020 minutes difference).
+
+// Seconds
+int(tools._seconds(timestamp1))             // returns 1690356056. (1690356056 seconds since 1970).
+int(tools._seconds(timestamp1, timestamp2)) // returns 300841210. (300841210 seconds difference).
+```
+
+</CodeGroup>
+
+## Formatted time difference
+
+If you prefer a neatly formatted human-readable time difference utilizing all or a selection of time 
+segments, you can conveniently use the method [`_getTimeDifference()`](/_timestamp#get-time-difference). 
+This method will return the time difference in a user-friendly manner, making it easy to comprehend 
+specific time units as needed.
+
+<CodeGroup>
+
+```js {{ title: 'Method' }}
+// Example timestamps used:
+var timestamp1 = 1690356056000 // 2023-07-26 03:20:56 AM GMT
+var timestamp2 = 1389514846000 // 2014-01-12 03:20:46 AM GMT
+
+// Get the time difference between timestamp1 and timenow.
+timestamp1.tools._getTimeDifference()             
+// returns '1 day, 12 hours, 37 minutes, and 18 seconds' (based on my current time of writing this).
+
+// Get the time difference between timestamp1 and timestamp2.
+timestamp1.tools._getTimeDifference(timestamp2)   
+// returns '9 years, 6 months, 2 weeks, 7 hours, 38 minutes, and 34 seconds.
+
+// Get the time difference between timestamp1 and timestamp2. 
+// By default, all segments - years, months, weeks, days, hours, minutes, and seconds - are included. 
+// To customize the output, just turn off the segments you want to omit.
+// Example with switching months and weeks off.
+timestamp1.tools._getTimeDifference(timestamp2, months=false, weeks=false)  
+// returns '9 years, 196 days, 23 hours, and 10 seconds.
+```
+
+```js {{ title: 'Function' }}
+// Example timestamps used:
+var timestamp1 = 1690356056000 // 2023-07-26 03:20:56 AM GMT
+var timestamp2 = 1389514846000 // 2014-01-12 03:20:46 AM GMT
+
+// Get the time difference between timestamp1 and timenow.
+tools._getTimeDifference(timestamp1)             
+// returns '1 day, 12 hours, 37 minutes, and 18 seconds' (based on current time of writing this).
+
+// Get the time difference between timestamp1 and timestamp2.
+tools._getTimeDifference(timestamp1, timestamp2)   
+// returns '9 years, 6 months, 2 weeks, 7 hours, 38 minutes, and 34 seconds.
+
+// Get the time difference between timestamp1 and timestamp2. 
+// By default, all segments years, months, weeks, days, hours, minutes, and seconds are included. 
+// To customize the output, just turn off the segments you want to omit.
+// Example with switching months and weeks off.
+tools._getTimeDifference(timestamp1, timestamp2, months=false, weeks=false)  
+// returns '9 years, 196 days, 23 hours, and 10 seconds'.
+```
+
+</CodeGroup>

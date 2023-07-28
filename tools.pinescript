@@ -660,6 +660,153 @@ export _rndmTimestampMatrix(int rows=0, int columns=0, int year=0, int month=0, 
 
 // }
 
+// { Timestamps: Methods and functions to help with timestamps, time, date, etc.
+
+// @function For *INTERNAL* use only.
+__getSeconds(string this) =>
+	int result = na
+	// Calculate in seconds.
+	_minute = 60 // 60 seconds in a minute.
+	_hour = 60 * _minute // 60 minutes in an hour.
+	_day = 24 * _hour // 24 hours in a day.
+	_week = 7 * _day // 7 days in a week.
+	_month = int(30.44 * _day) // 30.44 days in a month.
+	_year = 365 * _day // 365 days in a year.
+	if str.lower(this) == 'year' or this == 'y'
+		result := _year
+	else if str.lower(this) == 'month' or this == 'M'
+		result := _month
+	else if str.lower(this) == 'week' or this == 'w'
+		result := _week
+	else if str.lower(this) == 'day' or this == 'd'
+		result := _day
+	else if str.lower(this) == 'hour' or this == 'h'
+		result := _hour
+	else if str.lower(this) == 'minute' or this == 'm'
+		result := _minute
+	result
+
+// @function            Get total epoch seconds for a timestamp, or the difference in seconds between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in seconds time.
+export method _seconds(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+    diffMilliseconds = not na(timestamp2) ? timestamp2 - timestamp1 : timestamp1
+	math.abs(diffMilliseconds) / 1000
+
+// @function            Get total epoch years for a timestamp, or the difference in years between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in years time.
+export method _years(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('year')
+
+// @function            Get total epoch months for a timestamp, or the difference in months between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in months time.
+export method _months(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('month')
+
+// @function            Get total epoch weeks for a timestamp, or the difference in weeks between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in weeks time.
+export method _weeks(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('week')
+
+// @function            Get total epoch days for a timestamp, or the difference in days between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in days time.
+export method _days(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('day')
+
+// @function            Get total epoch hours for a timestamp, or the difference in hours between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in hours time.
+export method _hours(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('hour')
+
+// @function            Get total epoch minutes for a timestamp, or the difference in minutes between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @returns             (int/float) Total difference in minutes time.
+export method _minutes(int timestamp1, int timestamp2=na) =>
+	// @function For *INTERNAL* use only.
+	diffInSeconds = _seconds(timestamp1, timestamp2)
+	diffInSeconds / __getSeconds('minute')
+
+// @function            Get breakdown of the full time difference with current time or between two unix timestamps.
+// @param timestamp1    (int) The start time in unix timestamp.
+// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
+// @param dsiplay    	(string)  (y=year, M=month, w=week, h=hour, m=month, s=second). (`y,M,w,h,m,s` is used if no argument is supplied).
+// @returns             (string) Total breakdown of time difference in segments.
+export method _getTimeDifference(int timestamp1, int timestamp2=na, bool years=true, bool months=true, bool weeks=true, bool days=true, bool hours=true, bool minutes=true, bool seconds=true) =>
+	st = timestamp1
+    et = not na(timestamp2) ? timestamp2 : timenow
+	msg = array.new<string>()
+	if years // Display years:
+		yrs = int(_years(st, et))
+		if yrs > 0
+			msg.push(str.format("{0} {1}", yrs, yrs > 1 ? "years" : "year"))
+			// remove the value from seconds
+			st := st - (__getSeconds('year') * yrs) * 1000
+	if months // Display months:
+		mnths = int(_months(st, et))
+		if mnths > 0
+			msg.push(str.format("{0} {1}", mnths, mnths > 1 ? "months" : "month"))
+			// remove the value from seconds
+			st := st - (__getSeconds('month') * mnths) * 1000
+	if weeks // Display weeks:
+		wks = int(_weeks(st, et))
+		if wks > 0
+			msg.push(str.format("{0} {1}", wks, wks > 1 ? "weeks" : "week"))
+			// remove the value from seconds
+			st := st - (__getSeconds('week') * wks) * 1000
+	if days // Display days:
+		dys = int(_days(st, et))
+		if dys > 0
+			msg.push(str.format("{0} {1}", dys, dys > 1 ? "days" : "day"))
+			// remove the value from seconds
+			st := st - (__getSeconds('day') * dys) * 1000
+	if hours // Display hours:
+		hrs = int(_hours(st, et))
+		if hrs > 0
+			msg.push(str.format("{0} {1}", hrs, hrs > 1 ? "hours" : "hour"))
+			// remove the value from seconds
+			st := st - (__getSeconds('hour') * hrs) * 1000
+	if minutes // Display minutes:
+		mnts = int(_minutes(st, et))
+		if mnts > 0
+			msg.push(str.format("{0} {1}", mnts, mnts > 1 ? "minutes" : "minute"))
+			// remove the value from seconds
+			st := st - (__getSeconds('minute') * mnts) * 1000
+	if seconds // Display seconds:
+		scnds = int(_seconds(st, et))
+		if scnds > 0
+			msg.push(str.format("{0} {1}", scnds, scnds > 1 ? "seconds" : "second"))
+			// remove the value from seconds
+			st := st - (__getSeconds('second') * scnds) * 1000
+	if msg.size() > 1
+		lastItem = msg.pop()
+		msg.push("and " + lastItem)
+	msg._join(', ')
+
+// }
+
 // { Colors: Methods and functions related to colors, and gradients.
 
 // @function        Custom preset color.
@@ -1395,33 +1542,47 @@ export method debug(_printer this, bool debug) =>
 
 //}
 
-var header = "Tools: with a comprehensive print method, plus more."
-var footer = "Built with care. Any question or suggestion, please leave a comment. Thanks."
-var sections = array.from("Get data `types`.", "Cast data from one type to another.", "Joins and Splits", "Generators.", "A color method and gradient object.", "A comprehensive printer object.")
+var header = "Tools: faiyaz7283.github.io/tools"
+var footer = "Full documentation: faiyaz7283.github.io/tools"
+var sections = array.from("Get data `types`.", "Cast data from one type to another.", "Joins and Splits", "Generators.", "A color method and gradient object.", "Timestamps.", "A comprehensive printer object.")
 var docSec1 = "Get type for string, float, integer, boolean, color, box, label, line, linefill, table, array<type> and matrix<type>."
 var docSec2 = "Casting data from one type to another.\nFor example, use _bool(string), will return a boolean value. If the string is empty, it will be false, else true.\nAnd on the other hand _str(bool), would simply convert the bool value into string.\nAvailable casting types are bool, float, integer, string, and color. "
 var docSec3 = "There are also some useful join and splitting methods for string to array and array to string conversions.\nFor array to string conversion, available array types are string, float, int, bool and color."
 var docSec4 = "Use generators to generate:\n- random strings (characters, words, sentences)\n- booleans\n- numbers (integers, floats, UNIX timestamps)\n- colors\nAll arrays and matrix are supported."
 var docSec5 = "A convenient _color() method that accepts preset color names and returns the color.\nColors include aqua, black, blue, gray, green, orange, pink, purple, red, white and yellow.\nAdd _bright, _light, _medium or _dark with the color name to get a specific shade of that color.\nSetup a gradient object,and get gradient color of a number."
-var docSec6a = "Use the convenient _printer object and print method to print almost anything on screen.\nPrinter object can print a single item or multiple sets of data at once.\nBehind the scene, it uses table, and cells strategically for printing.\nAll _printer methods are chain-able for convenience."
-var docSec6b = "Header: Use the convenient header method to add a header, and pass a headerStyle object to customize."
-var docSec6c = "Footer: Use the convenient footer method to add a footer, and pass a footerStyle object to customize."
-var docSec6d = "There's also several other convenient methods to customize the printer.\n- theme(): method to add a preset theme.\n   Choices are gray (same as default color style), blue, orange, green, red, purple, pink, yellow and white.\n- title(): pass custom default titleStyle object for all data,\n   or just pass top=<true/false> to designate the location of title placement.\n- stack(): use true or false to either stack each set of data (default is true), or side by side (if false).\n- gutter(): use true or false to add extra spacing. Pass a gutterStyle object to customize.\n- cell(): method to add custom default cell settings with cellStyle object,\n   or just pass horizontal=<true/false> to position array data vertically or horizontally.\n- debug(): use true or false, to print some helpful debugging info or hide them."
-var docSec6e = "Once a printer object is created, use the print() method to print any item on screen.\nEach print method accepts a title parameter for that particular dataset.\nYou can also pass titleStyle and cellStyle objects to individually target that dataset.\nYou can also pass a theme name to individual print methods."
-var docSec6 = array.from(docSec6a, docSec6b, docSec6c, docSec6d, docSec6e)
+var docSec6 = "Timestamps related functions and methods. For example, calculating the differences between two unix \ntimestamps and returning in a human readable format such as `timestamp1._getTimeDifference(timestamp2)` \nwill return \"1 year, 2 months, 4 days, 9 hours, 14 minutes and 20 seconds\"."
+var docSec7a = "Use the convenient _printer object and print method to print almost anything on screen.\nPrinter object can print a single item or multiple sets of data at once.\nBehind the scene, it uses table, and cells strategically for printing.\nAll _printer methods are chain-able for convenience."
+var docSec7b = "Header: Use the convenient header method to add a header, and pass a headerStyle object to customize."
+var docSec7c = "Footer: Use the convenient footer method to add a footer, and pass a footerStyle object to customize."
+var docSec7d = "There's also several other convenient methods to customize the printer.\n- theme(): method to add a preset theme.\n   Choices are gray (same as default color style), blue, orange, green, red, purple, pink, yellow and white.\n- title(): pass custom default titleStyle object for all data,\n   or just pass top=<true/false> to designate the location of title placement.\n- stack(): use true or false to either stack each set of data (default is true), or side by side (if false).\n- gutter(): use true or false to add extra spacing. Pass a gutterStyle object to customize.\n- cell(): method to add custom default cell settings with cellStyle object,\n   or just pass horizontal=<true/false> to position array data vertically or horizontally.\n- debug(): use true or false, to print some helpful debugging info or hide them."
+var docSec7e = "Once a printer object is created, use the print() method to print any item on screen.\nEach print method accepts a title parameter for that particular dataset.\nYou can also pass titleStyle and cellStyle objects to individually target that dataset.\nYou can also pass a theme name to individual print methods."
+var docSec7 = array.from(docSec7a, docSec7b, docSec7c, docSec7d, docSec7e)
 
 var hs = headerStyle.new(textSize=size.large)
 var fs = footerStyle.new(textSize=size.large, textHalign=text.align_right)
 var ts = titleStyle.new(top=false, textHalign=text.align_right, textValign=text.align_top, textSize=size.normal)
 var cs = cellStyle.new(textHalign=text.align_left, textSize=size.normal)
 
+var t1 = 1690356056000
+var t2 = 1389514846000
+var startTime = str.format_time(t1, "yyyy-MM-dd hh:mm:ss a", "America/New_York")
+var endTime = str.format_time(t2, "yyyy-MM-dd hh:mm:ss a", "America/New_York")
+var years = int(_years(t1, t2))
+var months = int(_months(t1, t2))
+var weeks = int(_weeks(t1, t2))
+var days = int(_days(t1, t2))
+var hours = int(_hours(t1, t2))
+var minutes = int(_minutes(t1, t2))
+var seconds = int(_seconds(t1, t2))
+
 if barstate.islast
     printer = _printer.new().header(header, hs).footer(footer, fs).stack(true).title(titleStyle=ts).gutter(true).cell(cellStyle=cs).theme("white")
     printer.headerStyle.textColor := _color("blue_medium")
-    printer.footerStyle.textColor := _color("orange_dark")
+    printer.footerStyle.textColor := _color("purple_dark")
     printer.print(docSec1, title=sections.get(0), theme="pink")
     printer.print(docSec2, title=sections.get(1), theme="orange")
     printer.print(docSec3, title=sections.get(2), theme="yellow")
     printer.print(docSec4, title=sections.get(3), theme="red")
     printer.print(docSec5, title=sections.get(4), theme="purple")
-    printer.print(docSec6, title=sections.get(5), theme="blue")
+    printer.print(docSec6, title=sections.get(5), theme="green")
+    printer.print(docSec7, title=sections.get(6), theme="blue")

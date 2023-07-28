@@ -1,0 +1,48 @@
+export const description =
+  'On this page, we’ll look at the make up of _color() method.'
+
+# The _color() method.
+The _color() method serves two distinct functions. Firstly, it acts as a method that returns a 
+color value based on **[constants](/colors#constants)**. Secondly, it functions as a method of the gradient object, 
+allowing users to obtain the gradient color value by providing it with a number.
+
+## _color()
+Get custom preset color.
+<Properties>
+  <Property name="this" type="string">
+    A preset constant. _Choices are: 
+    aqua_bright, aqua_dark, aqua_light, aqua_medium, 
+    black_bright, black_dark, black_light, black_medium,
+    blue_bright, blue_dark, blue_light, blue_medium,
+    gray_bright, gray_dark, gray_light, gray_medium,
+    green_bright, green_dark, green_light, green_medium,
+    orange_bright, orange_dark, orange_light, orange_medium,
+    pink_bright, pink_dark, pink_light, pink_medium,
+    purple_bright, purple_dark, purple_light, purple_medium,
+    red_bright, red_dark, red_light, red_medium,
+    white_bright, white_dark, white_light, white_medium,
+    yellow_bright, yellow_dark, yellow_light, yellow_medium._
+  </Property>
+  <Property name="transp" type="float">
+    A transparency value. _Optional. The default is 0._
+  </Property>
+  <Property name="returns" type="color">
+    A custom preset color value based on constant name.
+  </Property>
+</Properties>
+
+---
+
+## _color()
+Get the gradient color for given number.
+<Properties>
+  <Property name="this" type="_gradient">
+    A _gradient object.
+  </Property>
+  <Property name="num" type="float">
+    A number value. Must be in range of the minimum and maximum value of the _gradient object.
+  </Property>
+  <Property name="returns" type="color">
+    A custom preset color value based on constant name.
+  </Property>
+</Properties>

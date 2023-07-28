@@ -3,79 +3,79 @@ export const description =
 
 # Style
 
-There are six style objects that can be used to target individual areas of the [`_printer`](/_printer). These style 
+There are six style objects that can be used to target individual areas of the [`_printer`](/_printer#printer). These style 
 objects are pretty similar to styling table cells using the `table.cell()` method.
 
 <Note>
-  For all the examples in this page, `tl` is used as a namespace for the tools library.
+  For all the examples in this page, `tools` is used as a namespace for the tools library.
   If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tl` as namespace.
+  version of the library in your script first, and assign `tools` as namespace.
 </Note>
 
 ## Table
-Use the [`tableStyle`](/tableStyle) object to style the internal table. Since there is no dedicated 
-method for setting [`tableStyle`](/tableStyle), direct assignment is fine.
+Use the [`tableStyle`](/styles#table-style) object to style the internal table. Since there is no dedicated 
+method for setting [`tableStyle`](/styles#table-style), direct assignment is fine.
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom tableStyle object.
-var tbs = tl.tableStyle.new(
-             bgColor = tl._color("white_medium"),
-             frameColor = tl._color("red_dark"),
+var tbs = tools.tableStyle.new(
+             bgColor = tools._color("white_medium"),
+             frameColor = tools._color("red_dark"),
              frameWidth = 2,
-             borderColor = tl._color("red_bright"),
+             borderColor = tools._color("red_bright"),
              borderWidth = 2)
 
 if barstate.islast
     // Create a printer with the custom tableStyle.
-    printer = tl._printer.new(tableStyle=tbs)
+    printer = tools._printer.new(tableStyle=tbs)
 
     // Print something.
-    printer.print(tl._rndmStringMatrix(rows=2, columns=2))
+    printer.print(tools._rndmStringMatrix(rows=2, columns=2))
 ```
 
 ```js {{ title: 'Function' }}
 // Create a custom headerStyle object.
-var tbs = tl.tableStyle.new(
-             bgColor = tl._color("white_medium"),
-             frameColor = tl._color("red_dark"),
+var tbs = tools.tableStyle.new(
+             bgColor = tools._color("white_medium"),
+             frameColor = tools._color("red_dark"),
              frameWidth = 2,
-             borderColor = tl._color("red_bright"),
+             borderColor = tools._color("red_bright"),
              borderWidth = 2)
 
 if barstate.islast
     // Create a printer with the custom tableStyle.
-    printer = tl._printer.new(tableStyle=tbs)
+    printer = tools._printer.new(tableStyle=tbs)
 
     // Print something. 
-    tl.print(printer, tl._rndmStringMatrix(rows=2, columns=2))
+    tools.print(printer, tools._rndmStringMatrix(rows=2, columns=2))
 ```
 
 </CodeGroup>
 
 ## Header
-Use the [`headerStyle`](/headerStyle) object to style the header cell. To add a 
-[`headerStyle`](/headerStyle), use the [`header()`](#) method.
+Use the [`headerStyle`](/styles#header-style) object to style the header cell. To add a 
+[`headerStyle`](/styles#header-style), use the [`header()`](_printer#header) method.
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom headerStyle object.
-var hs = tl.headerStyle.new(
+var hs = tools.headerStyle.new(
            width = 0, 
            height = 5, 
            textHalign = text.align_left, 
            textValign = text.align_center, 
-           textColor = tl._color("purple_bright"), 
+           textColor = tools._color("purple_bright"), 
            textSize = size.large, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "HEADER: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using header().
     printer.header(val="Header with custom styling", headerStyle=hs)
@@ -86,53 +86,53 @@ if barstate.islast
 
 ```js {{ title: 'Function' }}
 // Create a custom headerStyle object.
-var hs = tl.headerStyle.new(
+var hs = tools.headerStyle.new(
            width = 0, 
            height = 5, 
            textHalign = text.align_left, 
            textValign = text.align_center, 
-           textColor = tl._color("purple_bright"), 
+           textColor = tools._color("purple_bright"), 
            textSize = size.large, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "HEADER: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using header().
-    tl.header(printer, val="Header with custom styling", headerStyle=hs)
+    tools.header(printer, val="Header with custom styling", headerStyle=hs)
 
     // Print something.
-    tl.print(printer, "Testing custom headerStyle")
+    tools.print(printer, "Testing custom headerStyle")
 ```
 
 </CodeGroup>
 
 
 ## Footer
-Use the [`footerStyle`](/footerStyle) object to style the footer cell. To add a 
-[`footerStyle`](/footerStyle), use the [`footer()`](#) method.
+Use the [`footerStyle`](/styles#footer-style) object to style the footer cell. To add a 
+[`footerStyle`](/styles#footer-style), use the [`footer()`](_printer#footer) method.
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom footerStyle object.
-var fs = tl.footerStyle.new(
+var fs = tools.footerStyle.new(
            width = 0, 
            height = 5, 
            textHalign = text.align_left, 
            textValign = text.align_center, 
-           textColor = tl.tl._color("purple_bright"), 
+           textColor = tools.tools._color("purple_bright"), 
            textSize = size.large, 
-           bgColor = tl.tl._color("blue_dark"), 
+           bgColor = tools.tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "FOOTER: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using footer().
     printer.footer(val="Footer with custom styling", footerStyle=fs)
@@ -143,55 +143,56 @@ if barstate.islast
 
 ```js {{ title: 'Function' }}
 // Create a custom footerStyle object.
-var fs = tl.footerStyle.new(
+var fs = tools.footerStyle.new(
            width = 0, 
            height = 5, 
            textHalign = text.align_left, 
            textValign = text.align_center, 
-           textColor = tl._color("purple_bright"), 
+           textColor = tools._color("purple_bright"), 
            textSize = size.large, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "FOOTER: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using footer().
-    tl.footer(printer, val="Footer with custom styling", footerStyle=fs)
+    tools.footer(printer, val="Footer with custom styling", footerStyle=fs)
 
     // Print something.
-    tl.print(printer, "Testing custom footerStyle")
+    tools.print(printer, "Testing custom footerStyle")
 ```
 
 </CodeGroup>
 
 ## Title cells
-Use the [`titleStyle`](/titleStyle) object to style all title cells or individual ones. 
-There are couple of ways to add custom [`titleStyle`](/titleStyle). We can use the 
-dedicated [`title()`](#) method to target all titles, or pass it to the print method to 
-target individual sets. Lets look at how to apply [`titleStyle`](/titleStyle).
+Use the [`titleStyle`](/styles#title-style) object to style all title cells or individual ones. 
+There are couple of ways to add custom [`titleStyle`](/styles#title-style). We can use the 
+dedicated [`title()`](_printer#title-2) method to target all titles, or pass it to the 
+[`print()`](_printer#print) method to target individual sets. Lets look at how to apply 
+[`titleStyle`](/styles#title-style).
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom titleStyle object.
-var ts = tl.titleStyle.new(
+var ts = tools.titleStyle.new(
            top = true,
            width = 0, 
            height = 0, 
            textHalign = text.align_center, 
            textValign = text.align_top, 
-           textColor = tl._color("green_light"), 
+           textColor = tools._color("green_light"), 
            textSize = size.normal, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "TITLE: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using title().
     printer.title(titleStyle=ts)
@@ -200,72 +201,73 @@ if barstate.islast
     printer.print("First print", title="First title")
 
     // Second print will use a new custom titleStyle passed directly to it.
-    printer.print("Second print", title="Second title", titleStyle=tl.titleStyle.new(top=false))
+    printer.print("Second print", title="Second title", titleStyle=tools.titleStyle.new(top=false))
 ```
 
 ```js {{ title: 'Function' }}
 // Create a custom titleStyle object.
-var ts = tl.titleStyle.new(
+var ts = tools.titleStyle.new(
            top = true,
            width = 0, 
            height = 0, 
            textHalign = text.align_center, 
            textValign = text.align_top, 
-           textColor = tl._color("green_light"), 
+           textColor = tools._color("green_light"), 
            textSize = size.normal, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "TITLE: {0}")
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using title().
-    tl.title(printer, titleStyle=ts)
+    tools.title(printer, titleStyle=ts)
 
     // First print will use the custom titleStyle, as passed thru the printer.
-    tl.print(printer, "First print", title="First title")
+    tools.print(printer, "First print", title="First title")
 
     // Second print will use a new custom titleStyle passed directly to it.
-    tl.print(printer, "Second print", title="Second title", titleStyle=tl.titleStyle.new(top=false))
+    tools.print(printer, "Second print", title="Second title", titleStyle=tools.titleStyle.new(top=false))
 ```
 
 </CodeGroup>
 
 ## Cells
-Use the [`cellStyle`](/cellStyle) object to style all the regular data cells. 
-There are couple of ways to add custom [`cellStyle`](/cellStyle). We can use 
-the dedicated [`cell()`](#) method to target all data cells, or pass it to the 
-print method to target individual sets. Lets look at how to apply [`cellStyle`](/cellStyle).
+Use the [`cellStyle`](/styles#cell-style) object to style all the regular data cells. 
+There are couple of ways to add custom [`cellStyle`](/styles#cell-style). We can use 
+the dedicated [`cell()`](_printer#cell-2) method to target all data cells, or pass it to the 
+[`print()`](/_printer#print) method to target individual sets. Lets look at how to apply 
+[`cellStyle`](/styles#cell-style).
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom cellStyle object.
-var cs = tl.cellStyle.new(
+var cs = tools.cellStyle.new(
            horizontal = false,
            width = 0, 
            height = 0, 
            textHalign = text.align_center, 
            textValign = text.align_top, 
-           textColor = tl._color("green_light"), 
+           textColor = tools._color("green_light"), 
            textSize = size.normal, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default,
            format = "CELL: {0}")
 
 // Create a second cellStyle.
-var cs2 = tl.cellStyle.copy(cs)
+var cs2 = tools.cellStyle.copy(cs)
 
 // Change few things.
 cs2.horizontal := true
-cs2.bgColor := tl._color("purple_dark", 80)
+cs2.bgColor := tools._color("purple_dark", 80)
 cs2.format := "Cell 2: {0}"
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using cell().
     printer.cell(cellStyle=cs)
@@ -273,40 +275,40 @@ if barstate.islast
     // Print something.
     
     // First print will use a custom cellStyle, as passed thru the printer.
-    printer.print(tl._rndmString())
+    printer.print(tools._rndmString())
     
     // Second print will use a new custom cellStyle passed directly to it.
-    printer.print(tl._rndmFloatArray(), cellStyle=cs2)
+    printer.print(tools._rndmFloatArray(), cellStyle=cs2)
     
     // Third print will again fall back to the first set cellStyle.
-    printer.print(tl._rndmBoolArray())
+    printer.print(tools._rndmBoolArray())
 ```
 
 ```js {{ title: 'Function' }}
 // Create a custom cellStyle object.
-var cs = tl.cellStyle.new(
+var cs = tools.cellStyle.new(
            horizontal = false,
            width = 0, 
            height = 0, 
            textHalign = text.align_center, 
            textValign = text.align_top, 
-           textColor = tl._color("green_light"), 
+           textColor = tools._color("green_light"), 
            textSize = size.normal, 
-           bgColor = tl._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default,
            format = "CELL: {0}")
 
 // Create a second cellStyle.
-var cs2 = tl.cellStyle.copy(cs)
+var cs2 = tools.cellStyle.copy(cs)
 
 // Change few things.
 cs2.horizontal := true
-cs2.bgColor := tl._color("purple_dark", 80)
+cs2.bgColor := tools._color("purple_dark", 80)
 cs2.format := "Cell 2: {0}"
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
 
     // Connect the style to the printer, using cell().
     cell(printer, cellStyle=cs)
@@ -314,84 +316,84 @@ if barstate.islast
     // Print something.
     
     // First print will use a custom cellStyle, as passed thru the printer.
-    tl.print(printer, tl._rndmString())
+    tools.print(printer, tools._rndmString())
     
     // Second print will use a new custom cellStyle passed directly to it.
-    tl.print(printer, tl._rndmFloatArray(), cellStyle=cs2)
+    tools.print(printer, tools._rndmFloatArray(), cellStyle=cs2)
     
     // Third print will again fall back to the first set cellStyle.
-    tl.print(printer, tl._rndmBoolArray())
+    tools.print(printer, tools._rndmBoolArray())
 ```
 
 </CodeGroup>
 
 ## Gutter Cells
-Use the [`gutterStyle`](/gutterStyle) object to style all the gutter cells. To add a 
-[`gutterStyle`](/gutterStyle), use the [`gutter()`](#) method.
+Use the [`gutterStyle`](/styles#gutter-style) object to style all the gutter cells. To add a 
+[`gutterStyle`](/styles#gutter-style), use the [`gutter()`](_printer#gutter-2) method.
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // Create a custom titleStyle object.
-var gs = tl.gutterStyle.new(
+var gs = tools.gutterStyle.new(
            gutter = true,
            width = 2, 
            height = 2)
 
 // Add some frame and border to help see the gutter space better.
-var tbs = tl.tableStyle.new(
+var tbs = tools.tableStyle.new(
              frameColor = color.silver, 
              borderColor = color.silver, 
              borderWidth = 1)
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new(tableStyle=tbs)
+    printer = tools._printer.new(tableStyle=tbs)
 
     // Connect the style to the printer, using cell().
     printer.gutter(gutterStyle=gs)
 
     // Print something.
-    printer.print(tl._rndmStringArray())
+    printer.print(tools._rndmStringArray())
     
     // Add few more data sets to see the gutterStyle in action. 
-    printer.print(tl._rndmFloatArray())
-    printer.print(tl._rndmIntMatrix())
+    printer.print(tools._rndmFloatArray())
+    printer.print(tools._rndmIntMatrix())
 ```
 
 ```js {{ title: 'Function' }}
 // Create a custom titleStyle object.
-var gs = tl.gutterStyle.new(
+var gs = tools.gutterStyle.new(
            gutter = true,
            width = 2, 
            height = 2)
 
 // Add some frame and border to help see the gutter space better.
-var tbs = tl.tableStyle.new(
+var tbs = tools.tableStyle.new(
              frameColor = color.silver, 
              borderColor = color.silver, 
              borderWidth = 1)
 
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new(tableStyle=tbs)
+    printer = tools._printer.new(tableStyle=tbs)
 
     // Connect the style to the printer, using cell().
-    tl.gutter(printer, gutterStyle=gs)
+    tools.gutter(printer, gutterStyle=gs)
 
     // Print something.
-    tl.print(printer, tl._rndmStringArray())
+    tools.print(printer, tools._rndmStringArray())
     
     // Add few more data sets to see the gutterStyle in action. 
-    tl.print(printer, tl._rndmFloatArray())
-    tl.print(printer, tl._rndmIntMatrix())
+    tools.print(printer, tools._rndmFloatArray())
+    tools.print(printer, tools._rndmIntMatrix())
 ```
 
 </CodeGroup>
 
 ## Themes
 
-You can style the printer with a convenient [`theme()`](/#) method, which uses preset colors to create a color
+You can style the printer with a convenient [`theme()`](/_printer#theme) method, which uses preset colors to create a color
 theme. Below are all the current available themes with their color guides.
 
 | | Background color | Frame color | Cell text color | Header/Footer/Title text color | Title background color | Header/Footer background color |
@@ -406,8 +408,8 @@ theme. Below are all the current available themes with their color guides.
 | white | #C8C8C80D | #FFFFFFB8 | #E1E1E1 | #000000 | #C8C8C8D9 | #EBEBEBDE |
 | yellow | #AFAF000D | #FFFF00B8 | #E1E1E1 | #000000 | #E6E600D9 | #FFFF00DE |
 
-There are couple of ways to set theme. We can use the dedicated [`theme()`](#) 
-method to target everything. We can also pass theme individually to each print method. 
+There are couple of ways to set theme. We can use the dedicated [`theme()`](/_printer#theme) 
+method to target everything. We can also pass theme individually to each [`print()`](/_printer#print) method. 
 Lets see how we can do both.
 
 <CodeGroup>
@@ -415,7 +417,7 @@ Lets see how we can do both.
 ```js {{ title: 'Method' }}
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
+    printer = tools._printer.new()
     printer.header("Header")
     printer.footer("Footer")
     
@@ -423,35 +425,35 @@ if barstate.islast
     printer.theme("green")
 
     // Print something.
-    printer.print(tl._rndmFloatArray(size=5), title="Green")
+    printer.print(tools._rndmFloatArray(size=5), title="Green")
 
     // Print another couple set of data, but give them their own themes.
-    printer.print(tl._rndmBoolMatrix(rows=3, columns=3), title="Orange", theme="orange")
-    printer.print(tl._rndmStringMatrix(rows=3, columns=3), title="Pink", theme="pink")
+    printer.print(tools._rndmBoolMatrix(rows=3, columns=3), title="Orange", theme="orange")
+    printer.print(tools._rndmStringMatrix(rows=3, columns=3), title="Pink", theme="pink")
 
     // Print another set of data, this one will fall back to the first theme.
-    printer.print(tl._rndmBoolArray(size=3), title="Green")
+    printer.print(tools._rndmBoolArray(size=3), title="Green")
 ```
 
 ```js {{ title: 'Function' }}
 if barstate.islast
     // Create a printer object.
-    printer = tl._printer.new()
-    tl.header("Header")
-    tl.footer("Footer")
+    printer = tools._printer.new()
+    tools.header("Header")
+    tools.footer("Footer")
 
     // Set the theme.
-    tl.theme(printer, "green")
+    tools.theme(printer, "green")
 
     // Print something.
-    tl.print(printer, tl._rndmFloatArray(size=5), title="Green")
+    tools.print(printer, tools._rndmFloatArray(size=5), title="Green")
 
     // Print another couple set of data, but give them their own themes.
-    tl.print(printer, tl._rndmBoolMatrix(rows=3, columns=3), title="Orange", theme="orange")
-    tl.print(printer, tl._rndmStringMatrix(rows=3, columns=3), title="Pink", theme="pink")
+    tools.print(printer, tools._rndmBoolMatrix(rows=3, columns=3), title="Orange", theme="orange")
+    tools.print(printer, tools._rndmStringMatrix(rows=3, columns=3), title="Pink", theme="pink")
 
     // Print another set of data, this one will fall back to the first theme.
-    tl.print(printer, tl._rndmBoolArray(size=3), title="Green")
+    tools.print(printer, tools._rndmBoolArray(size=3), title="Green")
 ```
 
 </CodeGroup>

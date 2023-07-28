@@ -1,0 +1,156 @@
+export const description =
+  'On this page, we’ll look at the make up of all the timestamp related methods.'
+
+# Timestamp related methods.
+A set of methods to help with breaking down and comparing timestamps.
+
+---
+
+## _years()
+Get the total epoch years for a single timestamp or calculate the time difference in years between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in years.
+  </Property>
+</Properties>
+
+---
+
+## _months()
+Get the total epoch months for a single timestamp or calculate the time difference in months between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in months.
+  </Property>
+</Properties>
+
+---
+
+## _weeks()
+Get the total epoch weeks for a single timestamp or calculate the time difference in weeks between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in weeks.
+  </Property>
+</Properties>
+
+---
+
+## _days()
+Get the total epoch days for a single timestamp or calculate the time difference in days between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in days.
+  </Property>
+</Properties>
+
+---
+
+## _hours()
+Get the total epoch hours for a single timestamp or calculate the time difference in hours between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in hours.
+  </Property>
+</Properties>
+
+---
+
+## _minutes()
+Get the total epoch minutes for a single timestamp or calculate the time difference in minutes between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in minutes.
+  </Property>
+</Properties>
+
+---
+
+## _seconds()
+Get the total epoch seconds for a single timestamp or calculate the time difference in seconds between two timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="returns" type="int/float">
+    The total time difference in seconds.
+  </Property>
+</Properties>
+
+---
+
+## _getTimeDifference()
+Get a detailed breakdown of the time difference from the current time or between two UNIX timestamps.
+<Properties>
+  <Property name="this" type="object">
+    An object of type int. (Epoch timestamp in milliseconds only).
+  </Property>
+  <Property name="timestamp2" type="int">
+    An object of type int. (Epoch timestamp in milliseconds only). _Optional. The default is na._
+  </Property>
+  <Property name="years" type="bool">
+    Calculate the total number of years. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="months" type="bool">
+    Calculate the total number of months. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="weeks" type="bool">
+    Calculate the total number of weeks. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="days" type="bool">
+    Calculate the total number of days. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="hours" type="bool">
+    Calculate the total number of hours. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="minutes" type="bool">
+    Calculate the total number of minutes. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="seconds" type="bool">
+    Calculate the total number of seconds. Use false to omit. _Optional. The default is true._
+  </Property>
+  <Property name="returns" type="int/float">
+     Complete breakdown of the time difference into various segments.
+  </Property>
+</Properties>
+
+---

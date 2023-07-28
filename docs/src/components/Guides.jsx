@@ -28,6 +28,11 @@ const guides = [
     description: 'Color and gradient.',
   },
   {
+    href: '/timestamps',
+    name: 'Timestamps',
+    description: 'Timestamp breakdowns.',
+  },
+  {
     href: '/printer',
     name: 'Printer',
     description: 'A comprehensive printer object.',
