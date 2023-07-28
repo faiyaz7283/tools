@@ -1,15 +1,15 @@
 export const description =
-  'On this page, we’ll look at the make up of all the random UNIX timestamp generator functions.'
+  'On this page, we’ll look at the make up of all the random unix timestamp generator functions.'
 
 
-# UNIX timestamp generators.
-A set of functions to help with generating random UNIX timestamp values. 
+# Unix timestamp generators.
+A set of functions to help with generating random [`unix-timestamp`](https://www.tradingview.com/pine-script-reference/v5/#fun_timestamp) values. 
 Generators can return a single value or grouped values using arrays and matrix. 
 
 ---
 
 ## _rndmTimestamp()
-Generate a random UNIX timestamp value.
+Generate a random unix timestamp value.
 <Properties>
   <Property name="year" type="int">
     Set a custom year, instead of random value. By default its set to 0, which implies random. _Optional. The default is 0_.
@@ -30,14 +30,14 @@ Generate a random UNIX timestamp value.
     Set a custom second, instead of random value. By default its set to 0, which implies random. _Optional. The default is 0_.
   </Property>
   <Property name="returns" type="int">
-    A random UNIX timestamp value.
+    A random unix timestamp value.
   </Property>
 </Properties>
 
 ---
 
 ## _rndmTimestampArray()
-Generate a random integer array of UNIX timestamp values.
+Generate a random integer array of unix timestamp values.
 <Properties>
   <Property name="size" type="int">
     The size of the array. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
@@ -61,14 +61,14 @@ Generate a random integer array of UNIX timestamp values.
     Set a custom second, instead of random values. By default its set to 0, which implies random. _Optional. The default is 0_.
   </Property>
   <Property name="returns" type="array<int>">
-    A random integer array of UNIX timestamp values.
+    A random integer array of unix timestamp values.
   </Property>
 </Properties>
 
 ---
 
 ## _rndmTimestampMatrix()
-Generate a random integer matrix of UNIX timestamp values.
+Generate a random integer matrix of unix timestamp values.
 <Properties>
   <Property name="rows" type="int">
     Total row size. By default its set to 0, which implies a random length between 3-10 values. _Optional. The default is 0_.
@@ -95,6 +95,6 @@ Generate a random integer matrix of UNIX timestamp values.
     Set a custom second, instead of random values. By default its set to 0, which implies random. _Optional. The default is 0_.
   </Property>
   <Property name="returns" type="matrix<int>">
-    A random integer matrix of UNIX timestamp values.
+    A random integer matrix of unix timestamp values.
   </Property>
 </Properties>

@@ -1,15 +1,13 @@
+import ColorBox from '@/components/ColorBox'
+
 export const description =
   'In this guide, we’ll look at some usages of the _color() method and _gradient object.'
 
 # Color
-There are two ways to generate colors using the tools library. One, using string method with
-constant color names. Two, using a gradient object method to get color based on number value.
+There are two ways to generate colors using the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library. One, using string method with
+constant color names. Two, using a [`gradient`](/gradient) object method to get color based on number value.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 ## Constants
 Using the [`_color()`](/color#color) method with constant color names. These constants follow a naming 
@@ -17,63 +15,109 @@ convention of color name followed by a type of shade: **&lt;color&gt;_bright**,
 **&lt;color&gt;_light**, **&lt;color&gt;_medium**, and **&lt;color&gt;_dark**. For example, 
 **"aqua_bright"._color()** returns the color **#00FFFF**.
 
-The color method also accepts a parameter for passing transparency value. By default, it's always 0 (full transparency). For example, 
-**"aqua_bright"._color(transp=50)** returns the color **#00FFFF7F**.
+| colors | constants | hex values |
+| :---: | :---: | :---: |
+| <ColorBox color="#00FFFF" /> | aqua_bright   | #00FFFF |
+| <ColorBox color="#00C8FF" /> | aqua_light    | #00C8FF |
+| <ColorBox color="#0096FF" /> | aqua_medium   | #0096FF |
+| <ColorBox color="#0078FF" /> | aqua_dark     | #0078FF |
+| <ColorBox color="#191919" /> | black_bright  | #191919 |
+| <ColorBox color="#0A0A0A" /> | black_light   | #0A0A0A |
+| <ColorBox color="#050505" /> | black_medium  | #050505 |
+| <ColorBox color="#000000" /> | black_dark    | #000000 |
+| <ColorBox color="#0000FF" /> | blue_bright   | #0000FF |
+| <ColorBox color="#0000C8" /> | blue_light    | #0000C8 |
+| <ColorBox color="#000096" /> | blue_medium   | #000096 |
+| <ColorBox color="#000078" /> | blue_dark     | #000078 |
+| <ColorBox color="#3C4650" /> | gray_bright   | #3C4650 |
+| <ColorBox color="#2D3741" /> | gray_light    | #2D3741 |
+| <ColorBox color="#1E2832" /> | gray_medium   | #1E2832 |
+| <ColorBox color="#0F1923" /> | gray_dark     | #0F1923 |
+| <ColorBox color="#00FF00" /> | green_bright  | #00FF00 |
+| <ColorBox color="#00C800" /> | green_light   | #00C800 |
+| <ColorBox color="#009600" /> | green_medium  | #009600 |
+| <ColorBox color="#007800" /> | green_dark    | #007800 |
+| <ColorBox color="#FF6400" /> | orange_bright | #FF6400 |
+| <ColorBox color="#F55A00" /> | orange_light  | #F55A00 |
+| <ColorBox color="#EB5000" /> | orange_medium | #EB5000 |
+| <ColorBox color="#E14600" /> | orange_dark   | #E14600 |
+| <ColorBox color="#FF96FF" /> | pink_bright   | #FF96FF |
+| <ColorBox color="#FF64FF" /> | pink_light    | #FF64FF |
+| <ColorBox color="#FF32FF" /> | pink_medium   | #FF32FF |
+| <ColorBox color="#FF00FF" /> | pink_dark     | #FF00FF |
+| <ColorBox color="#9696FF" /> | purple_bright | #9696FF |
+| <ColorBox color="#9664FF" /> | purple_light  | #9664FF |
+| <ColorBox color="#9632FF" /> | purple_medium | #9632FF |
+| <ColorBox color="#9600FF" /> | purple_dark   | #9600FF |
+| <ColorBox color="#FF0000" /> | red_bright    | #FF0000 |
+| <ColorBox color="#C80000" /> | red_light     | #C80000 |
+| <ColorBox color="#960000" /> | red_medium    | #960000 |
+| <ColorBox color="#780000" /> | red_dark      | #780000 |
+| <ColorBox color="#FFFFFF" /> | white_bright  | #FFFFFF |
+| <ColorBox color="#EBEBEB" /> | white_light   | #EBEBEB |
+| <ColorBox color="#D7D7D7" /> | white_medium  | #D7D7D7 |
+| <ColorBox color="#C8C8C8" /> | white_dark    | #C8C8C8 |
+| <ColorBox color="#FFFF00" /> | yellow_bright | #FFFF00 |
+| <ColorBox color="#E6E600" /> | yellow_light  | #E6E600 |
+| <ColorBox color="#D2D200" /> | yellow_medium | #D2D200 |
+| <ColorBox color="#AFAF00" /> | yellow_dark   | #AFAF00 | 
+
+### Usage examples:
 
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
 // All available preset colors.
 
-"aqua_bright".tools._color()   // returns the color #00FFFF.
-"aqua_light".tools._color()    // returns the color #00C8FF.
-"aqua_medium".tools._color()   // returns the color #0096FF.
-"aqua_dark".tools._color()     // returns the color #0078FF.
-"black_bright".tools._color()  // returns the color #191919.
-"black_light".tools._color()   // returns the color #0A0A0A.
-"black_medium".tools._color()  // returns the color #050505.
-"black_dark".tools._color()    // returns the color #000000.
-"blue_bright".tools._color()   // returns the color #0000FF.
-"blue_light".tools._color()    // returns the color #0000C8.
-"blue_medium".tools._color()   // returns the color #000096.
-"blue_dark".tools._color()     // returns the color #000078.
-"gray_bright".tools._color()   // returns the color #3C4650.
-"gray_light".tools._color()    // returns the color #2D3741.
-"gray_medium".tools._color()   // returns the color #1E2832.
-"gray_dark".tools._color()     // returns the color #0F1923.
-"green_bright".tools._color()  // returns the color #00FF00.
-"green_light".tools._color()   // returns the color #00C800.
-"green_medium".tools._color()  // returns the color #009600.
-"green_dark".tools._color()    // returns the color #007800.
-"orange_bright".tools._color() // returns the color #FF6400.
-"orange_light".tools._color()  // returns the color #F55A00.
-"orange_medium".tools._color() // returns the color #EB5000.
-"orange_dark".tools._color()   // returns the color #E14600.
-"pink_bright".tools._color()   // returns the color #FF96FF.
-"pink_light".tools._color()    // returns the color #FF64FF.
-"pink_medium".tools._color()   // returns the color #FF32FF.
-"pink_dark".tools._color()     // returns the color #FF00FF.
-"purple_bright".tools._color() // returns the color #9696FF.
-"purple_light".tools._color()  // returns the color #9664FF.
-"purple_medium".tools._color() // returns the color #9632FF.
-"purple_dark".tools._color()   // returns the color #9600FF.
-"red_bright".tools._color()    // returns the color #FF0000.
-"red_light".tools._color()     // returns the color #C80000.
-"red_medium".tools._color()    // returns the color #960000.
-"red_dark".tools._color()      // returns the color #780000.
-"white_bright".tools._color()  // returns the color #FFFFFF.
-"white_light".tools._color()   // returns the color #EBEBEB.
-"white_medium".tools._color()  // returns the color #D7D7D7.
-"white_dark".tools._color()    // returns the color #C8C8C8.
-"yellow_bright".tools._color() // returns the color #FFFF00.
-"yellow_light".tools._color()  // returns the color #E6E600.
-"yellow_medium".tools._color() // returns the color #D2D200.
-"yellow_dark".tools._color()   // returns the color #AFAF00.
+"aqua_bright"._color()   // returns the color #00FFFF.
+"aqua_light"._color()    // returns the color #00C8FF.
+"aqua_medium"._color()   // returns the color #0096FF.
+"aqua_dark"._color()     // returns the color #0078FF.
+"black_bright"._color()  // returns the color #191919.
+"black_light"._color()   // returns the color #0A0A0A.
+"black_medium"._color()  // returns the color #050505.
+"black_dark"._color()    // returns the color #000000.
+"blue_bright"._color()   // returns the color #0000FF.
+"blue_light"._color()    // returns the color #0000C8.
+"blue_medium"._color()   // returns the color #000096.
+"blue_dark"._color()     // returns the color #000078.
+"gray_bright"._color()   // returns the color #3C4650.
+"gray_light"._color()    // returns the color #2D3741.
+"gray_medium"._color()   // returns the color #1E2832.
+"gray_dark"._color()     // returns the color #0F1923.
+"green_bright"._color()  // returns the color #00FF00.
+"green_light"._color()   // returns the color #00C800.
+"green_medium"._color()  // returns the color #009600.
+"green_dark"._color()    // returns the color #007800.
+"orange_bright"._color() // returns the color #FF6400.
+"orange_light"._color()  // returns the color #F55A00.
+"orange_medium"._color() // returns the color #EB5000.
+"orange_dark"._color()   // returns the color #E14600.
+"pink_bright"._color()   // returns the color #FF96FF.
+"pink_light"._color()    // returns the color #FF64FF.
+"pink_medium"._color()   // returns the color #FF32FF.
+"pink_dark"._color()     // returns the color #FF00FF.
+"purple_bright"._color() // returns the color #9696FF.
+"purple_light"._color()  // returns the color #9664FF.
+"purple_medium"._color() // returns the color #9632FF.
+"purple_dark"._color()   // returns the color #9600FF.
+"red_bright"._color()    // returns the color #FF0000.
+"red_light"._color()     // returns the color #C80000.
+"red_medium"._color()    // returns the color #960000.
+"red_dark"._color()      // returns the color #780000.
+"white_bright"._color()  // returns the color #FFFFFF.
+"white_light"._color()   // returns the color #EBEBEB.
+"white_medium"._color()  // returns the color #D7D7D7.
+"white_dark"._color()    // returns the color #C8C8C8.
+"yellow_bright"._color() // returns the color #FFFF00.
+"yellow_light"._color()  // returns the color #E6E600.
+"yellow_medium"._color() // returns the color #D2D200.
+"yellow_dark"._color()   // returns the color #AFAF00.
 
 // The color method also accepts a parameter for passing transparency value. 
 // By default, its always 0 (full transparency).
 
-"aqua_bright".tools._color(transp=50)   // returns the color #00FFFF7F.
+"aqua_bright"._color(transp=50)   // returns the color #00FFFF7F.
 ```
 
 ```js {{ title: 'Function' }}
@@ -135,9 +179,10 @@ tools._color("aqua_bright", transp=50)  // returns the color #00FFFF7F.
 
 ## Gradient
 The second use of the [`_color()`](/color#color-2) method is with the [`_gradient`](/gradient) object. 
-Let's look at some examples below.
+It accepts a parameter for passing transparency value. By default, it's always 0 (full transparency). For example, 
+**"aqua_bright"._color(transp=50)** returns the color **#00FFFF7F**. Let's look at some examples below.
 
-### Usage example:
+### Usage examples:
 
 <CodeGroup>
 
@@ -152,12 +197,12 @@ var gradient = tools._gradient.new(
                  down=color.red)
 
 // Examples of getting gradient colors.
-gradient.tools._color(num=25.08)   // returns color #BFF8DC.
-gradient.tools._color(num=-25.90)  // returns color #FFD2D2.
-gradient.tools._color(num=0)       // returns color #FFFFFF.
-gradient.tools._color(num=100)     // returns color #00E676.
-gradient.tools._color(num=-100)    // returns color #FF5252.
-gradient.tools._color(num=62.35)   // returns color #60EFA9.
+gradient._color(num=25.08)   // returns color #BFF8DC.
+gradient._color(num=-25.90)  // returns color #FFD2D2.
+gradient._color(num=0)       // returns color #FFFFFF.
+gradient._color(num=100)     // returns color #00E676.
+gradient._color(num=-100)    // returns color #FF5252.
+gradient._color(num=62.35)   // returns color #60EFA9.
 ```
 
 ```js {{ title: 'Function' }}

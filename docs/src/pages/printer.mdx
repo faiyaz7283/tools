@@ -7,18 +7,14 @@ The [`_printer`](/_printer#printer) is designed to help print data on screen qui
 a new [`_printer`](/_printer#printer) object and start printing with the [`print()`](/_printer#print) method. There are also many
 convenient methods to easily customize and style the [`_printer`](/_printer#printer).
 
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
+
 <Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
+  Always create a printer under the [`barstate.islast`](https://www.tradingview.com/pine-script-reference/v5/#var_barstate.islast) condition. 
 </Note>
 
 <Note>
-  Always create a printer under the `barstate.islast` condition. 
-</Note>
-
-<Note>
-  Do not use `var` when assigning a printer to a variable. 
+  Do not use [`var`](https://www.tradingview.com/pine-script-reference/v5/#op_var) when assigning a printer to a variable. 
 </Note>
 
 ```js {{ title: 'Creating a printer object' }}
@@ -30,7 +26,7 @@ if barstate.islast
 ```
 
 Below we will go through all the available methods and some examples of how to use them. All the
-examples below assumes we already have a printer object created.
+examples below assumes we already have a [`printer`](/_printer#printer) object created.
 
 <Note>
   It is recommended to use methods instead of directly interacting with the printer properties. 
@@ -38,8 +34,8 @@ examples below assumes we already have a printer object created.
 </Note>
 
 ## cell()
-  - [`cell()`](_printer#cell): Used for changing the orientation of arrays to horizontal.
-  - [`cell()`](_printer#cell-2): Used for setting a custom [`cellStyle`](/styles#cell-style). 
+  - [`cell()`](/_printer#cell): Used for changing the orientation of arrays to horizontal.
+  - [`cell()`](/_printer#cell-2): Used for setting a custom [`cellStyle`](/styles#cell-style). 
   - The last example assumes we already have a variable called `customCellStyle`.
 
 <CodeGroup>
@@ -242,31 +238,31 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Title.
 
   // Add a title.
-  printer.print(tools._rndmFloatArray, title="Random float array")
+  printer.print(tools._rndmFloatArray(), title="Random float array")
 
   // Change the orientation of title.
   // Changing orientation for all titles.
   printer.title(top=false)
-  printer.print(tools._rndmFloatArray, title="Random float array")
-  printer.print(tools._rndmSentence, title="Random sentence")
-  printer.print(tools._rndmFloatMatrix, title="Random float matrix")
+  printer.print(tools._rndmFloatArray(), title="Random float array")
+  printer.print(tools._rndmSentence(), title="Random sentence")
+  printer.print(tools._rndmFloatMatrix(), title="Random float matrix")
 
   // Changing orientation for single title.
   ts = titleStyle.copy(printer.titleStyle)
   ts.top := false
-  printer.print(tools._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
-  printer.print(tools._rndmSentence, title="Random sentence") // Back to default orientation.
-  printer.print(tools._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+  printer.print(tools._rndmFloatArray(), title="Random float array", titleStyle=ts) // Will be changed.
+  printer.print(tools._rndmSentence(), title="Random sentence") // Back to default orientation.
+  printer.print(tools._rndmFloatMatrix(), title="Random float matrix") // Back to default orientation.
 
   //-----------------------------------
 
   // Printing: Styles.
 
   // Add custom titleStyle and cellStyle to print method.
-  printer.print(tools._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
-  printer.print(tools._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
-  printer.print(tools._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
-  printer.print(tools._rndmIntArray, title="Random integer array") // Back to default styles.
+  printer.print(tools._rndmFloatArray(), title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  printer.print(tools._rndmSentence(), title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  printer.print(tools._rndmFloatMatrix(), title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  printer.print(tools._rndmIntArray(), title="Random integer array") // Back to default styles.
   ```
 
   ```js {{ title: "Function" }}
@@ -345,37 +341,37 @@ have the variables called customTitleStyle and customCellStyle.
   // Printing: Title.
 
   // Add a title.
-  tools.print(printer, tools._rndmFloatArray, title="Random float array")
+  tools.print(printer, tools._rndmFloatArray(), title="Random float array")
 
   // Change the orientation of title.
   // Changing orientation for all titles.
   tools.title(printer, top=false)
-  tools.print(printer, tools._rndmFloatArray, title="Random float array")
-  tools.print(printer, tools._rndmSentence, title="Random sentence")
-  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix")
+  tools.print(printer, tools._rndmFloatArray(), title="Random float array")
+  tools.print(printer, tools._rndmSentence(), title="Random sentence")
+  tools.print(printer, tools._rndmFloatMatrix(), title="Random float matrix")
 
   // Changing orientation for single title.
   ts = tools.titleStyle.copy(printer.titleStyle)
   ts.top := false
-  tools.print(printer, tools._rndmFloatArray, title="Random float array", titleStyle=ts) // Will be changed.
-  tools.print(printer, tools._rndmSentence, title="Random sentence") // Back to default orientation.
-  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix") // Back to default orientation.
+  tools.print(printer, tools._rndmFloatArray(), title="Random float array", titleStyle=ts) // Will be changed.
+  tools.print(printer, tools._rndmSentence(), title="Random sentence") // Back to default orientation.
+  tools.print(printer, tools._rndmFloatMatrix(), title="Random float matrix") // Back to default orientation.
 
   //-----------------------------------
 
   // Printing: Styles.
 
   // Add custom titleStyle and cellStyle to print method.
-  tools.print(printer, tools._rndmFloatArray, title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
-  tools.print(printer, tools._rndmSentence, title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
-  tools.print(printer, tools._rndmFloatMatrix, title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
-  tools.print(printer, tools._rndmIntArray, title="Random integer array") // Back to default styles.
+  tools.print(printer, tools._rndmFloatArray(), title="Random float array", titleStyle=customTitleStyle) // Custom titleStyle.
+  tools.print(printer, tools._rndmSentence(), title="Random sentence", cellStyle=customCellStyle)  // Custom cellStyle.
+  tools.print(printer, tools._rndmFloatMatrix(), title="Random float matrix", titleStyle=customTitleStyle, cellStyle=customCellStyle) // Both custom styles.
+  tools.print(printer, tools._rndmIntArray(), title="Random integer array") // Back to default styles.
   ```
 
 </CodeGroup>
 
 ## stack()
-[`stack()`](_printer#stack): Used for changing the orientation of the printer. By default, groups data and stacks it vertically. 
+[`stack()`](_printer#stack): Used for changing the orientation of a [`printer`](/_printer#printer) object. By default, groups data and stacks it vertically. 
 Setting this to false will print each group side by side.
 
 <CodeGroup>
@@ -399,7 +395,7 @@ Setting this to false will print each group side by side.
 </CodeGroup>
 
 ## theme()
-[`theme()`](_printer#theme): Used for adding a preset style combination to a printer object.
+[`theme()`](_printer#theme): Used for adding a preset style combination to a [`printer`](/_printer#printer) object.
 
 <CodeGroup>
 

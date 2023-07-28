@@ -4,14 +4,11 @@ export const description =
 # Join and split
 The tools library provides some custom array and string methods that expand Pinescript's own `array.join()` and `str.split()` methods.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 ## Join
-The [`_join()`](/join-splits#join) method is similar to the `array.join()` method in Pinescript, but it extends this functionality to boolean and color arrays.
+The [`_join()`](/join-splits#join) method is similar to the Pinescript's [`array.join()`](https://www.tradingview.com/pine-script-reference/v5/#fun_array.join) method, 
+and extends the ability to join boolean and color arrays as well.
 
 <CodeGroup>
 
@@ -19,37 +16,37 @@ The [`_join()`](/join-splits#join) method is similar to the `array.join()` metho
 // Joining array<string>
 
 strArray = array.from("apple", "banana", "carrot")
-strArray.tools._join()          // returns the string "apple,banana,carrot".
-strArray.tools._join(sep=" ")   // returns the string "apple banana carrot".
-strArray.tools._join(sep="-")   // returns the string "apple-banana-carrot".
+strArray._join()          // returns the string "apple,banana,carrot".
+strArray._join(sep=" ")   // returns the string "apple banana carrot".
+strArray._join(sep="-")   // returns the string "apple-banana-carrot".
 
 // Joining array<float>
 
 fltArray = array.from(1.2, 2.1, 3.098, 4.0089)
-fltArray.tools._join()          // returns the string "1.2,2.1,3.098,4.0089".
-fltArray.tools._join(sep=" ")   // returns the string "1.2 2.1 3.098 4.0089".
-fltArray.tools._join(sep="-")   // returns the string "1.2-2.1-3.098-4.0089".
+fltArray._join()          // returns the string "1.2,2.1,3.098,4.0089".
+fltArray._join(sep=" ")   // returns the string "1.2 2.1 3.098 4.0089".
+fltArray._join(sep="-")   // returns the string "1.2-2.1-3.098-4.0089".
 
 // Joining array<int>
 
 intArray = array.from(1, 2, 3, 4, 5)
-intArray.tools._join()          // returns the string "1,2,3,4,5".
-intArray.tools._join(sep=" ")   // returns the string "1 2 3 4 5".
-intArray.tools._join(sep="-")   // returns the string "1-2-3-4-5".
+intArray._join()          // returns the string "1,2,3,4,5".
+intArray._join(sep=" ")   // returns the string "1 2 3 4 5".
+intArray._join(sep="-")   // returns the string "1-2-3-4-5".
 
 // Joining array<bool>
 
 boolArray = array.from(true, false, false, true, false)
-boolArray.tools._join()         // returns the string "true,false,false,true,false".
-boolArray.tools._join(sep=" ")  // returns the string "true false false true false".
-boolArray.tools._join(sep="-")  // returns the string "true-false-false-true-false".
+boolArray._join()         // returns the string "true,false,false,true,false".
+boolArray._join(sep=" ")  // returns the string "true false false true false".
+boolArray._join(sep="-")  // returns the string "true-false-false-true-false".
 
 // Joining array<color>
 
 clrArray = array.from(color.red, color.black, color.white)
-clrArray.tools._join()          // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
-clrArray.tools._join(sep=" ")   // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
-clrArray.tools._join(sep="-")   // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
+clrArray._join()          // returns the string "255|82|82|0,54|58|69|0,255|255|255|0".
+clrArray._join(sep=" ")   // returns the string "255|82|82|0 54|58|69|0 255|255|255|0".
+clrArray._join(sep="-")   // returns the string "255|82|82|0-54|58|69|0-255|255|255|0".
 ```
 
 ```js {{ title: 'Function' }}
@@ -93,7 +90,8 @@ tools._join(clrArray, sep="-")  // returns the string "255|82|82|0-54|58|69|0-25
 
 ## Split
 
-The tools library provides several convenient split methods that work similarly to the `str.split()` method in Pinescript. 
+The tools library provides several convenient split methods that work similarly to the Pinescript's 
+[`str.split()`](https://www.tradingview.com/pine-script-reference/v5/#fun_str.split) method. 
 These methods are named with their separator (comma, pipe or colon) and follow a naming convention: 
 
 - Split into an array.
@@ -119,26 +117,26 @@ These methods are named with their separator (comma, pipe or colon) and follow a
 // Separator: Comma
 
 commaStr = "apple,banana,carrot"
-commaStr.tools._commaSplit()        // returns an array<string>("apple", "banana", "carrot").
-commaStr.tools._commaSplit(idx=2)   // returns the string "carrot".
-commaStr.tools._commaSplitPair()    // returns a tuple containing ["apple", "banana"].
-commaStr.tools._commaSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
+commaStr._commaSplit()        // returns an array<string>("apple", "banana", "carrot").
+commaStr._commaSplit(idx=2)   // returns the string "carrot".
+commaStr._commaSplitPair()    // returns a tuple containing ["apple", "banana"].
+commaStr._commaSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Pipe
 
 pipeStr = "apple|banana|carrot"
-pipeStr.tools._pipeSplit()          // returns an array<string>("apple", "banana", "carrot").
-pipeStr.tools._pipeSplit(idx=2)     // returns the string "carrot".
-pipeStr.tools._pipeSplitPair()      // returns a tuple containing ["apple", "banana"].
-pipeStr.tools._pipeSplitShift()     // returns an array<string>("banana", "carrot") without "apple".
+pipeStr._pipeSplit()          // returns an array<string>("apple", "banana", "carrot").
+pipeStr._pipeSplit(idx=2)     // returns the string "carrot".
+pipeStr._pipeSplitPair()      // returns a tuple containing ["apple", "banana"].
+pipeStr._pipeSplitShift()     // returns an array<string>("banana", "carrot") without "apple".
 
 // Separator: Colon
 
 colonStr = "apple:banana:carrot"
-colonStr.tools._colonSplit()        // returns an array<string>("apple", "banana", "carrot").
-colonStr.tools._colonSplit(idx=2)   // returns the string "carrot".
-colonStr.tools._colonSplitPair()    // returns a tuple containing ["apple", "banana"].
-colonStr.tools._colonSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
+colonStr._colonSplit()        // returns an array<string>("apple", "banana", "carrot").
+colonStr._colonSplit(idx=2)   // returns the string "carrot".
+colonStr._colonSplitPair()    // returns a tuple containing ["apple", "banana"].
+colonStr._colonSplitShift()   // returns an array<string>("banana", "carrot") without "apple".
 ```
 
 ```js {{ title: 'Function' }}

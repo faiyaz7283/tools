@@ -24,8 +24,8 @@ const guides = [
   },
   {
     href: '/colors',
-    name: 'Color',
-    description: 'Color and gradient.',
+    name: 'Colors',
+    description: 'Colors and gradient.',
   },
   {
     href: '/timestamps',

@@ -5,14 +5,10 @@ export const description =
 The tools library provides custom casting methods that expand Pinescript's casting 
 capabilities for boolean, float, integer, string, and color object types.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 ## Boolean
-The [`_bool()`](/cast#bool) method extends the functionality of the `bool()` function in Pinescript, 
+The [`_bool()`](/cast#bool) method extends the functionality of the Pinescript's [`bool()`](https://www.tradingview.com/pine-script-reference/v5/#fun_bool) function,
 allowing the conversion of string, integer, and float values to boolean values. 
 
 <CodeGroup>
@@ -20,18 +16,18 @@ allowing the conversion of string, integer, and float values to boolean values.
 ```js {{ title: 'Method' }}
 // Values that returns false
 
-"".tools._bool()          // empty string.
-0.tools._bool()           // literal 0 value.
-0.0.tools._bool()         // float 0.
-"0".tools._bool()         // string "0".
-"no".tools._bool()        // string "no"  (letter casing doesn't matter).
-"na".tools._bool()        // string "na"  (letter casing doesn't matter).
-"NaN".tools._bool()       // string "nan" (letter casing doesn't matter).
+""._bool()          // empty string.
+0._bool()           // literal 0 value.
+0.0._bool()         // float 0.
+"0"._bool()         // string "0".
+"no"._bool()        // string "no"  (letter casing doesn't matter).
+"na"._bool()        // string "na"  (letter casing doesn't matter).
+"NaN"._bool()       // string "nan" (letter casing doesn't matter).
 
 // Values that returns true
 
-"non-empty".tools._bool() // any non-empty string (other than 0, no, na, nan).
-100.tools._bool()         // any float or integer value other than 0.
+"non-empty"._bool() // any non-empty string (other than 0, no, na, nan).
+100._bool()         // any float or integer value other than 0.
 ```
 
 ```js {{ title: 'Function' }}
@@ -61,8 +57,8 @@ floating point number.
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
-"20.408".tools._float()             // returns float 20.408.
-"20.408".tools._float(precision=2)  // returns float 20.40.
+"20.408"._float()             // returns float 20.408.
+"20.408"._float(precision=2)  // returns float 20.40.
 ```
 
 ```js {{ title: 'Function' }}
@@ -80,7 +76,7 @@ integer values.
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
-"201".tools._int() // returns integer 201.
+"201"._int() // returns integer 201.
 ```
 
 ```js {{ title: 'Function' }}
@@ -91,7 +87,9 @@ tools._int("201")  // returns integer 201.
 
 ## String
 The [`_str()`](/cast#str)  method provides a convenient way to convert a value to it's string representation. 
-The method works with string, boolean, float, integer, and color object types. If a color 
+The method works with [`string`](https://www.tradingview.com/pine-script-reference/v5/#op_string), [`integer`](https://www.tradingview.com/pine-script-reference/v5/#op_int), 
+[`boolean`](https://www.tradingview.com/pine-script-reference/v5/#op_bool), [`float`](https://www.tradingview.com/pine-script-reference/v5/#op_float) and 
+[`color`](https://www.tradingview.com/pine-script-reference/v5/#op_color) object types. If a color 
 value is passed, the method converts it to the color's RGBT values and returns those 
 values as a string separated by pipes ("|"). There is also a convenient method 
 [`_colorToString()`](/cast#color-to-string) which basically does the same thing.
@@ -99,13 +97,13 @@ values as a string separated by pipes ("|"). There is also a convenient method
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
-true.tools._str()                             // returns the string "true".
-20.408.tools._str()                           // returns the string "20.408".
-201.tools._str()                              // returns the string "201".
-#FFFFFF.tools._str()                          // returns the string "255|255|255|0".
-color.new(#FFFFFF, 0).tools._str()            // returns the string "255|255|255|0".
-#FFFFFF.tools._colorToString()                // (alternative) returns the string "255|255|255|0".
-color.new(#FFFFFF, 0).tools._colorToString()  // (alternative) returns the string "255|255|255|0".
+true._str()                             // returns the string "true".
+20.408._str()                           // returns the string "20.408".
+201._str()                              // returns the string "201".
+#FFFFFF._str()                          // returns the string "255|255|255|0".
+color.new(#FFFFFF, 0)._str()            // returns the string "255|255|255|0".
+#FFFFFF._colorToString()                // (alternative) returns the string "255|255|255|0".
+color.new(#FFFFFF, 0)._colorToString()  // (alternative) returns the string "255|255|255|0".
 ```
 
 ```js {{ title: 'Function' }}
@@ -129,8 +127,8 @@ does the same thing.
 <CodeGroup>
 
 ```js {{ title: 'Method' }}
-"255|255|255|0".tools._clr()              // returns the #FFFFFF color.
-"255|255|255|0".tools._colorFromString()  // (alternative) returns the #FFFFFF color.
+"255|255|255|0"._clr()              // returns the #FFFFFF color.
+"255|255|255|0"._colorFromString()  // (alternative) returns the #FFFFFF color.
 ```
 
 ```js {{ title: 'Function' }}

@@ -1,16 +1,14 @@
+import ColorBox from '@/components/ColorBox'
+
 export const description =
   'In this guide, we’ll look at some usages of the `_printer` and the versatile print() method.'
 
-# Style
+# Style ka baccha
 
 There are six style objects that can be used to target individual areas of the [`_printer`](/_printer#printer). These style 
-objects are pretty similar to styling table cells using the `table.cell()` method.
+objects are pretty similar to styling table cells using the [`table.cell()`](https://www.tradingview.com/pine-script-reference/v5/#fun_table.cell) method.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 ## Table
 Use the [`tableStyle`](/styles#table-style) object to style the internal table. Since there is no dedicated 
@@ -124,9 +122,9 @@ var fs = tools.footerStyle.new(
            height = 5, 
            textHalign = text.align_left, 
            textValign = text.align_center, 
-           textColor = tools.tools._color("purple_bright"), 
+           textColor = tools._color("purple_bright"), 
            textSize = size.large, 
-           bgColor = tools.tools._color("blue_dark"), 
+           bgColor = tools._color("blue_dark"), 
            textFontFamily = font.family_default, 
            format = "FOOTER: {0}")
 
@@ -398,15 +396,15 @@ theme. Below are all the current available themes with their color guides.
 
 | | Background color | Frame color | Cell text color | Header/Footer/Title text color | Title background color | Header/Footer background color |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| blue | #0000780D | #0000FFB3 | #00FFFF | #E1E1E1 | #0078FF9E | #0096FFA6 |
-| gray | #0000004D | #3C4650B8 | #E14600 | #E1E1E1 | #1E283273 | #3C465078 |
-| green | #0078000D | #00FF00B8 | #E1E1E1 | #000000 | #00C800D9 | #00FF00DE |
-| orange | #E146000D | #E16400B8 | #E1E1E1 | #000000 | #E14600D9 | #E16400DE |
-| pink | #FF00FF0D | #FF96FFB8 | #E1E1E1 | #000000 | #FF64FFD9 | #FF96FFDE |
-| purple | #9B00FF0D | #9696FFB8 | #E1E1E1 | #E1E1E1 | #9664FFD9 | #9696FFDE |
-| red | #7800000D | #FF0000B8 | #E1E1E1 | #E1E1E1 | #C80000D9 | #FF0000DE |
-| white | #C8C8C80D | #FFFFFFB8 | #E1E1E1 | #000000 | #C8C8C8D9 | #EBEBEBDE |
-| yellow | #AFAF000D | #FFFF00B8 | #E1E1E1 | #000000 | #E6E600D9 | #FFFF00DE |
+| blue   | <ColorBox color="#0000780D" /> | <ColorBox color="#0000FFB3" /> | <ColorBox color="#00FFFF" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#0078FF9E" /> | <ColorBox color="#0096FFA6" /> |
+| gray   | <ColorBox color="#0000004D" /> | <ColorBox color="#3C4650B8" /> | <ColorBox color="#E14600" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#1E283273" /> | <ColorBox color="#3C465078" /> |
+| green  | <ColorBox color="#0078000D" /> | <ColorBox color="#00FF00B8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#000000" /> | <ColorBox color="#00C800D9" /> | <ColorBox color="#00FF00DE" /> |
+| orange | <ColorBox color="#E146000D" /> | <ColorBox color="#E16400B8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#000000" /> | <ColorBox color="#E14600D9" /> | <ColorBox color="#E16400DE" /> |
+| pink   | <ColorBox color="#FF00FF0D" /> | <ColorBox color="#FF96FFB8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#000000" /> | <ColorBox color="#FF64FFD9" /> | <ColorBox color="#FF96FFDE" /> |
+| purple | <ColorBox color="#9B00FF0D" /> | <ColorBox color="#9696FFB8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#9664FFD9" /> | <ColorBox color="#9696FFDE" /> |
+| red    | <ColorBox color="#7800000D" /> | <ColorBox color="#FF0000B8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#C80000D9" /> | <ColorBox color="#FF0000DE" /> |
+| white  | <ColorBox color="#C8C8C80D" /> | <ColorBox color="#FFFFFFB8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#000000" /> | <ColorBox color="#C8C8C8D9" /> | <ColorBox color="#EBEBEBDE" /> |
+| yellow | <ColorBox color="#AFAF000D" /> | <ColorBox color="#FFFF00B8" /> | <ColorBox color="#E1E1E1" /> | <ColorBox color="#000000" /> | <ColorBox color="#E6E600D9" /> | <ColorBox color="#FFFF00DE" /> |
 
 There are couple of ways to set theme. We can use the dedicated [`theme()`](/_printer#theme) 
 method to target everything. We can also pass theme individually to each [`print()`](/_printer#print) method. 

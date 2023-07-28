@@ -5,17 +5,15 @@ export const description =
 
 The tools library provides a set of custom data generator functions. These generator functions
 can be used to produce a single data or multiple data across all pinescripts basic data types - 
-string, float, integer (including unix timestamp), boolean, color. These data can be generated 
-as single entity or using pinescript's array or matrix.
+[`string`](https://www.tradingview.com/pine-script-reference/v5/#op_string), [`float`](https://www.tradingview.com/pine-script-reference/v5/#op_float), 
+[`integer`](https://www.tradingview.com/pine-script-reference/v5/#op_int), [`unix-timestamp`](https://www.tradingview.com/pine-script-reference/v5/#fun_timestamp), 
+[`boolean`](https://www.tradingview.com/pine-script-reference/v5/#op_bool), [`color`](https://www.tradingview.com/pine-script-reference/v5/#op_color). 
+These data can be generated as single entity or as Pinescript's arrays and matrix.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 ## Strings
-To generate random string(s), use the following functions:
+To generate random [`string(s)`](https://www.tradingview.com/pine-script-reference/v5/#op_string), use the following functions:
 
 - [`_rndmChar()`](/string-generators#rndm-char)
 - [`_rndmString()`](/string-generators#rndm-string)
@@ -84,7 +82,7 @@ To generate random string(s), use the following functions:
 </CodeGroup>
 
 ## Floats
-To generate random float(s), use the following functions:
+To generate random  [`float(s)`](https://www.tradingview.com/pine-script-reference/v5/#op_float), use the following functions:
 
 - [`_rndmFloat()`](/float-generators#rndm-float)
 - [`_rndmFloatArray()`](/float-generators#rndm-float-array)
@@ -115,7 +113,7 @@ tools._rndmFloatMatrix(rows=4, columns=4, min=1, max=5, precision=1)
 ```
 
 ## Integers
-To generate random integer(s), use the following functions:
+To generate random [`integer(s)`](https://www.tradingview.com/pine-script-reference/v5/#op_int), use the following functions:
 
 - [`_rndmInt()`](/int-generators#rndm-int)
 - [`_rndmIntArray()`](/int-generators#rndm-int-array)
@@ -143,7 +141,7 @@ tools._rndmIntMatrix(rows=4, columns=4, min=1, max=5)
 ```
 
 ## Booleans
-To generate random boolean(s), use the following functions:
+To generate random  [`boolean(s)`](https://www.tradingview.com/pine-script-reference/v5/#op_bool), use the following functions:
 
 - [`_rndmBool()`](/bool-generators#rndm-bool)
 - [`_rndmBoolArray()`](/bool-generators#rndm-bool-array)
@@ -168,7 +166,7 @@ tools._rndmBoolMatrix(rows=2, columns=2)
 ```
 
 ## Colors
-To generate random color(s), use the following functions:
+To generate random  [`color(s)`](https://www.tradingview.com/pine-script-reference/v5/#op_color), use the following functions:
 
 - [`_rndmColor()`](/color-generators#rndm-color)
 - [`_rndmColorArray()`](/color-generators#rndm-color-array)
@@ -176,27 +174,30 @@ To generate random color(s), use the following functions:
 
 ```js {{ title: 'Generating random color(s)' }}
 tools._rndmColor()                                    
-// returns color #D7AD84.
+// returns a random color (full transparency).
 
 tools._rndmColor(trnsp=true)                          
-// returns color #C0D88E3B.
+// returns a random color with random level of transparency.
 
 tools._rndmColorArray()                               
-// returns random size array<color>, each filled with random color value.
+// returns random size array<color>, each filled with random color value 
+// (full transparency).
 
 tools._rndmColorArray(size=2, trnsp=true)             
-// returns array<color> size 2, each filled with random color value and random transparency.
+// returns array<color> size 2, each filled with random color value and random level 
+// of transparency.
 
 tools._rndmColorMatrix()                              
-// returns matrix<color> with random rows and columns, each filled with random color value and 
-// random transparency.
+// returns matrix<color> with random rows and columns, each filled with random color 
+// value (full transparency) and random transparency.
 
 tools._rndmColorMatrix(rows=3, columns=3, trnsp=true) 
-// returns 3x3 matrix<color>, each filled with random color value and random transparency.
+// returns 3x3 matrix<color>, each filled with random color value and random level of 
+// transparency.
 ```
 
-## unix timestamps
-To generate random unix timestamp(s), use the following functions:
+## Unix timestamps
+To generate random [`unix-timestamp(s)`](https://www.tradingview.com/pine-script-reference/v5/#fun_timestamp), use the following functions:
 
 - [`_rndmTimestamp()`](/unix-timestamp-generators#rndm-timestamp)
 - [`_rndmTimestampArray()`](/unix-timestamp-generators#rndm-timestamp-array)

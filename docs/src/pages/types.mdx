@@ -4,15 +4,16 @@ export const description =
 # Inspect data types.
 
 The [`_type()`](/type#type) is a versatile method that can be used to inspect object type. This method is particularly useful for scripts that rely on 
-the type to return a certain value or perform a specific task. The [`_type()`](/type#type) method supports a wide range of data types, including `string`, 
-`integer`, `boolean`, `float`, `color`, `table`, `line`, `label`, `box`, `linefill`, `array<type>`, and `matrix<type>`. By leveraging the [`_type()`](/type#type)
-method, Pinescript users can create more robust and flexible scripts that can adapt to a wide range of data inputs.
+the type to return a certain value or perform a specific task. The [`_type()`](/type#type) method supports a wide range of data types, including 
+[`string`](https://www.tradingview.com/pine-script-reference/v5/#op_string), [`integer`](https://www.tradingview.com/pine-script-reference/v5/#op_int), 
+[`boolean`](https://www.tradingview.com/pine-script-reference/v5/#op_bool), [`float`](https://www.tradingview.com/pine-script-reference/v5/#op_float), 
+[`color`](https://www.tradingview.com/pine-script-reference/v5/#op_color), [`table`](https://www.tradingview.com/pine-script-reference/v5/#op_table), 
+[`line`](https://www.tradingview.com/pine-script-reference/v5/#op_line), [`label`](https://www.tradingview.com/pine-script-reference/v5/#op_label), 
+[`box`](https://www.tradingview.com/pine-script-reference/v5/#op_box), [`linefill`](https://www.tradingview.com/pine-script-reference/v5/#op_linefill), 
+[`array<type>`](https://www.tradingview.com/pine-script-reference/v5/#op_array), and [`matrix<type>`](https://www.tradingview.com/pine-script-reference/v5/#op_matrix). 
+By leveraging the [`_type()`](/type#type) method, Pinescript users can create more robust and flexible scripts that can adapt to a wide range of data inputs.
 
-<Note>
-  For all the examples in this page, `tools` is used as a namespace for the tools library.
-  If you are following along with the examples, please make sure to import the latest 
-  version of the library in your script first, and assign `tools` as namespace.
-</Note>
+<Note>Please make sure to import the [`tools`](https://www.tradingview.com/script/KuDBLIOE-tools) library in your script, before following along with the examples.</Note>
 
 <CodeGroup>
 
@@ -20,28 +21,28 @@ method, Pinescript users can create more robust and flexible scripts that can ad
 // Example testing object types 
 
 varStr = "Hello"
-varStr.tools._type() // returns "string".
+varStr._type() // returns "string".
 
 varFlt = 1.25
-varFlt.tools._type() // returns "float".
+varFlt._type() // returns "float".
 
 int varInt = 100
-varInt.tools._type() // returns "int".
+varInt._type() // returns "int".
 
 bool varBool = true
-varBool.tools._type() // returns "bool".
+varBool._type() // returns "bool".
 
 color varClr = color.red
-varClr.tools._type() // returns "color".
+varClr._type() // returns "color".
 
 table varTbl = table.new(position, col, row)
-varTbl.tools._type() // returns "table".
+varTbl._type() // returns "table".
 
 array<string> varArrS = array.new_string(5,na)
-varArrS.tools._type() // returns "array<string>".
+varArrS._type() // returns "array<string>".
 
 matrix<float> varMtxF = matrix.new<float>(4,4,0.5)
-varMtxF.tools._type() // returns "matrix<float>".
+varMtxF._type() // returns "matrix<float>".
 ```
 
 ```js {{ title: 'Function' }}
