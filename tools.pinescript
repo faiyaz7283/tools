@@ -686,77 +686,92 @@ __getSeconds(string this) =>
 		result := _minute
 	result
 
-// @function            Get total epoch seconds for a timestamp, or the difference in seconds between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in seconds time.
+// @function            Get the total epoch seconds for a single timestamp or calculate the time difference in seconds between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in seconds.
 export method _seconds(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
     diffMilliseconds = not na(timestamp2) ? timestamp2 - timestamp1 : timestamp1
 	math.abs(diffMilliseconds) / 1000
 
-// @function            Get total epoch years for a timestamp, or the difference in years between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in years time.
+// @function            Get the total epoch years for a single timestamp or calculate the time difference in years between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in years.
 export method _years(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('year')
 
-// @function            Get total epoch months for a timestamp, or the difference in months between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in months time.
+// @function            Get the total epoch months for a single timestamp or calculate the time difference in months between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in months.
 export method _months(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('month')
 
-// @function            Get total epoch weeks for a timestamp, or the difference in weeks between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in weeks time.
+// @function            Get the total epoch weeks for a single timestamp or calculate the time difference in weeks between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in weeks.
 export method _weeks(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('week')
 
-// @function            Get total epoch days for a timestamp, or the difference in days between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in days time.
+// @function            Get the total epoch days for a single timestamp or calculate the time difference in days between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in days.
 export method _days(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('day')
 
-// @function            Get total epoch hours for a timestamp, or the difference in hours between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in hours time.
+// @function            Get the total epoch hours for a single timestamp or calculate the time difference in hours between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float)The total time difference in hours.
 export method _hours(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('hour')
 
-// @function            Get total epoch minutes for a timestamp, or the difference in minutes between two timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @returns             (int/float) Total difference in minutes time.
+// @function            Get the total epoch minutes for a single timestamp or calculate the time difference in minutes between two timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @returns             (int/float) The total time difference in minutes.
 export method _minutes(int timestamp1, int timestamp2=na) =>
 	// @function For *INTERNAL* use only.
 	diffInSeconds = _seconds(timestamp1, timestamp2)
 	diffInSeconds / __getSeconds('minute')
 
-// @function            Get breakdown of the full time difference with current time or between two unix timestamps.
-// @param timestamp1    (int) The start time in unix timestamp.
-// @param timestamp2    (int) The end time in unix timestamp. (`na` is used if no argument is supplied).
-// @param dsiplay    	(string)  (y=year, M=month, w=week, h=hour, m=month, s=second). (`y,M,w,h,m,s` is used if no argument is supplied).
-// @returns             (string) Total breakdown of time difference in segments.
+// @function            Get a detailed breakdown of the time difference from the current time or between two UNIX timestamps.
+// @param timestamp1    (int) The start time in unix timestamp (milliseconds).
+// @param timestamp2    (int) The end time in unix timestamp (milliseconds). (`na` is used if no argument is supplied).
+// @param years         (bool) Calculate the total number of years. Use false to omit. (`true` is used if no argument is supplied).
+// @param months        (bool) Calculate the total number of months. Use false to omit. (`true` is used if no argument is supplied).
+// @param weeks         (bool) Calculate the total number of weeks. Use false to omit. (`true` is used if no argument is supplied).
+// @param days          (bool) Calculate the total number of days. Use false to omit. (`true` is used if no argument is supplied).
+// @param hours         (bool) Calculate the total number of hours. Use false to omit. (`true` is used if no argument is supplied).
+// @param minutes       (bool) Calculate the total number of minutes. Use false to omit. (`true` is used if no argument is supplied).
+// @param seconds       (bool) Calculate the total number of seconds. Use false to omit. (`true` is used if no argument is supplied).
+// @returns             (string) Complete breakdown of the time difference into various segments.
 export method _getTimeDifference(int timestamp1, int timestamp2=na, bool years=true, bool months=true, bool weeks=true, bool days=true, bool hours=true, bool minutes=true, bool seconds=true) =>
-	st = timestamp1
+    st = timestamp1
     et = not na(timestamp2) ? timestamp2 : timenow
+
+    // If end time is greater, then reverse.
+    if et > st
+        st := et     
+        et := timestamp1
+
+    tt = array.new<string>()
+    tt.push("Total: " + _str(st))
+    
 	msg = array.new<string>()
 	if years // Display years:
 		yrs = int(_years(st, et))
@@ -764,42 +779,51 @@ export method _getTimeDifference(int timestamp1, int timestamp2=na, bool years=t
 			msg.push(str.format("{0} {1}", yrs, yrs > 1 ? "years" : "year"))
 			// remove the value from seconds
 			st := st - (__getSeconds('year') * yrs) * 1000
+            tt.push("-yrs: " + _str(st))
 	if months // Display months:
 		mnths = int(_months(st, et))
 		if mnths > 0
 			msg.push(str.format("{0} {1}", mnths, mnths > 1 ? "months" : "month"))
 			// remove the value from seconds
 			st := st - (__getSeconds('month') * mnths) * 1000
+            tt.push("-mnths: " + _str(st))
 	if weeks // Display weeks:
 		wks = int(_weeks(st, et))
 		if wks > 0
 			msg.push(str.format("{0} {1}", wks, wks > 1 ? "weeks" : "week"))
 			// remove the value from seconds
 			st := st - (__getSeconds('week') * wks) * 1000
+            tt.push("-wks: " + _str(st))
 	if days // Display days:
 		dys = int(_days(st, et))
 		if dys > 0
 			msg.push(str.format("{0} {1}", dys, dys > 1 ? "days" : "day"))
 			// remove the value from seconds
 			st := st - (__getSeconds('day') * dys) * 1000
+            tt.push("-dys: " + _str(st))
 	if hours // Display hours:
 		hrs = int(_hours(st, et))
 		if hrs > 0
 			msg.push(str.format("{0} {1}", hrs, hrs > 1 ? "hours" : "hour"))
 			// remove the value from seconds
 			st := st - (__getSeconds('hour') * hrs) * 1000
+            tt.push("-hrs: " + _str(st))
 	if minutes // Display minutes:
 		mnts = int(_minutes(st, et))
 		if mnts > 0
 			msg.push(str.format("{0} {1}", mnts, mnts > 1 ? "minutes" : "minute"))
 			// remove the value from seconds
 			st := st - (__getSeconds('minute') * mnts) * 1000
+            tt.push("-mnts: " + _str(st))
 	if seconds // Display seconds:
 		scnds = int(_seconds(st, et))
 		if scnds > 0
 			msg.push(str.format("{0} {1}", scnds, scnds > 1 ? "seconds" : "second"))
 			// remove the value from seconds
 			st := st - (__getSeconds('second') * scnds) * 1000
+            tt.push("-scnds: " + _str(st))
+    
+    // runtime.error(tt._join(', '))
 	if msg.size() > 1
 		lastItem = msg.pop()
 		msg.push("and " + lastItem)
@@ -809,10 +833,10 @@ export method _getTimeDifference(int timestamp1, int timestamp2=na, bool years=t
 
 // { Colors: Methods and functions related to colors, and gradients.
 
-// @function        Custom preset color.
+// @function        Get custom preset color.
 // @param this      (string) A string value.
 // @param transp    (float) A transparency value. (`0` is used if no argument is supplied). 
-// @returns         (color) A custom color.
+// @returns         (color) A custom preset color value based on constant name.
 export method _color(string this, float transp=0) =>
     color result = na
     _cl = switch this
@@ -1563,18 +1587,6 @@ var fs = footerStyle.new(textSize=size.large, textHalign=text.align_right)
 var ts = titleStyle.new(top=false, textHalign=text.align_right, textValign=text.align_top, textSize=size.normal)
 var cs = cellStyle.new(textHalign=text.align_left, textSize=size.normal)
 
-var t1 = 1690356056000
-var t2 = 1389514846000
-var startTime = str.format_time(t1, "yyyy-MM-dd hh:mm:ss a", "America/New_York")
-var endTime = str.format_time(t2, "yyyy-MM-dd hh:mm:ss a", "America/New_York")
-var years = int(_years(t1, t2))
-var months = int(_months(t1, t2))
-var weeks = int(_weeks(t1, t2))
-var days = int(_days(t1, t2))
-var hours = int(_hours(t1, t2))
-var minutes = int(_minutes(t1, t2))
-var seconds = int(_seconds(t1, t2))
-
 if barstate.islast
     printer = _printer.new().header(header, hs).footer(footer, fs).stack(true).title(titleStyle=ts).gutter(true).cell(cellStyle=cs).theme("white")
     printer.headerStyle.textColor := _color("blue_medium")
@@ -1586,3 +1598,4 @@ if barstate.islast
     printer.print(docSec5, title=sections.get(4), theme="purple")
     printer.print(docSec6, title=sections.get(5), theme="green")
     printer.print(docSec7, title=sections.get(6), theme="blue")
+    
