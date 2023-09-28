@@ -181,10 +181,7 @@ export method _int(int this) => this
 // @param this  (color) A color object.
 // @returns     (string) A color string.
 export method _colorToString(color this) =>
-    string result = na
-	if not na(this)
-    	result := str.format("{0}|{1}|{2}|{3}", color.r(this), color.g(this), color.b(this), color.t(this))
-	result
+    not na(this) ? str.format("{0}|{1}|{2}|{3}", color.r(this), color.g(this), color.b(this), color.t(this)) : na
     
 // @function    Cast to a color using the string's RGBT values (separated by "|").
 // @param this  (string) A string of RGBT values split by '|'.
@@ -256,11 +253,8 @@ export method _commaSplit(string this) => str.split(this, ",")
 // @param idx   (int) The index location of a value.
 // @returns     (string) A string.
 export method _commaSplit(string this, int idx) =>
-    result = ""
     items  = _commaSplit(this)
-    if idx < array.size(items)
-        result := array.get(items, idx)
-    result
+    idx < array.size(items) ? array.get(items, idx) : ""
 
 // @function    Get the first pair of values as tuple from a comma separated string.
 // @param this  (string) A comma separated string.
@@ -289,11 +283,8 @@ export method _pipeSplit(string this) => str.split(this, "|")
 // @param idx   (int) The index location of a value.
 // @returns     (string) A string.
 export method _pipeSplit(string this, int idx) =>
-    result = ""
     items  = _pipeSplit(this)
-    if idx < array.size(items)
-        result := array.get(items, idx)
-    result
+    idx < array.size(items) ? array.get(items, idx) : ""
 
 // @function    Get the first pair of values as tuple from a pipe separated string.
 // @param this  (string) A pipe separated string.
@@ -322,11 +313,8 @@ export method _colonSplit(string this) => str.split(this, ":")
 // @param idx   (int) The index location of a value.
 // @returns     (string) A string.
 export method _colonSplit(string this, int idx) =>
-    result = ""
     items  = _colonSplit(this)
-    if idx < array.size(items)
-        result := array.get(items, idx)
-    result
+    idx < array.size(items) ? array.get(items, idx) : ""
 
 // @function    Get the first pair of values as tuple from a colon separated string.
 // @param this   (string) A colon separated string.
@@ -895,707 +883,43 @@ export type _gradient
     float min
     float mid = 0
     color up = #00FF00
-    color neutral = #C8C8C8
+    color neutral = #fff9c4
     color down = #FF0000
+    color offsetColor = #000000
+    string offsetItem = 'text'
 
 // @function    Get the gradient color for given number.
 // @param this	(_gradient) A `_gradient` object.
 // @param num   (float) A number value.
 // @returns  	(color) The gradient color.
 export method _color(_gradient this, float num) =>
-    gradient_cl = color.from_gradient(num, this.mid, this.max, this.neutral, this.up)
-    if math.sign(num) == -1.0
-        gradient_cl := color.from_gradient(num, this.min, this.mid, this.down, this.neutral)
-    gradient_cl
-
+    bottom_value = num > 0 ? this.mid : this.min
+    top_value = num > 0 ? this.max : this.mid
+    bottom_color = num > 0 ? this.neutral : this.down
+    top_color = num > 0 ? this.up : this.neutral
+    num == 0 ? this.neutral : color.from_gradient(num, bottom_value, top_value, bottom_color, top_color)
 //}
 
-// { Print: methods for printing various kind of objects using table.
+// { Misc : Miscellaneous functions
 
-// Define the `tableStyle` UDT.
-export type tableStyle
-    color bgColor = #000000B3
-    color frameColor = #3C465047
-    int frameWidth = 1
-    color borderColor = na
-    int borderWidth = 2
-
-// Define the `headerStyle` UDT.
-export type headerStyle
-    float width = 0
-    float height = 0
-    string textHalign = text.align_center
-    string textValign = text.align_center
-    color textColor = #FFFFFF
-    string textSize = size.auto
-    color bgColor = #3C465087
-    string textFontFamily = font.family_default
-    string format = na
-
-// Define the `footerStyle` UDT.
-export type footerStyle
-    float width = 0
-    float height = 0
-    string textHalign = text.align_center
-    string textValign = text.align_center
-    color textColor = #FFFFFF
-    string textSize = size.auto
-    color bgColor = #3C465087
-    string textFontFamily = font.family_default
-    string format = na
-
-// Define the `titleStyle` UDT.
-export type titleStyle
-    bool top = true
-    float width = 0
-    float height = 0
-    string textHalign = text.align_center
-    string textValign = text.align_center
-    color textColor = #FFFFFF
-    string textSize = size.auto
-    color bgColor = #1E28328C
-    string textFontFamily = font.family_default
-    string format = na
-
-// Define the `cellStyle` UDT.
-export type cellStyle
-    bool horizontal = false
-    float width = 0
-    float height = 0
-    string textHalign = text.align_center
-    string textValign = text.align_center
-    color textColor = #E14600
-    string textSize = size.auto
-    color bgColor = na
-    string textFontFamily = font.family_default
-    string format = na
-
-// Define the `gutterStyle` UDT.
-export type gutterStyle
-    bool gutter = true
-    float width = 0.01
-    float height = 0.01
-
-// Define the `_printer` UDT.
-export type _printer
-    string header = na
-    string footer = na
-    bool stack = true
-    string loc = position.middle_center
-    bool debug = false
-    tableStyle tableStyle = na
-    headerStyle headerStyle = na
-    footerStyle footerStyle = na
-    titleStyle titleStyle = na
-    cellStyle cellStyle = na
-    gutterStyle gutterStyle = na
-    table _table = na
-    int _cTotal = 100
-    int _rTotal = 100
-    string _slot = na
-    int _maxCol = 0
-    bool _init = false
-
-
-// Tooltip
-__toolTip(_printer printer, col, row, cell, val, int idx=na, int mCol=na, int mRow=na, string _type=na) =>
-    tooltip = val
-    if printer.debug
-        if cell == "gutter"
-            gs = printer.gutterStyle
-            tooltip := str.format("column: {0}\nrow: {1}\ncell: {2}\nwidth: {3}\nheight: {4}", col, row, cell, gs.width, gs.height)
-        else
-            _tp = not na(_type) ? _type : _type(val)
-            tooltip := str.format("column: {0}\nrow: {1}\ncell: {2}\ntype: {3}", col, row, cell, _tp)
-            if _tp == "string" or _tp == "array<string>" or _tp == "matrix<string>"
-                tooltip := str.format("{0}\nlength: {1}", tooltip, str.length(val))
-            else if str.startswith(_tp, "array")
-                tooltip := str.format("{0}\nindex: {1}", tooltip, idx)
-            else if str.startswith(_tp, "matrix")
-                tooltip := str.format("{0}\nmatrix col: {1}\nmatrix row: {2}", tooltip, mCol, mRow)
-            tooltip := str.format("{0}\nvalue: {1}", tooltip, _str(val))
-    tooltip
-
-// Header
-__header(_printer printer, bool init=false) =>
-    if not na(printer.header)
-        if printer._maxCol > 0
-            // Readjustment: This keeps header adjusted in a single cell.
-            // Note: Gutter (single cell space between each data sets) requires 1 additional column per set.
-            //       So on non-stack setup, if gutter is turned on, we have to remove 2 extra spaces from the end to even it out, else 1.
-            maxCol = printer.stack ? printer._maxCol : printer._maxCol - (printer.gutterStyle.gutter ?  2 : 1)
-            printer._table.clear(0, 0, maxCol, 0)
-            printer._table.merge_cells(0, 0, maxCol, 0)
-        hs = printer.headerStyle
-        format = hs.format
-        val = printer.header
-        val := not na(format) ? str.format(format, val) : val
-        tooltip = __toolTip(printer, 0, 0, "header", printer.header, _type="string")
-        printer._table.cell(0, 0, text=val, width=hs.width, height=hs.height, text_color=hs.textColor, text_halign=hs.textHalign, text_valign=hs.textValign, text_size=hs.textSize, bgcolor=hs.bgColor, tooltip=tooltip, text_font_family=hs.textFontFamily)
-            
+export method numCompact(float num) =>
+    string result = na
+    thousand    = 1000
+    million     = thousand * thousand
+    billion     = million  * thousand
+    trillion    = billion  * thousand
+    quadrillion = trillion * thousand
     
-// Footer
-__footer(_printer printer, bool init=false) =>
-    if not na(printer.footer)
-        row = printer._rTotal - 1
-        if printer._maxCol > 0
-            // Readjustment: This keeps footer adjusted in a single cell.
-            // Note: Gutter (single cell space between each data sets) requires 1 additional column per set.
-            //       So on non-stack setup, if gutter is turned on, we have to remove 2 extra spaces from the end to even it out, else 1.
-            maxCol = printer.stack ? printer._maxCol : printer._maxCol - (printer.gutterStyle.gutter ?  2 : 1)
-            printer._table.clear(0, row, maxCol, row)
-            printer._table.merge_cells(0, row, maxCol, row)
-        fs = printer.footerStyle
-        format = fs.format
-        val = printer.footer
-        val := not na(format) ? str.format(format, val) : val
-        tooltip = __toolTip(printer, 0, row, "footer", printer.footer, _type="string")
-        printer._table.cell(0, row, text=val, width=fs.width, height=fs.height, text_color=fs.textColor, text_halign=fs.textHalign, text_valign=fs.textValign, text_size=fs.textSize, bgcolor=fs.bgColor, tooltip=tooltip, text_font_family=fs.textFontFamily)
-
-// Get or set and get table style.
-__tableStyle(_printer printer, tableStyle tableStyle=na) =>
-    if not na(tableStyle)
-        printer.tableStyle := tableStyle
-    else if na(printer.tableStyle)
-        printer.tableStyle := tableStyle.new()
-    printer.tableStyle
-
-// Get or set and get header style.
-__headerStyle(_printer printer, headerStyle headerStyle=na) =>
-    if not na(headerStyle)
-        printer.headerStyle := headerStyle
-    else if na(printer.headerStyle)
-        printer.headerStyle := headerStyle.new()
-    printer.headerStyle
-
-// Get or set and get footer style.
-__footerStyle(_printer printer, footerStyle footerStyle=na) =>
-    if not na(footerStyle)
-        printer.footerStyle := footerStyle
-    else if na(printer.footerStyle)
-        printer.footerStyle := footerStyle.new()
-    printer.footerStyle
-
-// Get or set and get title style.
-__titleStyle(_printer printer, titleStyle titleStyle=na) =>
-    if not na(titleStyle)
-        printer.titleStyle := titleStyle
-    else if na(printer.titleStyle)
-        printer.titleStyle := titleStyle.new()
-    printer.titleStyle     
-
-// Get or set and get cell style.
-__cellStyle(_printer printer, cellStyle cellStyle=na) =>
-    if not na(cellStyle)
-        printer.cellStyle := cellStyle
-    else if na(printer.cellStyle)
-        printer.cellStyle := cellStyle.new()
-    printer.cellStyle
-
-// Get or set and get gutter style.
-__gutterStyle(_printer printer, gutterStyle gutterStyle=na) =>
-    if not na(gutterStyle)
-        printer.gutterStyle := gutterStyle
-    else if na(printer.gutterStyle)
-        printer.gutterStyle := gutterStyle.new()
-    printer.gutterStyle
-
-// Setup default styles.
-__styles(_printer printer) =>
-    __tableStyle(printer)
-    __headerStyle(printer)
-    __footerStyle(printer)
-    __titleStyle(printer)
-    __cellStyle(printer)
-    __gutterStyle(printer)
-
-// Initialize
-__init(_printer printer) =>
-    // Run only if this is first time.
-    if not printer._init
-        // Setup all the default styles.
-        __styles(printer)
-        // Initialize a table.
-        printer._table := table.new(printer.loc, printer._cTotal, printer._rTotal, bgcolor=printer.tableStyle.bgColor, frame_color=printer.tableStyle.frameColor, frame_width=printer.tableStyle.frameWidth, border_color=printer.tableStyle.borderColor, border_width=printer.tableStyle.borderWidth)
-        // Header
-        if not na(printer.header)
-            __header(printer, init=true)
-            // After placing the header on very top, change the slot to use row 1, while starting column stays 0.
-            printer._slot := "0,1"
-        else
-            // If header is not given, then starting slot is always column 0, row 0
-            printer._slot := "0,0"
-        // Footer
-        if not na(printer.footer)
-            __footer(printer, init=true)    
-        // Mark complete, so next time init method gets skipped. 
-        printer._init := true
-
-// Slot setup
-__slot(_printer printer, int col, int row) =>
-    // Stacked: (stacking new set of data bottom of previous data set)
-    //      Column  - Should not change
-    //      Row     - Should increment by 1 
-    // Non stacked: (stacking new set of data right side of previous data set)
-    //      Column  - Should increment by 1
-    //      Row     - Should not change
-    int _col = printer.stack ? 0 : col + 1
-    int _row = printer.stack ? row + 1 : 0
-    // Special case: When not stacked, and have header, row have to start down 1 cell.
-    if not printer.stack and not na(printer.header)
-        _row += 1
-    // Store the value as "col,row" in printer._slot
-    printer._slot := str.format("{0},{1}", _col, _row)
-
-// get slot
-__slot(_printer printer) =>
-    [col, row] = printer._slot._commaSplitPair()
-    [_int(col), _int(row)]
-
-// Add 1 extra cell if title top is not true.
-__titleSide(_printer printer, bool title_top) =>
-    extraCell = 0
-    if not na(title_top)
-        extraCell := title_top ? extraCell : 1
+    if num < million
+        result := str.format("{0,number,0.000}", (nz(num) / thousand))    + "K"
+    else if num >= million and num < billion
+        result := str.format("{0,number,0.000}", (nz(num) / million))     + "M"
+    else if num >= billion and num < trillion
+        result := str.format("{0,number,0.000}", (nz(num) / billion))     + "B"
+    else if num >= trillion and num < quadrillion
+        result := str.format("{0,number,0.000}", (nz(num) / trillion))    + "T"
     else
-        extraCell := printer.titleStyle.top ? extraCell : 1
-    extraCell
+        result := str.format("{0,number,0.000}", (nz(num) / quadrillion)) + "Q"
+    result
 
-// Setup max column
-__maxColumn(_printer printer, int size, bool title_top, bool horizontal) =>
-    // Update the printer._maxCol
-    titleSide = __titleSide(printer, title_top)
-    if printer.stack
-        if horizontal
-            _size = size + titleSide
-            // For stacked data sets: (pushed to the bottom)
-            // Only if the set of data is positioned horizontally, then max column should be total size of all the values -1 (arrays start at 0 indexed)
-            printer._maxCol := _size > printer._maxCol ? _size - 1 : printer._maxCol
-        else
-            printer._maxCol := titleSide > printer._maxCol ? titleSide : printer._maxCol 
-    else
-        // For non-stacked data sets: (pushed to the right)
-        // every set of data occupies a column therefore +1.
-        // And if gutter is turned on, that also adds +1 (therefore 2).
-        // And if title is placed on the side (not top) then +1 as well.
-        printer._maxCol += (printer.gutterStyle.gutter ? 2 : 1) + titleSide
-        if horizontal
-            // And if the set of data is positioned horizontally, then max column should be total size of all the values -1 (arrays start at 0 indexed)
-            printer._maxCol += (size - 1)
-
-// Start the printer process
-__startPrinter(_printer printer, title, titleStyle, size, horizontal) =>
-    // Get the printer._init value to test first run.
-    firstRun = printer._init ? false : true
-    // Only runs when print is called first time.
-    __init(printer) 
-    // Get the column and row values from printer._slot. Print will start from here.
-    [col, row] = __slot(printer)
-    // Gutter
-    ps = printer.gutterStyle
-    if ps.gutter
-        tooltip = __toolTip(printer, col, row, "gutter", "")
-        printer._table.cell(col, row, na, width=ps.width, height=ps.height, tooltip=tooltip)
-    // Return the column and row value.
-    if not firstRun and ps.gutter
-        col := printer.stack ? col : (firstRun ? col : col + 1)
-        row := printer.stack ? (firstRun ? row : row + 1) : row
-    // Title setup
-    if not na(title)
-        format = titleStyle.format
-        tooltip = __toolTip(printer, col, row, "title", title)
-        val = not na(format) ? str.format(format, title) : _str(title)
-        printer._table.cell(col, row, text=val, width=titleStyle.width, height=titleStyle.height, text_color=titleStyle.textColor, text_halign=titleStyle.textHalign, text_valign=titleStyle.textValign, text_size=titleStyle.textSize, bgcolor=titleStyle.bgColor, tooltip=tooltip, text_font_family=titleStyle.textFontFamily)
-        if titleStyle.top
-            if horizontal
-                if size > 1
-                    printer._table.merge_cells(col, row, col + (size - 1), row)
-            row += 1
-        else
-            if not (horizontal)
-                if size > 1
-                    printer._table.merge_cells(col, row, col, row + (size - 1))
-            col += 1
-    [col, row]
-
-// End the printer process
-__endPrinter(_printer printer, col, row, size, titleTop, horizontal) =>
-    // After the loop completes, update the printer._slot with the last used column and row value
-    __slot(printer, col, row)
-    // Update the printer._maxCol
-    __maxColumn(printer, size, titleTop, horizontal)
-    // Re-run the title and footer, incase they need rearrangement for cell merging.
-    // Only runs if either title and/or footer is available.
-    __header(printer)
-    __footer(printer)
-    // Finally return the printer object.
-    printer
-
-// Loop thru array values.
-__arrayPrintLoop(_printer printer, val, title, titleStyle, cellStyle, string _type=na) =>
-    _tp = not na(_type) ? _type : _type(val) 
-    // Size of the values.
-    int size = val.size()
-    // Start the process.
-    ts = na(titleStyle) ? __titleStyle(printer) : titleStyle
-    cs = na(cellStyle) ? __cellStyle(printer) : cellStyle
-    [col, row] = __startPrinter(printer, title, ts, size, cs.horizontal)
-    // We need to store the column and row values into temporary variables.
-    // These temporary variables, allow us to keep track of current changes.
-    int _col = col 
-    int _row = row
-    // Start the loop thru the values.
-    for i=0 to size - 1
-        if cs.horizontal
-            // If horizontal is true, values should be placed per column.
-            // Therefore, each values should get an incremental column value.
-            _col := col + i
-        else 
-            // If horizontal is false, values should be placed per row.
-            // Therefore, each values should get an incremental row value.
-            _row := row + i
-        // If there is a format requested, transform the each value with the given format.
-        _format = cs.format
-        _val = _str(val.get(i))
-        _index = str.startswith(_tp, "array") ? i : na 
-        tooltip = __toolTip(printer, _col, _row, "cell", _val, idx=_index, _type=_tp)
-        _val := not na(_format) ? str.format(_format, _val) : _val
-        // Finally, put them in a table cell.
-        printer._table.cell(_col, _row, text=_val, width=cs.width, height=cs.height, text_color=cs.textColor, text_halign=cs.textHalign, text_valign=cs.textValign, text_size=cs.textSize, bgcolor=cs.bgColor, tooltip=tooltip, text_font_family=cs.textFontFamily)
-    // End printer process.
-    __endPrinter(printer, _col, _row, size, ts.top, cs.horizontal)
-
-// Loop thru matrix values.
-__matrixPrintLoop(_printer printer, val, title, titleStyle, cellStyle) =>
-    _tp = _type(val) 
-    // Start the process
-    totalRows = val.rows()
-    totalCols = val.columns()
-    ts = na(titleStyle) ? __titleStyle(printer) : titleStyle
-    size = ts.top ? totalCols : totalRows
-    horz = ts.top ? true : false
-    [col, row] = __startPrinter(printer, title, ts, size, horz)
-    // We need to store the column and row values into temporary variables.
-    // These temporary variables, allow us to keep track of current changes.
-    int _col = col 
-    int _row = row
-    // Start the loop thru the values.
-    isStack = printer.stack
-    cs = na(cellStyle) ? __cellStyle(printer) : cellStyle
-    for r=0 to totalRows - 1
-        for c=0 to totalCols - 1
-            _col := col + c
-            _row := row + r
-            _format = cs.format
-            _val = _str(val.get(r, c)) 
-            tooltip = __toolTip(printer, _col, _row, "cell", _val, mCol=c, mRow=r, _type=_tp)
-            _val := not na(_format) ? str.format(_format, _val) : _val
-            printer._table.cell(_col, _row, text=_val, width=cs.width, height=cs.height, text_color=cs.textColor, text_halign=cs.textHalign, text_valign=cs.textValign, text_size=cs.textSize, bgcolor=cs.bgColor, tooltip=tooltip, text_font_family=cs.textFontFamily)
-    __endPrinter(printer, _col, _row, totalCols, ts.top, true)
-
-// theme
-__theme(string theme) =>
-    // Default 'gray'
-    tblBgCl    = #0000004D       // _color("black_dark", 70)
-    frmCl      = #3C4650B8       // _color("gray_bright", 28)
-    cellTxtCl  = #E14600         // _color("orange_dark") 
-    otherTxtCl = #E1E1E1         // _color("white_bright")
-    titleBgCl  = #1E283273       // _color("gray_medium", 55)
-    otherBgCl  = #3C465078       // _color("gray_bright", 53)
-
-    if theme == "blue"
-        tblBgCl    := #0000780D  // _color("blue_dark", 95)
-        frmCl      := #0000FFB3  // _color("blue_bright", 30)
-        cellTxtCl  := #00FFFF    // _color("aqua_bright")
-        otherTxtCl := #E1E1E1    // _color("white_bright")
-        titleBgCl  := #0078FF9E  // _color("aqua_dark", 38)
-        otherBgCl  := #0096FFA6  // _color("aqua_medium", 35)
-    else if theme == "green"
-        tblBgCl    := #0078000D  // _color("green_dark", 95)
-        frmCl      := #00FF00B8  // _color("green_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #000000    // _color("black_dark")
-        titleBgCl  := #00C800D9  // _color("green_light", 15)
-        otherBgCl  := #00FF00DE  // _color("green_bright", 13)
-    else if theme == "orange"
-        tblBgCl    := #E146000D  // _color("orange_dark", 95)
-        frmCl      := #E16400B8  // _color("orange_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #000000    // _color("black_dark")
-        titleBgCl  := #E14600D9  // _color("orange_dark", 15)
-        otherBgCl  := #E16400DE  // _color("orange_bright", 13)
-    else if theme == "pink"
-        tblBgCl    := #FF00FF0D  // _color("pink_dark", 95)
-        frmCl      := #FF96FFB8  // _color("pink_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #000000    // _color("black_dark")
-        titleBgCl  := #FF64FFD9  // _color("pink_light", 15)
-        otherBgCl  := #FF96FFDE  // _color("pink_bright", 13)
-    else if theme == "purple"
-        tblBgCl    := #9B00FF0D  // _color("purple_dark", 95)
-        frmCl      := #9696FFB8  // _color("purple_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #E1E1E1    // _color("white_bright")
-        titleBgCl  := #9664FFD9  // _color("purple_light", 15)
-        otherBgCl  := #9696FFDE  // _color("purple_bright", 13)
-    else if theme == "red"
-        tblBgCl    := #7800000D  // _color("red_dark", 95)
-        frmCl      := #FF0000B8  // _color("red_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #E1E1E1    // _color("white_bright")
-        titleBgCl  := #C80000D9  // _color("red_light", 15)
-        otherBgCl  := #FF0000DE  // _color("red_bright", 13)
-    else if theme == "white"
-        tblBgCl    := #C8C8C80D  // _color("white_dark", 95)
-        frmCl      := #FFFFFFB8  // _color("white_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #000000    // _color("black_dark")
-        titleBgCl  := #C8C8C8D9  // _color("white_dark", 15)
-        otherBgCl  := #EBEBEBDE  // _color("white_light", 13)
-    else if theme == "yellow"
-        tblBgCl    := #AFAF000D  // _color("yellow_dark", 95)
-        frmCl      := #FFFF00B8  //_color("yellow_bright", 28)
-        cellTxtCl  := #E1E1E1    // _color("white_bright")
-        otherTxtCl := #000000    // _color("black_dark")
-        titleBgCl  := #E6E600D9  // _color("yellow_light", 15)
-        otherBgCl  := #FFFF00DE  // _color("yellow_bright", 13)
-    [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl]
-
-// @function         Set a color theme for the printer object using pre-defined theme names.
-// @param this       (_printer) A _printer UDT object. 
-// @param theme      (string) The name of the theme. Choices: gray, blue, green, orange, red, purple, pink and white. Gray is always default.
-// @returns          (_printer) Returns the _printer UDT object.
-export method theme(_printer this, string theme) =>
-    [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl] = __theme(theme)
-    // Styling for table.
-    if na(this.tableStyle)
-        this.tableStyle := tableStyle.new(bgColor=tblBgCl, frameColor=frmCl)
-    else
-        this.tableStyle.bgColor := tblBgCl
-        this.tableStyle.frameColor := frmCl
-    // Styling for Header.
-    if na(this.headerStyle)
-        this.headerStyle := headerStyle.new(textColor=otherTxtCl, bgColor=otherBgCl)
-    else
-        this.headerStyle.textColor := otherTxtCl
-        this.headerStyle.bgColor := otherBgCl
-    // Styling for Footer.
-    if na(this.footerStyle)
-        this.footerStyle := footerStyle.new(textColor=otherTxtCl, bgColor=otherBgCl)
-    else
-        this.footerStyle.textColor := otherTxtCl
-        this.footerStyle.bgColor := otherBgCl
-    // Styling for Title.
-    if na(this.titleStyle)
-        this.titleStyle := titleStyle.new(textColor=otherTxtCl, bgColor=titleBgCl)
-    else
-        this.titleStyle.textColor := otherTxtCl
-        this.titleStyle.bgColor := titleBgCl
-    // Styling for Cell.
-    if na(this.cellStyle)
-        this.cellStyle := cellStyle.new(textColor=cellTxtCl)
-    else
-        this.cellStyle.textColor := cellTxtCl
-    this
-
-// Set custom theme colors for a single print method.
-___printThemeSetup(printer, theme, titleStyle, cellStyle) =>
-    ts = titleStyle
-    cs = cellStyle
-    if not na(theme)
-        [tblBgCl, frmCl, cellTxtCl, otherTxtCl, titleBgCl, otherBgCl] = __theme(theme)
-        ts := titleStyle.copy(printer.titleStyle)
-        ts.textColor := otherTxtCl
-        ts.bgColor := titleBgCl
-        cs := cellStyle.copy(printer.cellStyle)
-        cs.textColor := cellTxtCl
-    [ts, cs]
-
-// @function         Print data on screen.
-// @param this       (_printer) A _printer UDT object. 
-// @param val        Data to print on screen. Possible types: string, float, int, bool, color, array<type>, matrix<type> 
-// @param title      (string) A title for the value. (`na` is used if no argument is supplied). 
-// @param titleStyle (titleStyle) Add a custom `titleStyle` for this print only. (`na` is used if no argument is supplied). 
-// @param cellStyle  (cellStyle) Add a custom `cellStyle` for this print only. (`na` is used if no argument is supplied).
-// @param theme      (string) The name of the theme. Choices: gray, blue, green, orange, green, red, purple, pink and white. (`na` is used if no argument is supplied).
-// @returns          (_printer) Returns the _printer UDT object.
-export method print(_printer this, string val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, array.new_string(1, val), title, ts, cs, "string")
-
-export method print(_printer this, float val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, array.new_float(1, val), title, ts, cs, "float")
-
-export method print(_printer this, int val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, array.new_int(1, val), title, ts, cs, "int")
-
-export method print(_printer this, bool val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, array.new_bool(1, val), title, ts, cs, "bool")
-
-export method print(_printer this, color val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, array.new_color(1, val), title, ts, cs, "color")
-
-export method print(_printer this, array<string> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, array<float> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, array<int> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, array<bool> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, array<color> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __arrayPrintLoop(this, val, title, ts, cs)
-
-export method print(_printer this, matrix<string> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __matrixPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, matrix<float> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __matrixPrintLoop(this, val, title, ts, cs)
-
-export method print(_printer this, matrix<int> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __matrixPrintLoop(this, val, title, ts, cs)
-    
-export method print(_printer this, matrix<bool> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __matrixPrintLoop(this, val, title, ts, cs)
-
-export method print(_printer this, matrix<color> val, string title=na, titleStyle titleStyle=na, cellStyle cellStyle=na, string theme=na) =>
-    [ts, cs] = ___printThemeSetup(this, theme, titleStyle, cellStyle)
-    __matrixPrintLoop(this, val, title, ts, cs)
-    
-// @function            Set a printer header. Optionally pass a customized header style.
-// @param this          (_printer) A _printer UDT object.  
-// @param headerStyle   (headerStyle) Add a custom `headerStyle` for the printer object. (`na` is used if no argument is supplied). 
-// @returns             (_printer) Returns the _printer UDT object.
-export method header(_printer this, string val, headerStyle headerStyle=na) =>
-    __headerStyle(this, headerStyle)
-    this.header := val
-    this
-
-// @function            Set a printer footer. Optionally pass a customized footer style.
-// @param this          (_printer) A _printer UDT object. 
-// @param footerStyle   (footerStyle) Add a custom `footerStyle` for the printer object. (`na` is used if no argument is supplied). 
-// @returns             (_printer) Returns the _printer UDT object.
-export method footer(_printer this, string val, footerStyle footerStyle=na) =>
-    __footerStyle(this, footerStyle)
-    this.footer := val
-    this
-
-// @function            Set a printer's default title location.
-// @param this          (_printer) A _printer UDT object. 
-// @param top           (bool) Location to place data titles. Use `false` to place the title to the left of data, or `true` to place title on top of data. By default this title top is `true`. 
-// @returns             (_printer) Returns the _printer UDT object.
-export method title(_printer this, bool top) =>
-    __titleStyle(this)
-    this.titleStyle.top := top
-    this
-
-// @function            Set a printer's custom title style.
-// @param this          (_printer) A _printer UDT object. 
-// @param titleStyle    (titleStyle) Add a custom `titleStyle` for the printer object. (`na` is used if no argument is supplied).  
-// @returns             (_printer) Returns the _printer UDT object.
-export method title(_printer this, titleStyle titleStyle) =>
-    __titleStyle(this, titleStyle)
-    this
-
-// @function            Set a printer's array orientation.
-// @param this          (_printer) A _printer UDT object.
-// @param horizontal    (bool) Array orientation. Use `false` for vertical placement, or `true` to use horizontal placement. By default horizontal is `false`. 
-// @returns             (_printer) Returns the _printer UDT object.
-export method cell(_printer this, bool horizontal) =>
-    __cellStyle(this)
-    this.cellStyle.horizontal := horizontal
-    this
-
-// @function            Set a printer's custom style for all data cells (excludes: header, footer and titles).
-// @param this          (_printer) A _printer UDT object.
-// @param cellStyle     (cellStyle) Add a custom `cellStyle` for the printer object.  
-// @returns             (_printer) Returns the _printer UDT object.
-export method cell(_printer this, cellStyle cellStyle) =>
-    __cellStyle(this, cellStyle)
-    this
-
-// @function            Set a printer's stacking order. Stacking order is the placement order of each new data sets. Either set new data under (true), or to the right (false).
-// @param this          (_printer) A _printer UDT object.
-// @param stack         (bool) If set to `true`, following data will be stacked under, if `false`, data will be pushed to the right. By default stacking is`true`. 
-// @returns             (_printer) Returns the _printer UDT object.
-export method stack(_printer this, bool stack) =>
-    this.stack := stack
-    this
-
-// @function            Set a printer's gutter. A gutter is an empty cell spacing between two individual printed data. 
-// @param this          (_printer) A _printer UDT object. 
-// @param gutter        (bool) If set to `true`, an empty cell will be added between each data set, if `false`, data sets will have no separation. By default gutter is `true`. 
-// @returns             (_printer) Returns the _printer UDT object.
-export method gutter(_printer this, bool gutter) =>
-    __gutterStyle(this)
-    this.gutterStyle.gutter := gutter
-    this
-
-// @function            Set a printer's custom style for gutter cells.
-// @param this          (_printer) A _printer UDT object.
-// @param gutterStyle   (cellStyle) Add a custom `gutterStyle` for the printer object.  
-// @returns             (_printer) Returns the _printer UDT object.
-export method gutter(_printer this, gutterStyle gutterStyle) =>
-    __gutterStyle(this, gutterStyle)
-    this
-
-// @function            Set the debug value for a printer.
-// @param this          (_printer) A _printer UDT object.
-// @param gutterStyle   (bool) If set to `true`, there will be some debuggin info added to tooltips for each printed cell (hover ur mouse over to see). If `false` this extra info will stay hidden. By default debug is `false`.  
-// @returns             (_printer) Returns the _printer UDT object.
-export method debug(_printer this, bool debug) =>
-    this.debug := debug
-    this
-
-//}
-
-var header = "Tools: faiyaz7283.github.io/tools"
-var footer = "Full documentation: faiyaz7283.github.io/tools"
-var sections = array.from("Get data `types`.", "Cast data from one type to another.", "Joins and Splits", "Generators.", "A color method and gradient object.", "Timestamps.", "A comprehensive printer object.")
-var docSec1 = "Get type for string, float, integer, boolean, color, box, label, line, linefill, table, array<type> and matrix<type>."
-var docSec2 = "Casting data from one type to another.\nFor example, use _bool(string), will return a boolean value. If the string is empty, it will be false, else true.\nAnd on the other hand _str(bool), would simply convert the bool value into string.\nAvailable casting types are bool, float, integer, string, and color. "
-var docSec3 = "There are also some useful join and splitting methods for string to array and array to string conversions.\nFor array to string conversion, available array types are string, float, int, bool and color."
-var docSec4 = "Use generators to generate:\n- random strings (characters, words, sentences)\n- booleans\n- numbers (integers, floats, UNIX timestamps)\n- colors\nAll arrays and matrix are supported."
-var docSec5 = "A convenient _color() method that accepts preset color names and returns the color.\nColors include aqua, black, blue, gray, green, orange, pink, purple, red, white and yellow.\nAdd _bright, _light, _medium or _dark with the color name to get a specific shade of that color.\nSetup a gradient object,and get gradient color of a number."
-var docSec6 = "Timestamps related functions and methods. For example, calculating the differences between two unix \ntimestamps and returning in a human readable format such as `timestamp1._getTimeDifference(timestamp2)` \nwill return \"1 year, 2 months, 4 days, 9 hours, 14 minutes and 20 seconds\"."
-var docSec7a = "Use the convenient _printer object and print method to print almost anything on screen.\nPrinter object can print a single item or multiple sets of data at once.\nBehind the scene, it uses table, and cells strategically for printing.\nAll _printer methods are chain-able for convenience."
-var docSec7b = "Header: Use the convenient header method to add a header, and pass a headerStyle object to customize."
-var docSec7c = "Footer: Use the convenient footer method to add a footer, and pass a footerStyle object to customize."
-var docSec7d = "There's also several other convenient methods to customize the printer.\n- theme(): method to add a preset theme.\n   Choices are gray (same as default color style), blue, orange, green, red, purple, pink, yellow and white.\n- title(): pass custom default titleStyle object for all data,\n   or just pass top=<true/false> to designate the location of title placement.\n- stack(): use true or false to either stack each set of data (default is true), or side by side (if false).\n- gutter(): use true or false to add extra spacing. Pass a gutterStyle object to customize.\n- cell(): method to add custom default cell settings with cellStyle object,\n   or just pass horizontal=<true/false> to position array data vertically or horizontally.\n- debug(): use true or false, to print some helpful debugging info or hide them."
-var docSec7e = "Once a printer object is created, use the print() method to print any item on screen.\nEach print method accepts a title parameter for that particular dataset.\nYou can also pass titleStyle and cellStyle objects to individually target that dataset.\nYou can also pass a theme name to individual print methods."
-var docSec7 = array.from(docSec7a, docSec7b, docSec7c, docSec7d, docSec7e)
-
-var hs = headerStyle.new(textSize=size.large)
-var fs = footerStyle.new(textSize=size.large, textHalign=text.align_right)
-var ts = titleStyle.new(top=false, textHalign=text.align_right, textValign=text.align_top, textSize=size.normal)
-var cs = cellStyle.new(textHalign=text.align_left, textSize=size.normal)
-
-if barstate.islast
-    printer = _printer.new().header(header, hs).footer(footer, fs).stack(true).title(titleStyle=ts).gutter(true).cell(cellStyle=cs).theme("white")
-    printer.headerStyle.textColor := _color("blue_medium")
-    printer.footerStyle.textColor := _color("purple_dark")
-    printer.print(docSec1, title=sections.get(0), theme="pink")
-    printer.print(docSec2, title=sections.get(1), theme="orange")
-    printer.print(docSec3, title=sections.get(2), theme="yellow")
-    printer.print(docSec4, title=sections.get(3), theme="red")
-    printer.print(docSec5, title=sections.get(4), theme="purple")
-    printer.print(docSec6, title=sections.get(5), theme="green")
-    printer.print(docSec7, title=sections.get(6), theme="blue")
-    
+// }
